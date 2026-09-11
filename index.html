@@ -215,6 +215,7 @@
   /* oflayn xizmatchi */
   var st = document.getElementById("st-off");
   if ("serviceWorker" in navigator) {
+    var hadSW = !!navigator.serviceWorker.controller;   // birinchi o'rnatishda sahifa qayta yuklanmasin
     navigator.serviceWorker.register("sw.js").then(function (reg) {
       function ready() { st.className = "st ok"; st.lastElementChild.textContent = "Internetsiz ham ochiladi"; }
       if (reg.active && !reg.installing) ready();
@@ -228,7 +229,7 @@
           } else ready();
         });
       });
-      navigator.serviceWorker.addEventListener("controllerchange", function () { location.reload(); });
+      navigator.serviceWorker.addEventListener("controllerchange", function () { if (hadSW) location.reload(); });
     }).catch(function () { st.lastElementChild.textContent = "Oflayn rejim faqat https yoki o‘rnatilgan ilovada ishlaydi"; });
   } else st.lastElementChild.textContent = "Bu brauzerda oflayn rejim yo‘q";
 
