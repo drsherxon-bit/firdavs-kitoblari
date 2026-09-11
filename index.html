@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Firdavs kitoblari</title>
+<meta name="description" content="Madina kitobi, Qoida sharhlari va o‘quvchi daftarlari — bitta kutubxonada, oflayn.">
+<meta name="theme-color" content="#FBF9F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#27251E" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Firdavs">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script>try{var t=localStorage.getItem("firdavs:theme");if(t){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}</script>
+<style>
+  :root {
+    --paper: #FBF9F2; --card: #FFFDF7; --ink: #0A0A0A; --muted: #726D65; --line: #D7DDE6;
+    --accent: #006A47; --sec: #B61B00; --branch: #0055CC; --asl: #6E5326;
+    --accent-soft: #D9F4EB; --sec-soft: #F9EBE9; --asl-soft: #F1E9DA; --head-bg: #EAEEF4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #27251E; --card: #2A2820; --ink: #F5F3EF; --muted: #A5A19B; --line: #4B5A70;
+      --accent: #07AF77; --sec: #F86F57; --branch: #579AF8; --asl: #C9A96A;
+      --accent-soft: #1A362C; --sec-soft: #482822; --asl-soft: #3B3426; --head-bg: #263140;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #27251E; --card: #2A2820; --ink: #F5F3EF; --muted: #A5A19B; --line: #4B5A70;
+    --accent: #07AF77; --sec: #F86F57; --branch: #579AF8; --asl: #C9A96A;
+    --accent-soft: #1A362C; --sec-soft: #482822; --asl-soft: #3B3426; --head-bg: #263140;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Literata", Georgia, serif; line-height: 1.55;
+    padding: 0 18px calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .ar { font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; }
+
+  /* ---- sarlavha ---- */
+  .top { display: flex; align-items: center; gap: 12px; padding: calc(18px + env(safe-area-inset-top, 0px)) 0 8px; }
+  .top .t-ar { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; text-align: left; font-size: 1.55rem; font-weight: 700; color: var(--accent); line-height: 1.4; margin-top: 2px; }
+  .top h1 { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+  .t-sub { color: var(--muted); font-size: 0.84rem; margin: 0 0 4px; }
+  .top .t-txt { flex: 1; min-width: 0; }
+  .ib {
+    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--card);
+    color: var(--muted); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ib svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ib:active { color: var(--accent); border-color: var(--accent); }
+
+  .davom {
+    display: flex; align-items: center; gap: 12px; margin: 14px 0 6px;
+    background: var(--accent-soft); border-radius: 12px; padding: 10px 14px; text-decoration: none; color: inherit;
+  }
+  .davom .d-k { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .davom .d-t { font-weight: 700; font-size: 0.98rem; line-height: 1.3; }
+  .davom .d-s { font-size: 0.82rem; color: var(--muted); }
+  .davom .d-ar { margin-left: auto; font-size: 1.35rem; color: var(--accent); white-space: nowrap; }
+  .davom[hidden] { display: none; }
+
+  /* ---- javon ---- */
+  .shelf { margin: 26px 0 0; }
+  .shelf h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--c); }
+  .shelf h2::after { content: ""; flex: 1; height: 1px; background: var(--c); opacity: 0.35; }
+  .shelf h2 .h-ar { font-family: "Amiri", serif; direction: rtl; font-size: 1.05rem; letter-spacing: 0; text-transform: none; font-weight: 700; }
+  .shelf.asl { --c: var(--asl); --cs: var(--asl-soft); }
+  .shelf.qoida { --c: var(--sec); --cs: var(--sec-soft); }
+  .shelf.daftar { --c: var(--accent); --cs: var(--accent-soft); }
+  .books { display: flex; flex-direction: column; gap: 8px; }
+  .book {
+    display: grid; grid-template-columns: 46px 1fr auto; align-items: center; gap: 12px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px 10px 10px;
+    color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent;
+  }
+  .book:active { border-color: var(--c); }
+  .book .juz {
+    width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--cs); color: var(--c); font-family: "Scheherazade New", "Amiri", serif; font-size: 1.5rem; font-weight: 700; line-height: 1;
+    position: relative;
+  }
+  .book .juz::before { content: ""; position: absolute; inset: 3px; border: 1px solid var(--c); border-radius: 50%; opacity: 0.5; }
+  .book .b-uz { font-weight: 700; font-size: 1rem; line-height: 1.25; }
+  .book .b-sub { color: var(--muted); font-size: 0.78rem; margin-top: 1px; }
+  .book .b-pos { margin-top: 4px; font-size: 0.74rem; color: var(--c); display: flex; align-items: center; gap: 6px; }
+  .book .b-pos i { display: inline-block; width: 56px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .book .b-pos i b { display: block; height: 100%; background: var(--c); }
+  .book .b-ar { font-family: "Amiri", serif; direction: rtl; font-size: 1.12rem; color: var(--c); text-align: right; line-height: 1.7; max-width: 8.5em; }
+  @media (max-width: 400px) { .book { grid-template-columns: 42px 1fr; } .book .b-ar { display: none; } }
+
+  /* ---- pastki izohlar ---- */
+  .foot { margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: center; }
+  .foot .st { display: inline-flex; align-items: center; gap: 6px; }
+  .foot .st i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .foot .st.ok i { background: var(--accent); }
+  .install {
+    margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+    font-size: 0.88rem; display: flex; gap: 12px; align-items: center;
+  }
+  .install[hidden] { display: none; }
+  .install b { display: block; font-size: 0.94rem; }
+  .install button {
+    margin-left: auto; flex: none; border: 0; background: var(--accent); color: #fff; border-radius: 9px;
+    padding: 8px 14px; font: inherit; font-weight: 700; cursor: pointer;
+  }
+  .toast {
+    position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    background: var(--ink); color: var(--paper); border-radius: 10px; padding: 10px 16px; font-size: 0.88rem;
+    display: flex; gap: 14px; align-items: center; box-shadow: 0 6px 24px rgba(0,0,0,0.25); z-index: 20; max-width: calc(100vw - 32px);
+  }
+  .toast button { border: 0; background: var(--accent); color: #fff; border-radius: 7px; padding: 6px 12px; font: inherit; font-weight: 700; cursor: pointer; }
+  .toast[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="t-txt">
+      <h1>Firdavs kitoblari</h1>
+      <div class="t-ar">كُتُبُ الفِرْدَوْسِ</div>
+    </div>
+    <button class="ib" id="theme" type="button" aria-label="Mavzu"></button>
+  </header>
+  <p class="t-sub">Madina kitobi · Qoida sharhlari · o‘quvchi daftarlari</p>
+
+  <a class="davom" id="davom" hidden>
+    <div>
+      <div class="d-k">Davom etish</div>
+      <div class="d-t" id="dv-t"></div>
+      <div class="d-s" id="dv-s"></div>
+    </div>
+    <div class="d-ar ar" id="dv-ar"></div>
+  </a>
+
+  <section class="shelf asl"><h2>Madina kitobi <span class="h-ar">دُرُوسُ اللُّغَةِ العَرَبِيَّةِ</span></h2><div class="books" data-kind="asl"></div></section>
+  <section class="shelf qoida"><h2>Qoida — sharh <span class="h-ar">شَرْحُ الدُّرُوسِ</span></h2><div class="books" data-kind="qoida"></div></section>
+  <section class="shelf daftar"><h2>O‘quvchi daftari <span class="h-ar">كُرَّاسَةُ الطَّالِبِ</span></h2><div class="books" data-kind="daftar"></div></section>
+
+  <div class="install" id="install" hidden>
+    <div><b>Ilova sifatida o‘rnatish</b><span id="inst-txt">Bosh ekranga qo‘shilsa, internetsiz ham ochiladi.</span></div>
+    <button type="button" id="inst-btn">O‘rnatish</button>
+  </div>
+
+  <footer class="foot">
+    <span class="st" id="st-off"><i></i><span>Oflayn tayyorlanmoqda…</span></span>
+    <span id="ver"></span>
+  </footer>
+</div>
+<div class="toast" id="toast" hidden><span>Kitoblarning yangi nusxasi bor.</span><button type="button" id="reload">Yangilash</button></div>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  /* mavzu */
+  var ic = {
+    sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    moon: '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+    auto: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>'
+  };
+  var theme = get("firdavs:theme") || "", order = ["", "dark", "light"];
+  var tb = document.getElementById("theme");
+  function applyTheme() {
+    if (theme) { root.setAttribute("data-theme", theme); root.style.colorScheme = theme; }
+    else { root.removeAttribute("data-theme"); root.style.colorScheme = ""; }
+    tb.innerHTML = theme === "dark" ? ic.moon : theme === "light" ? ic.sun : ic.auto;
+  }
+  applyTheme();
+  tb.addEventListener("click", function () { theme = order[(order.indexOf(theme) + 1) % 3]; set("firdavs:theme", theme); applyTheme(); });
+
+  /* kitoblar */
+  var AR = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+  function pos(slug) { try { return JSON.parse(get("firdavs:pos:" + slug) || "null"); } catch (e) { return null; } }
+  fetch("app/books.json").then(function (r) { return r.json(); }).then(function (books) {
+    var last = null, lastBook = null;
+    books.forEach(function (b) {
+      var p = pos(b.slug);
+      if (p && p.at && (!last || p.at > last.at)) { last = p; lastBook = b; }
+      var a = document.createElement("a");
+      a.className = "book"; a.href = "kitob/" + b.slug + ".html";
+      a.innerHTML =
+        '<span class="juz">' + AR[b.juz] + "</span>" +
+        '<span><span class="b-uz">' + b.uz + '</span><span class="b-sub" style="display:block">' + b.sub + "</span>" +
+        (p && p.pct > 0 ? '<span class="b-pos">' + (p.label ? p.label + " · " : "") + p.pct + "%<i><b style=\"width:" + p.pct + '%"></b></i></span>' : "") +
+        "</span>" +
+        '<span class="b-ar">' + b.ar + "</span>";
+      document.querySelector('.books[data-kind="' + b.kind + '"]').appendChild(a);
+    });
+    if (last && lastBook) {
+      var d = document.getElementById("davom");
+      d.href = "kitob/" + lastBook.slug + ".html";
+      document.getElementById("dv-t").textContent = lastBook.uz;
+      document.getElementById("dv-s").textContent = (last.label ? last.label + " · " : "") + last.pct + "% o‘qildi";
+      document.getElementById("dv-ar").textContent = lastBook.ar;
+      d.hidden = false;
+    }
+  });
+
+  /* versiya */
+  fetch("version.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (v) {
+    document.getElementById("ver").textContent = "Nusxa " + v.version + " · " + v.built.slice(0, 10);
+  }).catch(function () {});
+
+  /* oflayn xizmatchi */
+  var st = document.getElementById("st-off");
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").then(function (reg) {
+      function ready() { st.className = "st ok"; st.lastElementChild.textContent = "Internetsiz ham ochiladi"; }
+      if (reg.active && !reg.installing) ready();
+      reg.addEventListener("updatefound", function () {
+        var w = reg.installing;
+        w.addEventListener("statechange", function () {
+          if (w.state !== "installed") return;
+          if (navigator.serviceWorker.controller) {
+            var t = document.getElementById("toast"); t.hidden = false;
+            document.getElementById("reload").onclick = function () { w.postMessage("SKIP_WAITING"); };
+          } else ready();
+        });
+      });
+      navigator.serviceWorker.addEventListener("controllerchange", function () { location.reload(); });
+    }).catch(function () { st.lastElementChild.textContent = "Oflayn rejim faqat https yoki o‘rnatilgan ilovada ishlaydi"; });
+  } else st.lastElementChild.textContent = "Bu brauzerda oflayn rejim yo‘q";
+
+  /* o'rnatish */
+  var inst = document.getElementById("install"), deferred = null;
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault(); deferred = e; if (!standalone) inst.hidden = false;
+  });
+  document.getElementById("inst-btn").addEventListener("click", function () {
+    if (!deferred) return; deferred.prompt(); deferred.userChoice.then(function () { inst.hidden = true; deferred = null; });
+  });
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (isIOS && !standalone) {
+    inst.hidden = false; document.getElementById("inst-btn").hidden = true;
+    document.getElementById("inst-txt").textContent = "Safari’da «Ulashish» tugmasi → «Bosh ekranga qo‘shish».";
+  }
+})();
+</script>
+</body>
+</html>

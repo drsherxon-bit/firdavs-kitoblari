@@ -1,0 +1,63 @@
+/* Firdavs kitoblari — kitob ichidagi o'quvchi paneli.
+   Kitobning o'z ranglaridan foydalanadi (--paper, --ink, --accent, --line/--rule). */
+:root { --fk-zoom: 1; --fk-bar: 52px; }
+body > :not(.fk-bar):not(.fk-sheet):not(.fk-dim) { zoom: var(--fk-zoom); }
+/* kattalashtirilganda 1–2 px yon toshish telefonda butun sahifani surib yuboradi — kesib tashlanadi */
+html, body { overflow-x: clip; }
+body::after { content: ""; display: block; height: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px) + 12px); }
+
+.fk-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; align-items: stretch; justify-content: space-around;
+  height: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px));
+  padding: 0 4px env(safe-area-inset-bottom, 0px);
+  background: var(--paper, #FBF9F2);
+  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.fk-bar button, .fk-bar a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 0; background: none; color: var(--muted, #726D65); text-decoration: none;
+  font: inherit; font-size: 0.62rem; letter-spacing: 0.04em; cursor: pointer; padding: 0; min-width: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.fk-bar svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.fk-bar .fk-home { color: var(--accent, #006A47); }
+.fk-bar button:active, .fk-bar a:active { color: var(--accent, #006A47); }
+.fk-bar .fk-aa { font-weight: 700; font-family: "Literata", Georgia, serif; }
+.fk-bar .fk-aa b { font-size: 1.05rem; line-height: 1; }
+.fk-bar .fk-aa.sm b { font-size: 0.85rem; }
+
+.fk-dim { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.35); }
+.fk-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+  max-height: 72vh; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--paper, #FBF9F2); color: var(--ink, #0A0A0A);
+  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
+  border-radius: 14px 14px 0 0;
+  padding: 8px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+  font-family: "Literata", Georgia, serif;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.12);
+}
+.fk-sheet::before { content: ""; display: block; width: 38px; height: 4px; border-radius: 2px; margin: 0 auto 10px; background: var(--line, var(--rule, #D7DDE6)); }
+.fk-sheet h3 { margin: 0 18px 6px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #006A47); font-weight: 700; }
+.fk-sheet a {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 10px 18px; color: inherit; text-decoration: none; font-size: 0.98rem;
+  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
+}
+.fk-sheet a.now { color: var(--accent, #006A47); font-weight: 700; }
+.fk-sheet a .ar { margin-left: auto; font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.15rem; color: var(--muted, #726D65); }
+.fk-sheet a.now .ar { color: var(--accent, #006A47); }
+.fk-sheet .fk-row { display: flex; gap: 8px; padding: 6px 18px 10px; }
+.fk-sheet .fk-row button {
+  flex: 1; border: 1px solid var(--line, var(--rule, #D7DDE6)); background: var(--card, #FFFDF7); color: var(--ink, #0A0A0A);
+  border-radius: 8px; padding: 8px 4px; font: inherit; font-size: 0.85rem; cursor: pointer;
+}
+.fk-sheet .fk-row button.on { border-color: var(--accent, #006A47); color: var(--accent, #006A47); font-weight: 700; }
+[hidden] { display: none !important; }
+
+@media (min-width: 900px) {
+  .fk-bar { left: 50%; right: auto; transform: translateX(-50%); width: 520px; border-left: 1px solid var(--line, var(--rule, #D7DDE6)); border-right: 1px solid var(--line, var(--rule, #D7DDE6)); border-radius: 12px 12px 0 0; }
+  .fk-sheet { left: 50%; right: auto; transform: translateX(-50%); width: 560px; }
+}

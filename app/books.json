@@ -1,0 +1,22 @@
+[
+  { "slug": "madina-1", "kind": "asl",    "juz": 1, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 1-kitob", "sub": "Asl matn · 23 dars",
+    "artifact": "https://claude.ai/code/artifact/64db45c9-b2dd-4cb7-9968-7378a789818f" },
+  { "slug": "madina-2", "kind": "asl",    "juz": 2, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 2-kitob", "sub": "Asl matn · 31 dars",
+    "artifact": "https://claude.ai/code/artifact/9aa39bf0-d65a-4e5c-947e-292ddc5aa3a6" },
+  { "slug": "madina-3", "kind": "asl",    "juz": 3, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 3-kitob", "sub": "Asl matn · 34 dars",
+    "artifact": "https://claude.ai/code/artifact/3362a6c2-8272-4d19-9fa0-4c79258bc09d" },
+
+  { "slug": "qoida-1",  "kind": "qoida",  "juz": 1, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 1", "sub": "Qoidalar sharhi · kirish, 23 dars, xulosa",
+    "artifact": "https://claude.ai/code/artifact/2fa46457-1c7a-4698-aca9-b048d490b1e5" },
+  { "slug": "qoida-2",  "kind": "qoida",  "juz": 2, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 2", "sub": "Qoidalar sharhi · yozilmoqda",
+    "artifact": "https://claude.ai/code/artifact/9e6d8cc4-639c-4e85-af36-d64ce760c2c3" },
+  { "slug": "qoida-3",  "kind": "qoida",  "juz": 3, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 3", "sub": "Qoidalar sharhi · yozilmoqda",
+    "artifact": "https://claude.ai/code/artifact/9733ed03-ea8e-4a6e-a9fc-1b4b2ccadb2e" },
+
+  { "slug": "daftar-1", "kind": "daftar", "juz": 1, "ar": "كُرَّاسَةُ الطَّالِبِ", "uz": "O‘quvchi daftari 1", "sub": "Reja · normativ · savollar · lug‘at · husnixat",
+    "artifact": "https://claude.ai/code/artifact/56fda4f9-07e8-4108-8123-1809eb839225" },
+  { "slug": "daftar-2", "kind": "daftar", "juz": 2, "ar": "كُرَّاسَةُ الطَّالِبِ", "uz": "O‘quvchi daftari 2", "sub": "Reja · normativ · savollar · lug‘at · so‘zlashuv",
+    "artifact": "https://claude.ai/code/artifact/5416dd23-58af-4ad6-8f6d-29f9b573ef5d" },
+  { "slug": "daftar-3", "kind": "daftar", "juz": 3, "ar": "كُرَّاسَةُ الطَّالِبِ", "uz": "O‘quvchi daftari 3", "sub": "Reja · normativ · lug‘at",
+    "artifact": "https://claude.ai/code/artifact/6f72efbf-6e08-4b65-9e2f-d6e620fe4230" }
+]

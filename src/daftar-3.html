@@ -1,0 +1,1824 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>O‘quvchi daftari 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* qog‘oz va matn */
+    --paper: #FBF9F2;
+    --card: #FFFDF7;
+    --ink: #0A0A0A;
+    --muted: #726D65;
+    --line: #D7DDE6;
+    /* 1-qatlam — matn ranglari. Hammasi BIR XIL ko‘rinma yorug‘likda (lum 0.108). */
+    --accent: #006A47;
+    --sec: #B61B00;
+    --branch: #0055CC;
+    --ex-text: #006B34;
+    /* 2-qatlam — chegaralar */
+    --ex-border: #1EAB4D;
+    /* 3-qatlam — fon tusliklari, o‘zaro teng (lum 0.855) */
+    --accent-soft: #D9F4EB;
+    --sec-soft: #F9EBE9;
+    --ex-bg: #DAF4E7;
+    --head-bg: #EAEEF4;
+    /* Husnixat va normativlar — kitobning umumiy palitrasidan */
+    --hx-bg: var(--card);
+    --hx-ink: #0055CC;
+    --hx-label: var(--muted);
+    --hx-grid: color-mix(in srgb, var(--ink) 8%, transparent);
+    --hx-field: color-mix(in srgb, var(--ink) 34%, transparent);
+    --hx-rule: var(--sec);
+    --nv-card: var(--card);
+    --nv-ink: var(--ink);
+    --nv-soft: var(--muted);
+    --nv-label: var(--muted);
+    --nv-rule: var(--sec);
+    --nv-line: var(--line);
+    --nv-dot: color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #27251E; --card: #2A2820; --ink: #F5F3EF; --muted: #A5A19B; --line: #4B5A70;
+      --accent: #07AF77; --sec: #F86F57; --branch: #579AF8; --ex-text: #07B059;
+      --ex-border: #298E5E;
+      --accent-soft: #1A362C; --sec-soft: #482822; --ex-bg: #1A3627; --head-bg: #263140;
+      --hx-ink: #579AF8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #27251E; --card: #2A2820; --ink: #F5F3EF; --muted: #A5A19B; --line: #4B5A70;
+    --accent: #07AF77; --sec: #F86F57; --branch: #579AF8; --ex-text: #07B059;
+    --ex-border: #298E5E;
+    --accent-soft: #1A362C; --sec-soft: #482822; --ex-bg: #1A3627; --head-bg: #263140;
+    --hx-ink: #579AF8;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 26px 18px 60px;
+    background: var(--paper); color: var(--ink);
+    font-family: "Literata", Georgia, serif;
+    font-size: 15px; line-height: 1.55;
+    counter-reset: qq;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  .ar {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.14em; padding-inline: 0.12em;
+  }
+
+  /* ---- Muqova ---- */
+  .cover {
+    text-align: center; padding: 44px 0 36px;
+    border-bottom: 1px solid var(--line); margin-bottom: 34px;
+  }
+  .cover .cv-ar {
+    font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 2.4rem; color: var(--sec); line-height: 1.75; margin-bottom: 4px;
+  }
+  .cover .cv-sub {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 1.2rem; color: var(--accent); line-height: 1.9;
+  }
+  .cover h1 { font-size: 1.5rem; margin: 14px 0 4px; letter-spacing: -0.01em; }
+  .sec-cover { text-align: center; margin: 48px 0 6px; }
+  .sec-cover .cv-ar {
+    font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 2.1rem; color: var(--sec); line-height: 1.75; margin-bottom: 2px;
+  }
+  .sec-cover .cv-sub {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 1.1rem; color: var(--accent); line-height: 1.9;
+  }
+  .sec-cover h2 { font-size: 1.35rem; margin: 10px 0 0; letter-spacing: -0.01em; }
+  .cover .cv-uz { color: var(--muted); font-size: 1rem; }
+  .cv-toc { display: grid; gap: 0; max-width: 430px; margin: 24px auto 0; text-align: start; }
+  .ct-item {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 7px 3px; border-bottom: 1px solid var(--line);
+    color: inherit; text-decoration: none;
+  }
+  .ct-item:last-child { border-bottom: 0; }
+  .ct-n {
+    width: 2.1em; flex: none; font-size: 0.74rem; letter-spacing: 0.12em;
+    font-weight: 700; color: var(--sec);
+  }
+  .ct-uz { font-size: 0.95rem; }
+  .ct-ar {
+    margin-left: auto; font-family: "Scheherazade New", "Amiri", serif;
+    direction: rtl; unicode-bidi: isolate; font-size: 1.12rem; color: var(--accent);
+  }
+  .cover .cv-note {
+    margin-top: 26px; font-size: 0.9rem; color: var(--muted);
+    border-top: 1px solid var(--line); padding-top: 16px; display: inline-block;
+  }
+
+  /* ---- Muqova (ikkala kitob uchun bir xil qolip) ---- */
+  .cover.bc { padding: 0; border: 0; margin: 0 0 clamp(34px, 7vw, 56px); text-align: center; }
+  .bc { --bc-a: var(--sec); --bc-b: var(--accent); }
+  .bc.bc-daftar { --bc-a: var(--accent); --bc-b: var(--sec); }
+
+  .bc-sheet {
+    position: relative; box-sizing: border-box;
+    max-width: 620px; margin: 0 auto; aspect-ratio: 210 / 297;
+    container-type: inline-size;
+    background: var(--paper);
+    border: 1.5px solid var(--bc-a);
+    padding: clamp(24px, 5.4vw, 40px) clamp(24px, 5.4vw, 40px) clamp(30px, 6.4vw, 48px);
+    display: flex; flex-direction: column;
+  }
+  .bc-sheet::before {
+    content: ""; position: absolute; inset: 11px;
+    border: 1px solid var(--bc-a); opacity: 0.34; pointer-events: none;
+  }
+  .bc-corner { position: absolute; width: 22px; height: 22px; }
+  .bc-corner .cst { fill: var(--bc-a); }
+  .bc-corner .chalo { fill: var(--paper); }
+  .bc-corner.tl { left: 0; top: 0; }
+  .bc-corner.tr { right: 0; top: 0; }
+  .bc-corner.bl { left: 0; bottom: 0; }
+  .bc-corner.br { right: 0; bottom: 0; }
+
+  .bc-body {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 3cqi;
+  }
+  .bc-basmala {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; color: var(--bc-b);
+    font-size: 3.5cqi; line-height: 1.8;
+  }
+  .bc-shamsa { width: 25cqi; height: auto; display: block; margin: 0.5cqi 0 1cqi; }
+  .bc-shamsa .s-out { fill: none; stroke: var(--bc-a); stroke-width: 1.1; stroke-linejoin: round; }
+  .bc-shamsa .s-ring { fill: none; stroke: var(--bc-a); stroke-width: 0.8; opacity: 0.55; }
+  .bc-shamsa .s-disc { fill: var(--bc-a); fill-opacity: 0.07; }
+  .bc-shamsa .s-num {
+    font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif; font-size: 42px; font-weight: 700;
+    fill: var(--bc-a); text-anchor: middle; dominant-baseline: central;
+  }
+
+  .bc .bc-ar {
+    font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 10.2cqi; font-weight: 700; color: var(--bc-a);
+    line-height: 1.6; margin: 0; white-space: nowrap;
+  }
+  .bc.bc-daftar .bc-ar { font-size: 15cqi; }
+  .bc-arsub {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; color: var(--bc-a);
+    font-size: 4.2cqi; line-height: 1.9; margin: 0; text-wrap: balance;
+  }
+  .bc-div { display: flex; align-items: center; gap: 11px; width: min(74%, 350px); }
+  .bc-div i { flex: 1; height: 1px; opacity: 0.45; }
+  .bc-div i:first-child { background-image: linear-gradient(to right, transparent, var(--bc-a)); }
+  .bc-div i:last-child  { background-image: linear-gradient(to left,  transparent, var(--bc-a)); }
+  .bc-div svg { width: 2.6cqi; height: 2.6cqi; min-width: 12px; min-height: 12px; fill: var(--bc-a); flex: none; }
+
+  .bc-uz { font-size: 3.9cqi; font-weight: 600; color: var(--ink); margin: 0; text-wrap: balance; }
+  .bc-note { font-size: 2.7cqi; color: var(--muted); margin: 0; max-width: 44ch; line-height: 1.65; text-wrap: balance; }
+
+  .bc-author { font-size: 2.6cqi; color: var(--muted); line-height: 1.65; margin: 0; }
+  .bc-author .an {
+    display: block; margin: 0.6cqi 0 0;
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.55em; color: var(--ink);
+  }
+
+  .bc-list { display: grid; gap: 0; width: min(100%, 62cqi); text-align: start; }
+  .bc-li {
+    display: flex; align-items: baseline; gap: 2cqi;
+    padding: 1.4cqi 0.4cqi; border-bottom: 1px solid var(--line);
+    color: inherit; text-decoration: none;
+  }
+  .bc-li:last-child { border-bottom: 0; }
+  .bc-li:hover .bc-lu, .bc-li:focus-visible .bc-lu { color: var(--bc-a); }
+  .bc-li:focus-visible { outline: 2px solid var(--bc-a); outline-offset: 3px; border-radius: 2px; }
+  .bc-ln { width: 4cqi; flex: none; font-size: 2.2cqi; font-weight: 700; letter-spacing: 0.12em; color: var(--bc-a); }
+  .bc-lu { font-size: 2.9cqi; }
+  .bc-la { margin-left: auto; font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 3.4cqi; color: var(--bc-b); }
+
+  @media (max-width: 460px) {
+    .bc-sheet { aspect-ratio: auto; min-height: 76vh; }
+  }
+
+  /* ---- Bo'lim ---- */
+  .qsec { margin: 0 0 26px; counter-reset: ql; break-inside: auto; }
+  .qhead {
+    display: flex; align-items: baseline; gap: 12px;
+    background: var(--sec-soft); border-radius: 9px;
+    padding: 7px 16px; margin-bottom: 7px;
+  }
+  .qhead .qh-uz { font-weight: 700; font-size: 1.02rem; color: var(--sec); }
+  .qhead .qh-ar {
+    margin-left: auto; font-family: "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 1.3rem; font-weight: 700; color: var(--sec);
+  }
+
+  table.qt { width: 100%; border-collapse: collapse; }
+  table.qt th {
+    background: var(--head-bg); color: var(--muted);
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 4px 8px; border: 1px solid var(--line);
+  }
+  table.qt td {
+    border: 1px solid var(--line); padding: 4px 10px;
+    vertical-align: top; background: var(--card);
+  }
+  table.qt tbody tr { counter-increment: qq ql; break-inside: avoid; }
+  td.n, td.ln { text-align: center; color: var(--muted); font-size: 0.82rem; width: 1%; white-space: nowrap; }
+  td.n::before { content: counter(qq); }
+  td.ln::before { content: counter(ql); }
+  td.q { width: auto; }
+  td.q.c { text-align: center; }
+  td.a { width: 26%; background: var(--paper); }
+  th.h-a { width: 26%; }
+
+  .qnew { color: var(--ex-text); }
+  .qnew::after {
+    content: "yangi"; margin-inline-start: 8px;
+    font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ex-text); background: var(--ex-bg);
+    border: 1px solid var(--ex-border); border-radius: 20px; padding: 1px 7px;
+    vertical-align: 1px; white-space: nowrap;
+  }
+
+
+  /* ---- Lug'at ---- */
+  .lug-head {
+    display: flex; align-items: baseline; gap: 12px;
+    background: var(--accent-soft); border-radius: 9px;
+    padding: 9px 16px; margin: 44px 0 4px;
+  }
+  .lug-head .qh-uz { font-weight: 700; font-size: 1.12rem; color: var(--accent); }
+  .lug-head .qh-ar {
+    margin-left: auto; font-family: "Scheherazade New", "Amiri", serif; direction: rtl;
+    font-size: 1.5rem; font-weight: 700; color: var(--accent);
+  }
+  .lug-note { text-align: center; color: var(--muted); font-size: 0.88rem; margin: 8px 0 16px; }
+  .lug-dars { display: flex; direction: rtl; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 10px; margin: 24px 0 6px; }
+  .lug-dars .ld-ar { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; font-size: 1.3rem; font-weight: 700; color: var(--sec); line-height: 1.8; }
+  .lug-dars .ld-uz { direction: ltr; unicode-bidi: isolate; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.04em; }
+  .lug { column-count: 2; column-gap: 42px; direction: rtl; }
+  .lug.terms { column-count: 1; }
+  .lg-item {
+    break-inside: avoid;
+    display: grid; grid-template-columns: 1.9em auto minmax(14px, 1fr) auto;
+    align-items: baseline; column-gap: 9px;
+    padding: 3px 0 4px; direction: rtl;
+  }
+  .lg-item .lg-n {
+    color: var(--muted); font-size: 0.76rem; text-align: center;
+    font-variant-numeric: tabular-nums; direction: ltr;
+  }
+  .lg-item .lg-ar {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.34rem; line-height: 1.85; white-space: nowrap;
+  }
+  .lg-item .lg-dot {
+    align-self: center; height: 2px; background-image: radial-gradient(circle, var(--muted) 0.35px, transparent 0.6px); background-size: 4px 2px; background-position: left center; background-repeat: repeat-x;
+    opacity: 0.5;
+    transform: translateY(0.2em);
+  }
+  .lg-item .lg-uz {
+    direction: ltr; unicode-bidi: isolate; text-align: left;
+    font-size: 0.92rem; line-height: 1.5;
+  }
+  .lg-item .lg-uz .ld { color: var(--muted); font-size: 0.78rem; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
+  .lug.terms .lg-item { grid-template-columns: 2.2em auto minmax(14px, 1fr) minmax(0, 1.05fr); }
+  .lug.terms .lg-ar { color: var(--ex-text); font-weight: 700; }
+  .lug.terms .lg-uz { white-space: normal; }
+  .lug-sub {
+    display: flex; align-items: baseline; gap: 10px; direction: rtl;
+    background: var(--ex-bg); border-inline-start: 3px solid var(--ex-border);
+    border-radius: 7px; padding: 4px 13px; margin: 12px 0 3px;
+  }
+  .lug-sub .ls-ar { font-family: "Scheherazade New", "Amiri", serif; font-size: 1.12rem; font-weight: 700; color: var(--ex-text); line-height: 1.8; }
+  .lug-sub .ls-uz { margin-left: auto; direction: ltr; unicode-bidi: isolate; font-size: 0.8rem; font-weight: 600; color: var(--ex-text); order: -1; }
+  @media (max-width: 620px) { .lug { column-count: 1; } .lg-item { grid-template-columns: 1.7em auto minmax(12px, 1fr) auto; column-gap: 7px; } .lg-item .lg-ar { font-size: 1.16rem; } .lg-item .lg-uz { font-size: 0.85rem; } }
+  .my-words .lg-item { grid-template-columns: 1.9em minmax(0, 1fr); align-items: end; padding: 10px 0 5px; }
+  .my-words .lg-ar, .my-words .lg-uz { display: none; }
+  .my-words .lg-dot { opacity: 0.8; }
+  /* ---- Husnixat daftari (asl o'lchovlar: 6 mm katak, 46 katak balandlik) ---- */
+  .hx-page {
+    max-width: 210mm; margin: 0 auto; padding: 6mm 12mm 12mm;
+    background-image:
+      linear-gradient(var(--hx-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hx-grid) 1px, transparent 1px);
+    background-size: 6mm 6mm;
+  }
+  .hx-head {
+    direction: ltr;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 10mm;
+    height: 12mm;
+    border-bottom: 1.2px solid var(--hx-rule);
+    padding-bottom: 1mm;
+    margin-bottom: 6mm;
+  }
+  .hx-head .hx-date { display: flex; align-items: baseline; gap: 3mm; width: 54mm; font-size: 0.78rem; color: var(--hx-label); }
+  .hx-head .hx-fill { flex: 1; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; height: 4mm; }
+  .hx-head .hx-les { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--hx-label); white-space: nowrap; }
+
+  .hx-s {
+    height: 6mm; margin: 0; padding: 0 4mm;
+    display: flex; direction: rtl;
+    align-items: flex-end; justify-content: space-between; gap: 6mm;
+  }
+  .hx-s span {
+    font-family: "Scheherazade New", serif;
+    font-weight: 400;
+    font-size: var(--fs, 42px);
+    line-height: 1;
+    color: var(--hx-ink);
+    white-space: nowrap;
+    word-spacing: 0.13em;
+    transform: translateY(0.31em);
+  }
+  .hx-s + .hx-s { height: 18mm; }
+  .hx-s i { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+
+  .hx-blank .hx-gap0 { height: 258mm; }
+  @media (max-width: 620px) { .hx-blank .hx-gap0 { height: 222mm; } }
+  .hx-gap  { height: 246mm; }
+  .hx-gap2 { height: 228mm; }
+  .hx-gap3 { height: 210mm; }
+
+  .hx-foot {
+    direction: rtl;
+    display: flex; justify-content: flex-start;
+    height: 6mm;
+    font-size: 0.72rem; color: var(--hx-label);
+  }
+
+  @media (max-width: 620px) {
+    .hx-page { padding: 6mm 6mm 12mm; }
+    .hx-gap  { height: 192mm; }
+    .hx-gap2 { height: 174mm; }
+    .hx-gap3 { height: 156mm; }
+  }
+  /* ---- Madina 1 normativlari ---- */
+  .nv-sec { color: var(--nv-ink); }
+  .nv-top { border-bottom: 1.5px solid var(--nv-rule); padding-bottom: 10px; }
+  .nv-top h1 { margin: 0 0 4px; font-size: 1.45rem; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+  .nv-top .nv-sub { margin: 0; color: var(--nv-soft); font-size: 0.92rem; max-width: 62ch; }
+  .nv-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin: 14px 0 26px;
+          font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nv-label); }
+  .nv-meta b { font-weight: 600; color: var(--nv-soft); letter-spacing: 0; text-transform: none; font-size: 0.88rem; }
+  .nv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+  .nv-card { background: var(--nv-card); border: 1px solid var(--nv-line); border-radius: 8px; padding: 11px 14px 9px; break-inside: avoid; }
+  .nv-card header { display: flex; align-items: baseline; gap: 6px; padding-bottom: 7px; margin-bottom: 5px; border-bottom: 1px solid var(--nv-line); }
+  .nv-card .nv-num { font-size: 1.15rem; font-weight: 600; color: var(--nv-rule); font-variant-numeric: tabular-nums; }
+  .nv-card .nv-lbl { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nv-label); }
+  .nv-card .nv-sum { margin-inline-start: auto; font-size: 0.78rem; color: var(--nv-soft); font-variant-numeric: tabular-nums; }
+  .nv-card ul { list-style: none; margin: 0; padding: 0; }
+  .nv-card li { display: flex; align-items: baseline; gap: 7px; padding: 3px 0; }
+  .nv-nm { font-size: 0.95rem; }
+  .nv-nm.nv-ar { font-family: "Scheherazade New", "Amiri", serif; font-size: 1.18rem; direction: rtl; unicode-bidi: isolate; line-height: 1.15; }
+  .nv-pg { font-size: 0.74rem; color: var(--nv-label); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nv-dots { flex: 1; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; transform: translateY(-3px); min-width: 12px; }
+  .nv-tm { width: 2.9em; flex: none; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
+  .nv-q { color: var(--nv-rule); font-size: 0.8em; vertical-align: super; margin-inline-start: 1px; }
+  .nv-box { width: 11px; height: 11px; border: 1px solid var(--nv-dot); border-radius: 2px; flex: none; }
+  .nv-my {
+    width: 3.6em; flex: none; padding: 0 0 1px; margin-inline-start: 2px;
+    border: 0; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; background: transparent;
+    color: var(--nv-ink); font-family: inherit; font-size: 0.86rem;
+    font-variant-numeric: tabular-nums; text-align: center; direction: ltr;
+  }
+  .nv-my::placeholder { color: var(--nv-label); opacity: 0.5; }
+  .nv-my:focus { outline: none; border-bottom-color: var(--nv-rule); }
+  .nv-my:focus-visible { outline: 2px solid var(--nv-rule); outline-offset: 2px; border-radius: 2px; }
+  .nv-hdr { display: flex; align-items: baseline; gap: 7px; margin: 0 0 4px; padding: 0 1px;
+         font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nv-label); }
+  .nv-hdr .nv-h1 { flex: 1; }
+  .nv-hdr .nv-h2 { width: 2.9em; text-align: right; }
+  .nv-hdr .nv-h3 { width: 3.6em; text-align: center; }
+  .nv-hdr .nv-h4 { width: 11px; }
+  .nv-foot { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--nv-line);
+          font-size: 0.8rem; color: var(--nv-label); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .foot { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+
+  @media (max-width: 640px) {
+    body { font-size: 14px; padding: 18px 10px 40px; }
+    td.a, th.h-a { width: 18%; }
+    .cover .cv-ar { font-size: 2.2rem; }
+  }
+  /* ---- Muqovadagi maydonlar ---- */
+  .bc-fields {
+    width: min(100%, 62cqi); display: flex; flex-direction: column; gap: 1.8cqi;
+    font-size: 2.7cqi; color: var(--muted);
+    border-top: 1px solid var(--line); padding-top: 3cqi;
+  }
+  .bc-fields span { display: flex; align-items: baseline; gap: 1.6cqi; }
+  .bc-fields i { flex: 1; height: 2px; align-self: flex-end; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; }
+
+  /* ---- O'quv rejasi ---- */
+  .rj-cols { display: grid; grid-template-columns: 96px 1fr 86px 120px 86px;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1.5px solid var(--sec); padding-bottom: 6px; margin-bottom: 9px;
+  }
+  .rj-cols span { padding-inline: 12px; }
+  .rj-cols span:nth-child(1) { padding-inline: 0; }
+  .rj-cols span:nth-child(n + 3) { text-align: center; padding-inline: 0; }
+  .rj-group {
+    display: flex; border: 1px solid var(--line); background: var(--card);
+    margin-bottom: 7px; break-inside: avoid;
+  }
+  .rj-les {
+    flex: 0 0 96px; display: flex; align-items: center; justify-content: center;
+    padding-inline: 8px; line-height: 1.3;
+    font-size: 0.82rem; font-weight: 600; color: var(--branch);
+    border-inline-end: 1px solid var(--line); padding-block: 8px; text-align: center;
+  }
+  .rj-rows { flex: 1; display: grid; grid-template-columns: 1fr 86px 120px 86px; }
+  .rj-task, .rj-date, .rj-name, .rj-sign { border-top: 1px solid var(--line); min-height: 26px; }
+  .rj-task { padding: 5px 12px; }
+  .rj-hint { color: var(--muted); font-size: 0.8em; margin-inline-start: 8px; white-space: nowrap; }
+  .rj-hint::before { content: "\00B7"; margin-inline-end: 6px; }
+  .rj-date, .rj-name, .rj-sign { border-inline-start: 1px solid var(--line); }
+  .rj-rows > :nth-child(-n + 4) { border-top: 0; }
+  .rj-total {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline;
+    gap: 8px 28px; margin-top: 14px; padding-top: 10px;
+    border-top: 1.5px solid var(--sec); font-size: 0.95rem;
+  }
+  .rj-total b { font-weight: 600; }
+  .rj-total .rj-fill {
+    display: inline-block; width: 90px; margin-inline-start: 6px;
+    height: 2px; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x;
+  }
+  .rj-foot {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px;
+    margin-top: 8px; font-size: 0.85rem; color: var(--muted);
+  }
+  @media (max-width: 560px) {
+    .rj-cols { grid-template-columns: 74px 1fr 54px 76px 54px; }
+    .rj-les { flex-basis: 74px; }
+    .rj-rows { grid-template-columns: 1fr 54px 76px 54px; }
+    .rj-task { padding: 5px 8px; }
+  }
+
+  /* ---- So'zlashuv (muhadasa) ---- */
+  .mh-topic { text-align: center; margin: 34px 0 12px; }
+  .mh-topic .mt-ar { display: block; font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif;
+    direction: rtl; unicode-bidi: isolate; font-size: 1.95rem; font-weight: 700;
+    color: var(--accent); line-height: 1.7; }
+  .mh-topic .mt-uz { display: block; font-size: 0.78rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted); }
+
+  .mh-rules { display: flex; flex-wrap: wrap; gap: 5px 6px; margin: 0 0 22px; }
+  .mh-rules .rl {
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.02rem;
+    background: var(--ex-bg); color: var(--ex-text); border: 1px solid var(--ex-border);
+    border-radius: 20px; padding: 1px 11px; line-height: 1.9;
+  }
+  .mh-rules .rl-uz { font-family: inherit; direction: ltr; font-size: 0.74rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); background: none; border: 0; padding: 1px 4px 1px 0; }
+
+  .mh-h { display: flex; align-items: baseline; gap: 12px; background: var(--sec-soft);
+    border-radius: 9px; padding: 7px 16px; margin: 26px 0 9px; break-after: avoid; }
+  .mh-h .mh-uz { font-weight: 700; font-size: 1.02rem; color: var(--sec); }
+  .mh-h .mh-ar { margin-left: auto; font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.3rem; font-weight: 700; color: var(--sec); }
+  .mh-note { color: var(--muted); font-size: 0.86rem; margin: 0 0 10px; }
+
+  .mh-steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+  .mh-step { display: flex; align-items: baseline; gap: 8px; border: 1px solid var(--line);
+    background: var(--card); border-radius: 20px; padding: 3px 14px; font-size: 0.82rem; color: var(--muted); }
+  .mh-step .st-ar { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.08rem; color: var(--accent); }
+
+  .dlg { direction: rtl; background: var(--card); border: 1px solid var(--line);
+    border-radius: 8px; padding: 11px 15px; break-inside: avoid; }
+  .dl { display: flex; gap: 12px; align-items: baseline; padding: 3px 0 4px;
+    border-inline-start: 2px solid transparent; padding-inline-start: 11px; }
+  .dl .who { flex: 0 0 4.6em; font-family: "Scheherazade New", "Amiri", serif; font-size: 1.06rem; font-weight: 700; }
+  .dl .say { flex: 1; font-family: "Scheherazade New", "Amiri", serif; font-size: 1.3rem; line-height: 1.95; }
+  .dl.a { border-inline-start-color: var(--sec); }
+  .dl.b { border-inline-start-color: var(--accent); }
+  .dl.a .who { color: var(--sec); }
+  .dl.b .who { color: var(--accent); }
+  .gp { display: inline-block; min-width: 5.5em; height: 1.15em; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x;
+    vertical-align: -0.15em; margin-inline: 0.2em; }
+
+  .mh-scaf { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; direction: rtl; }
+  .mh-scaf .sq, .mh-scaf .sa { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.18rem; line-height: 1.95; padding: 3px 0; border-bottom: 1px solid var(--line); }
+  .mh-scaf .sa { color: var(--accent); }
+  @media (max-width: 560px) { .mh-scaf { grid-template-columns: 1fr; gap: 2px; } }
+
+  .mh-pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 9px; }
+  .mp { border: 1px solid var(--line); background: var(--card); border-radius: 6px; padding: 7px 12px 9px; break-inside: avoid; }
+  .mp .mp-n { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .mp .row { display: flex; align-items: baseline; gap: 9px; direction: rtl; padding: 2px 0; }
+  .mp .row .ar { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.18rem; flex: 1; }
+  .mp .bx { width: 11px; height: 11px; border: 1px solid var(--hx-field); border-radius: 2px; flex: none; }
+
+  .mh-bub { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 9px; }
+  .bub { border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: 7px 14px;
+    font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.2rem; line-height: 1.85; }
+
+  .mh-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .mh-two { grid-template-columns: 1fr; } }
+  .mh-fiche { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 10px 14px; }
+  .mh-fiche .fr { display: flex; align-items: baseline; gap: 10px; direction: rtl; padding: 3px 0; }
+  .mh-fiche .fk { flex: 0 0 5.2em; font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.06rem; color: var(--accent); }
+  .mh-fiche .fv { flex: 1; font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.12rem; }
+  .mh-fiche .fv.blank { background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; min-height: 1.5em; }
+
+  .mh-text { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: 1.3rem; line-height: 2.1; background: var(--card);
+    border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; }
+  .mh-lines { border: 1px solid var(--line); background: var(--card); border-radius: 8px; padding: 10px 14px; }
+  .mh-lines i { display: block; height: 2px; margin-top: 1.9em; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; }
+  .dl .wl { display: block; height: 2px; margin-top: 1.75em; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; }
+  .mh-start { font-family: "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.18rem; color: var(--accent); }
+
+  .mh-hikmat { text-align: center; margin: 30px 0 10px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .mh-hikmat .hk-ar {
+    font-family: "Scheherazade New", "Scheherazade New", "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+    font-size: clamp(2rem, 6vw, 2.9rem); font-weight: 700; color: var(--sec);
+    line-height: 1.85; letter-spacing: 0.01em;
+  }
+
+  .mh-ref { border: 1px dotted var(--line); border-left: 3px solid var(--accent);
+    background: var(--accent-soft); border-radius: 7px; padding: 8px 14px 9px; margin: 30px 0 0; }
+  .mh-ref .mr-top { display: flex; align-items: baseline; gap: 12px; }
+  .mh-ref .mr-tag { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; }
+  .mh-ref .mr-ar { margin-left: auto; font-family: "Scheherazade New", "Amiri", serif; direction: rtl;
+    unicode-bidi: isolate; font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+  .mh-ref .mr-uz { font-size: 0.9rem; margin-top: 4px; line-height: 1.5; }
+  .mh-ref .mr-uz b { font-weight: 700; color: var(--accent); }
+  .mh-ref + .mh-h { margin-top: 8px; }
+
+  /* ---- Ko'chirish varag'i (normativ bilan) ---- */
+  .nx-h {
+    direction: ltr; display: flex; align-items: flex-end; gap: 6mm;
+    height: 6mm; padding: 0 4mm; font-size: 0.74rem; color: var(--hx-label);
+  }
+  .nx-h > span { line-height: 1; transform: translateY(0.23em); }
+  .nx-h .nx-n { font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hx-ink); }
+  .nx-h .nx-t b { color: var(--hx-rule); font-weight: 700; }
+  .nx-h .nx-my { margin-left: auto; display: flex; align-items: baseline; gap: 2mm; }
+  .nx-h .nx-my i { display: block; width: 20mm; height: 4mm; background-image: radial-gradient(circle, var(--muted) 0.32px, transparent 0.55px); background-size: 4px 2px; background-position: left bottom; background-repeat: repeat-x; }
+  .nx-blk .hx-s, .nx-blk .hx-s + .hx-s { height: 12mm; }
+  .nx-gap4 { height: 198mm; }
+  @media (max-width: 620px) { .nx-gap4 { height: 144mm; } }
+  .nx-gap5 { height: 186mm; }
+  @media (max-width: 620px) { .nx-gap5 { height: 132mm; } }
+  .nx-gap6 { height: 174mm; }
+  @media (max-width: 620px) { .nx-gap6 { height: 120mm; } }
+  .nx-gap8 { height: 150mm; }
+  .nx-gap10 { height: 126mm; }
+  .nx-gap12 { height: 102mm; }
+  @media (max-width: 620px) {
+    .nx-gap8 { height: 96mm; }
+    .nx-gap10 { height: 72mm; }
+    .nx-gap12 { height: 48mm; }
+  }
+
+</style>
+
+<div class="wrap">
+  <div class="cover bc bc-daftar">
+    <div class="bc-sheet">
+      <svg class="bc-corner tl" viewBox="0 0 16 16" aria-hidden="true"><circle class="chalo" cx="8" cy="8" r="7.6"/><polygon class="cst" points="8.00,0.00 9.27,4.94 13.66,2.34 11.06,6.73 16.00,8.00 11.06,9.27 13.66,13.66 9.27,11.06 8.00,16.00 6.73,11.06 2.34,13.66 4.94,9.27 0.00,8.00 4.94,6.73 2.34,2.34 6.73,4.94"/></svg>
+      <svg class="bc-corner tr" viewBox="0 0 16 16" aria-hidden="true"><circle class="chalo" cx="8" cy="8" r="7.6"/><polygon class="cst" points="8.00,0.00 9.27,4.94 13.66,2.34 11.06,6.73 16.00,8.00 11.06,9.27 13.66,13.66 9.27,11.06 8.00,16.00 6.73,11.06 2.34,13.66 4.94,9.27 0.00,8.00 4.94,6.73 2.34,2.34 6.73,4.94"/></svg>
+      <svg class="bc-corner bl" viewBox="0 0 16 16" aria-hidden="true"><circle class="chalo" cx="8" cy="8" r="7.6"/><polygon class="cst" points="8.00,0.00 9.27,4.94 13.66,2.34 11.06,6.73 16.00,8.00 11.06,9.27 13.66,13.66 9.27,11.06 8.00,16.00 6.73,11.06 2.34,13.66 4.94,9.27 0.00,8.00 4.94,6.73 2.34,2.34 6.73,4.94"/></svg>
+      <svg class="bc-corner br" viewBox="0 0 16 16" aria-hidden="true"><circle class="chalo" cx="8" cy="8" r="7.6"/><polygon class="cst" points="8.00,0.00 9.27,4.94 13.66,2.34 11.06,6.73 16.00,8.00 11.06,9.27 13.66,13.66 9.27,11.06 8.00,16.00 6.73,11.06 2.34,13.66 4.94,9.27 0.00,8.00 4.94,6.73 2.34,2.34 6.73,4.94"/></svg>
+      <div class="bc-body">
+        <div class="bc-basmala">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</div>
+        <svg class="bc-shamsa" viewBox="0 0 100 100" aria-hidden="true">
+          <polygon class="s-out" points="50.00,4.00 56.95,15.04 67.60,7.50 69.81,20.36 82.53,17.47 79.64,30.19 92.50,32.40 84.96,43.05 96.00,50.00 84.96,56.95 92.50,67.60 79.64,69.81 82.53,82.53 69.81,79.64 67.60,92.50 56.95,84.96 50.00,96.00 43.05,84.96 32.40,92.50 30.19,79.64 17.47,82.53 20.36,69.81 7.50,67.60 15.04,56.95 4.00,50.00 15.04,43.05 7.50,32.40 20.36,30.19 17.47,17.47 30.19,20.36 32.40,7.50 43.05,15.04"/>
+          <circle class="s-ring" cx="50" cy="50" r="34"/>
+          <circle class="s-disc" cx="50" cy="50" r="30"/>
+          <text class="s-num" x="50" y="50">٣</text>
+        </svg>
+        <h1 class="bc-ar">كُرَّاسَةُ الطَّالِبِ</h1>
+        <div class="bc-arsub">لِدُرُوسِ اللُّغَةِ العَرَبِيَّةِ لِغَيْرِ النَّاطِقِينَ بِهَا</div>
+        <div class="bc-div"><i></i><svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8.00,0.00 9.27,4.94 13.66,2.34 11.06,6.73 16.00,8.00 11.06,9.27 13.66,13.66 9.27,11.06 8.00,16.00 6.73,11.06 2.34,13.66 4.94,9.27 0.00,8.00 4.94,6.73 2.34,2.34 6.73,4.94"/></svg><i></i></div>
+        <p class="bc-uz">Madina 3-kitobi — o‘quvchi daftari</p>
+        <p class="bc-note">Madina kitobining uchinchi jildiga hamroh daftar</p>
+        <div class="bc-list">
+          <a class="bc-li" href="#reja"><span class="bc-ln">I</span><span class="bc-lu">O‘quv rejasi</span><span class="bc-la">خِطَّةُ الدِّرَاسَةِ</span></a>
+          <a class="bc-li" href="#normativ"><span class="bc-ln">II</span><span class="bc-lu">Normativlar</span><span class="bc-la">مَعَايِيرُ القِرَاءَةِ</span></a>
+          <a class="bc-li" href="#lugat"><span class="bc-ln">IV</span><span class="bc-lu">Lug‘at</span><span class="bc-la">قَامُوسُ الكِتَابِ</span></a>
+        </div>
+        <div class="bc-fields">
+          <span>Ism-familiya:<i></i></span>
+          <span>Sana:<i></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ O‘QUV REJASI ============ -->
+  <div class="sec-cover" id="reja">
+    <div class="cv-ar">خِطَّةُ الدِّرَاسَةِ</div>
+    <div class="cv-sub">لِدُرُوسِ اللُّغَةِ العَرَبِيَّةِ لِغَيرِ النَّاطِقِينَ بِهَا</div>
+    <h2>Birinchi bo‘lim · O‘quv rejasi</h2>
+  </div>
+  <p class="lug-note">Har dars uchun bajariladigan vazifalar · ustoz tekshirib, sanasini yozadi va qo‘l qo‘yadi</p>
+
+  <div class="qsec" id="reja-sec">
+  <div class="rj-cols">
+    <span></span><span>Vazifalar</span><span>Sana</span><span>Tekshirdi</span><span>Imzo</span>
+  </div>
+
+  <div class="rj-group">
+    <div class="rj-les">1-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Shu darsning lug‘atini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">2-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">2-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">10 daq 35 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">3-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">3-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">16 daq 45 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">4-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">Qaytarish</div>
+    <div class="rj-rows">
+      <div class="rj-task">1–3-dars lug‘atlari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">1–3-dars qoidalari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">4-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">10 daq 45 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">5-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">5-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">9 daq 15 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">6-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">6-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">5 daq 55 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">7-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">7-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">5 daq 10 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">8-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">Qaytarish</div>
+    <div class="rj-rows">
+      <div class="rj-task">1–7-dars lug‘atlari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">1–7-dars qoidalari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">8-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">3 daq 25 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">9-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">9-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">12 daq 35 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">10-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">10-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">2 daq 45 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">11-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">11-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">3 daq 25 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">12-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">Qaytarish</div>
+    <div class="rj-rows">
+      <div class="rj-task">1–11-dars lug‘atlari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">1–11-dars qoidalari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">12-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">6 daq 10 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">13-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">13-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">10 daq 15 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">14-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">14-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">10 daq 40 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash<span class="rj-hint">15-dars</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">15-dars</div>
+    <div class="rj-rows">
+      <div class="rj-task">Dars qoidasini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Normativ bajarish<span class="rj-hint">16 daq 20 s</span></div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Kitobdagi mashqlarni bajarish</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">Keyingi dars lug‘atini yodlash</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+  <div class="rj-group">
+    <div class="rj-les">Qaytarish</div>
+    <div class="rj-rows">
+      <div class="rj-task">1–15-dars lug‘atlari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+      <div class="rj-task">1–15-dars qoidalari</div><div class="rj-date"></div><div class="rj-name"></div><div class="rj-sign"></div>
+    </div>
+  </div>
+
+  <div class="rj-total">
+    <span>Jami vazifa: <b>68</b></span>
+    <span>Bajarildi:<span class="rj-fill"></span></span>
+  </div>
+  <div class="rj-foot">
+    <span>Har dars — qoida yodlash · normativ · mashqlar · keyingi darsning lug‘ati</span>
+  </div>
+  </div>
+
+  <!-- ============ NORMATIVLAR ============ -->
+  <div class="sec-cover" id="normativ">
+    <div class="cv-ar">مَعَايِيرُ القِرَاءَةِ</div>
+    <div class="cv-sub">لِدُرُوسِ اللُّغَةِ العَرَبِيَّةِ لِغَيرِ النَّاطِقِينَ بِهَا</div>
+    <h2>Ikkinchi bo‘lim · O‘qish normativlari</h2>
+  </div>
+  <p class="lug-note">Har bir matn va mashq uchun belgilangan o‘qish vaqti · o‘quvchi shu vaqt ichida xatosiz o‘qib berishi kerak, topshirgani qutichaga belgilanadi</p>
+
+  <div class="nv-sec">
+  <div class="nv-meta">
+    <span>Darslar <b>14</b></span>
+    <span>Normativlar <b>34</b></span>
+    <span>Jami <b>124 daq</b></span>
+  </div>
+
+  <div class="nv-grid">
+  <section class="nv-card">
+    <header><span class="nv-num">2</span><span class="nv-lbl">dars</span><span class="nv-sum">10 daq 35 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">20-bet</span><span class="nv-dots"></span><span class="nv-tm">9:25</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r1"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">2-mashq</span><span class="nv-pg">23-bet</span><span class="nv-dots"></span><span class="nv-tm">1:10</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r2"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">3</span><span class="nv-lbl">dars</span><span class="nv-sum">16 daq 45 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">28-bet</span><span class="nv-dots"></span><span class="nv-tm">10:15</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r3"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">2-mashq</span><span class="nv-pg">31-bet</span><span class="nv-dots"></span><span class="nv-tm">1:55</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r4"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">6-mashq</span><span class="nv-pg">34-bet</span><span class="nv-dots"></span><span class="nv-tm">1:40</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r5"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">8-mashq</span><span class="nv-pg">36-bet</span><span class="nv-dots"></span><span class="nv-tm">1:55</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r6"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">24-mashq</span><span class="nv-pg">40-bet</span><span class="nv-dots"></span><span class="nv-tm">1:00</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r7"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">4</span><span class="nv-lbl">dars</span><span class="nv-sum">10 daq 45 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">41-bet</span><span class="nv-dots"></span><span class="nv-tm">5:10</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r8"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">4-mashq</span><span class="nv-pg">44-bet</span><span class="nv-dots"></span><span class="nv-tm">2:55</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r9"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">7-mashq</span><span class="nv-pg">46-bet</span><span class="nv-dots"></span><span class="nv-tm">2:40</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r10"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">5</span><span class="nv-lbl">dars</span><span class="nv-sum">9 daq 15 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">49-bet</span><span class="nv-dots"></span><span class="nv-tm">5:30</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r11"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">16-mashq</span><span class="nv-pg">56-bet</span><span class="nv-dots"></span><span class="nv-tm">3:45</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r12"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">6</span><span class="nv-lbl">dars</span><span class="nv-sum">5 daq 55 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">59-bet</span><span class="nv-dots"></span><span class="nv-tm">3:30</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r13"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">4-mashq</span><span class="nv-pg">63-bet</span><span class="nv-dots"></span><span class="nv-tm">2:25</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r14"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">7</span><span class="nv-lbl">dars</span><span class="nv-sum">5 daq 10 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">64-bet</span><span class="nv-dots"></span><span class="nv-tm">3:20</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r15"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">6-mashq</span><span class="nv-pg">67-bet</span><span class="nv-dots"></span><span class="nv-tm">1:50</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r16"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">8</span><span class="nv-lbl">dars</span><span class="nv-sum">3 daq 25 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">69-bet</span><span class="nv-dots"></span><span class="nv-tm">3:25</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r17"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">9</span><span class="nv-lbl">dars</span><span class="nv-sum">12 daq 35 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">74-bet</span><span class="nv-dots"></span><span class="nv-tm">8:45</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r18"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">4-mashq</span><span class="nv-pg">77-bet</span><span class="nv-dots"></span><span class="nv-tm">2:05</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r19"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">5-mashq</span><span class="nv-pg">78-bet</span><span class="nv-dots"></span><span class="nv-tm">1:45</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r20"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">10</span><span class="nv-lbl">dars</span><span class="nv-sum">2 daq 45 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">84-bet</span><span class="nv-dots"></span><span class="nv-tm">2:45</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r21"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">11</span><span class="nv-lbl">dars</span><span class="nv-sum">3 daq 25 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">87-bet</span><span class="nv-dots"></span><span class="nv-tm">3:25</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r22"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">12</span><span class="nv-lbl">dars</span><span class="nv-sum">6 daq 10 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">96-bet</span><span class="nv-dots"></span><span class="nv-tm">3:20</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r23"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">4-mashq</span><span class="nv-pg">100-bet</span><span class="nv-dots"></span><span class="nv-tm">1:30</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r24"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">5-mashq</span><span class="nv-pg">100-bet</span><span class="nv-dots"></span><span class="nv-tm">1:20</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r25"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">13</span><span class="nv-lbl">dars</span><span class="nv-sum">10 daq 15 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">104-bet</span><span class="nv-dots"></span><span class="nv-tm">4:15</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r26"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">2-mashq</span><span class="nv-pg">106-bet</span><span class="nv-dots"></span><span class="nv-tm">1:10</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r27"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">1-mashq</span><span class="nv-pg">108-bet</span><span class="nv-dots"></span><span class="nv-tm">3:00</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r28"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">1-mashq</span><span class="nv-pg">110-bet</span><span class="nv-dots"></span><span class="nv-tm">1:50</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r29"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">14</span><span class="nv-lbl">dars</span><span class="nv-sum">10 daq 40 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">113-bet</span><span class="nv-dots"></span><span class="nv-tm">6:25</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r30"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">1-mashq</span><span class="nv-pg">116-bet</span><span class="nv-dots"></span><span class="nv-tm">4:15</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r31"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  <section class="nv-card">
+    <header><span class="nv-num">15</span><span class="nv-lbl">dars</span><span class="nv-sum">16 daq 20 s</span></header>
+    <div class="nv-hdr"><span class="nv-h1">normativ</span><span class="nv-h2">vaqt</span><span class="nv-h3">men</span><span class="nv-h4"></span></div>
+    <ul>
+      <li><span class="nv-nm">Matn</span><span class="nv-pg">118-bet</span><span class="nv-dots"></span><span class="nv-tm">10:40</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r32"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">3-mashq</span><span class="nv-pg">126-bet</span><span class="nv-dots"></span><span class="nv-tm">3:55</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r33"><span class="nv-box"></span></li>
+      <li><span class="nv-nm">1-mashq</span><span class="nv-pg">129-bet</span><span class="nv-dots"></span><span class="nv-tm">1:45</span><input class="nv-my" type="text" inputmode="numeric" maxlength="6" placeholder="0:00" aria-label="Mening natijam" data-n="r34"><span class="nv-box"></span></li>
+    </ul>
+  </section>
+  </div>
+
+  <div class="nv-foot">
+    <span>Vaqt: daqiqa:soniya</span>
+    <span>1-darsda o‘qish normativi yo‘q — normativlar 2-darsdan boshlanadi</span>
+  </div>
+  </div>
+
+  <!-- ============ LUG'AT ============ -->
+  <div class="sec-cover" id="lugat">
+    <div class="cv-ar">قَامُوسُ الكِتَابِ الثَّالِثِ</div>
+    <div class="cv-sub">لِدُرُوسِ اللُّغَةِ العَرَبِيَّةِ لِغَيْرِ النَّاطِقِينَ بِهَا</div>
+    <h2>To‘rtinchi bo‘lim · Lug‘at</h2>
+  </div>
+  <p class="lug-note">Arabcha–o‘zbekcha lug‘at, darslar bo‘yicha · 631 so‘z · manba: kitobning rasmiy qomusi</p>
+
+  <div class="qsec" id="lugat-sec">
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الأَوَّلُ</span><span class="ld-uz">1-dars · 17 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مُحامٍ (الـمُحامِي) (ج: مُحامُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Huquqshunos (advokat)</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">حَرٌّ</span><span class="lg-dot"></span><span class="lg-uz">Issiq</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">مَا عَدَا</span><span class="lg-dot"></span><span class="lg-uz">Bundan tashqari / bundan boshqa</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">حِينَئِذٍ</span><span class="lg-dot"></span><span class="lg-uz">O‘sha vaqtda / o‘sha paytda</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">بَاشَرَ يُبَاشِرُ</span><span class="lg-dot"></span><span class="lg-uz">To‘qnashdi / duch keldi</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">ظَهَرَ يَظْهَرُ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘rindi / zohir bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">مَيَّزَ يُـمَيِّزُ</span><span class="lg-dot"></span><span class="lg-uz">Tanlab oldi, tanlab oladi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">مُطْلَقاً</span><span class="lg-dot"></span><span class="lg-uz">Mutlaqo / hech qachon</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">حَذَفَ يَحْذِفُ</span><span class="lg-dot"></span><span class="lg-uz">O‘chirdi, o‘chiryapti</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">جَانٍ (الجَانِي) (ج: جُنَاةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Jinoyatchi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">أفْعًى (ج: أفَاعٍ)</span><span class="lg-dot"></span><span class="lg-uz">Ilon</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">مُتَّقٍ (الـمُتَّقِي) (ج: مُتَّقُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Taqvodor</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">جَرِيحٌ (ج: جَرحَى)</span><span class="lg-dot"></span><span class="lg-uz">Jarohatlangan</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">ثَبَتَ يَثْبُتُ</span><span class="lg-dot"></span><span class="lg-uz">Mustahkam bo‘ldi / sobit turdi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">نَحْوِيٌّ (ج:نُحَاةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Nahvshunos (grammatika olimi)</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">فِئَةٌ (ج: فِئَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Guruh, toifa</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">أَقْرَبُ (ج: أَقْرَبُونَ , أقَارِبُ)</span><span class="lg-dot"></span><span class="lg-uz">Yaqin kimsa (qarindoshi)</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الثَّانِي</span><span class="ld-uz">2-dars · 38 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مُحْرِمٌ</span><span class="lg-dot"></span><span class="lg-uz">Ehrom kiygan shaxs</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">حِزْبٌ</span><span class="lg-dot"></span><span class="lg-uz">Guruh / partiya</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">المائِدَةُ</span><span class="lg-dot"></span><span class="lg-uz">Qur’ondagi 5-sura (dasturxon)</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">طَلَعَ يَطْلُعُ طُلُوعاً</span><span class="lg-dot"></span><span class="lg-uz">Chiqdi (ko‘tarildi ma’nosida)</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">نَطَقَ يَنْطُقُ نُطْقاً</span><span class="lg-dot"></span><span class="lg-uz">Nutq qildi, nutq qilyapti, nutq</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">خَطَبَ يَخْطُبُ</span><span class="lg-dot"></span><span class="lg-uz">Xitob qildi / xutba qildi / ikkinchi shaxsga so‘zladi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">صَحِيحٌ (ج: أَصِحَّاءُ)</span><span class="lg-dot"></span><span class="lg-uz">Sog‘lom / to‘g‘ri</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">شَرْطٌ (ج:شُرُوطٌ)</span><span class="lg-dot"></span><span class="lg-uz">Shart</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">أَفَادَ يُفِيدُ</span><span class="lg-dot"></span><span class="lg-uz">Foyda berdi / ifodaladi</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">رَاسِبٌ (ج: رَاسِبُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Imtihondan yiqilgan</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">طَيْبَةُ</span><span class="lg-dot"></span><span class="lg-uz">Pok/yaxshi (Madinai-Munavvaraning nomi)</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">فَرِحٌ (ج: فَرِحُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Xursand bo‘lmoq</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">الرُّومُ</span><span class="lg-dot"></span><span class="lg-uz">Qur’ondagi 30-sura (Rim imperiyasi)</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">غَرَبَ يَغرُبُ غُرُوباً</span><span class="lg-dot"></span><span class="lg-uz">Botdi (quyosh) / g‘arbga botdi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">شَرَحَ يَشْرَحُ</span><span class="lg-dot"></span><span class="lg-uz">Sharhladi, sharhlayapti</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">حَالٌ (ج: أَحْوَالٌ)</span><span class="lg-dot"></span><span class="lg-uz">Holat</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">اسْتَجَابَ يَسْتَجِيبُ</span><span class="lg-dot"></span><span class="lg-uz">Ijobat qildi / chaqiruvni qabul qildi</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">عَلَى غِرَارِ ذَلِكَ</span><span class="lg-dot"></span><span class="lg-uz">Shu ma’noda / shular kabi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">كَوِّنْ (الجملةَ)</span><span class="lg-dot"></span><span class="lg-uz">(Jumla) tuz / yasa</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">أَقَامَ يُقِيمُ</span><span class="lg-dot"></span><span class="lg-uz">Takbir (iqoma) aytdi / muqim bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">شَاءَ يَشَاءُ</span><span class="lg-dot"></span><span class="lg-uz">Xohladi, xohlayapti</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">نَشْرَةُ الأَخْبَارِ</span><span class="lg-dot"></span><span class="lg-uz">Yangiliklar tarqalishi / tarqalgan xabarlar</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">بَقِيَ يَبْقَى</span><span class="lg-dot"></span><span class="lg-uz">Qoldi, qoladi</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">قَلَبَ يَقْلِبُ</span><span class="lg-dot"></span><span class="lg-uz">Ag‘darildi / to‘nkarildi / o‘zgardi</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">تَأَكَّدَ يَتَأَكَّدُ</span><span class="lg-dot"></span><span class="lg-uz">Aniqlashtirdi / ishonch hosil qildi</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">مَعْنًى (ج: مَعَانٍ)</span><span class="lg-dot"></span><span class="lg-uz">Ma’no</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">خَطّ ٌ(ج: خُطُوطٌ)</span><span class="lg-dot"></span><span class="lg-uz">Chiziq (yozuv)</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">صَيْدٌ</span><span class="lg-dot"></span><span class="lg-uz">Ov</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">قَسَمٌ</span><span class="lg-dot"></span><span class="lg-uz">Qasam</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">عُمرَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Umra</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">وَدَاعٌ</span><span class="lg-dot"></span><span class="lg-uz">Xayrlashuv</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">تَقَبَّلَ يَتَقَبَّلُ</span><span class="lg-dot"></span><span class="lg-uz">Qabul qildi, qabul qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">حَمَلَ يَحْمِلُ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘tardi / ortdi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">إِنْشَاءٌ</span><span class="lg-dot"></span><span class="lg-uz">Barpo qilish / insho yozish</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">طَلَبَ يَطْلُبُ</span><span class="lg-dot"></span><span class="lg-uz">Talab qildi, talab qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">اسْتَجِبْ</span><span class="lg-dot"></span><span class="lg-uz">Ijobat qil / qabul qil)</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">قَرِبَ يَقْرَبُ</span><span class="lg-dot"></span><span class="lg-uz">Yaqin keldi, yaqin kelyapti</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">صَحِيفَة ٌ(ج: صُحُفٌ)</span><span class="lg-dot"></span><span class="lg-uz">Jurnal / sahifa</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الثَّالِثُ</span><span class="ld-uz">3-dars · 58 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">وَثَنٌ (ج: أَوْثَانٌ)</span><span class="lg-dot"></span><span class="lg-uz">But, sanam</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">حَبٌّ</span><span class="lg-dot"></span><span class="lg-uz">Urug‘</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">مُسَدَّسٌ (ج: مُسَدَّسَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">To‘pponcha</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">تَـمْرٌ</span><span class="lg-dot"></span><span class="lg-uz">Xurmo</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">آتَى يُؤتِي إيْتَاءً</span><span class="lg-dot"></span><span class="lg-uz">keltirdi, keltiradi, keltirmoq</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">جَاسُوسٌ (ج: جَوَاسِيسُ)</span><span class="lg-dot"></span><span class="lg-uz">Josus, ayg‘oqchi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">ذَبَحَ يَذْبَحُ</span><span class="lg-dot"></span><span class="lg-uz">So‘ydi, so‘yadi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">اِبْنُ عِشْرِينَ عّاماً</span><span class="lg-dot"></span><span class="lg-uz">20 yosh</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">ألْـحَقَ يُلْحِقُ إلْحاقًا</span><span class="lg-dot"></span><span class="lg-uz">Yetkazdi / yetib oldi</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">تَأخَّرَ يَتَأخَّرُ</span><span class="lg-dot"></span><span class="lg-uz">Kechikdi, kechikadi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">حَوَى يَحْوِي</span><span class="lg-dot"></span><span class="lg-uz">O‘z ichiga oldi / o‘z ichiga oladi</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">سَبَبٌ (ج: أَسْبَابٌ)</span><span class="lg-dot"></span><span class="lg-uz">Sabab</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">لِصٌّ (ج: لُصُوصٌ)</span><span class="lg-dot"></span><span class="lg-uz">O‘g‘ri</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">تذْكِرةٌ (ج: تَذَاكِرُ)</span><span class="lg-dot"></span><span class="lg-uz">Chipta</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">جَدْوَلٌ (ج: جَدَاوِلُ)</span><span class="lg-dot"></span><span class="lg-uz">Jadval</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">جُنْدِيٌ (ج: جُنُودٌ)</span><span class="lg-dot"></span><span class="lg-uz">Askar</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">حَرْبٌ (حُرُوبٌ)</span><span class="lg-dot"></span><span class="lg-uz">Urush</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">مُعظَمُ الكُتُبِ</span><span class="lg-dot"></span><span class="lg-uz">Kitoblarning ko‘pi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">شَاحِنَةٌ (ج: شَاحِنَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yuk mashinasi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">الحَرْبُ العَالَمِيَّةُ الاُولَى</span><span class="lg-dot"></span><span class="lg-uz">Birinchi jahon urushi</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">جُحْرٌ (ج: جُحُورٌ , أَجحَارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tor joy / g‘orcha</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">2000م (للمِيلَادِ)</span><span class="lg-dot"></span><span class="lg-uz">2000-milodiy yil</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">اسْتَطَاعَ يَستَطِيعُ</span><span class="lg-dot"></span><span class="lg-uz">Qila oldi, qila oladi</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">عَوَّضَ مِنهُ يُعَوِّضُ</span><span class="lg-dot"></span><span class="lg-uz">Uning o‘rniga boshqasini oldi / almashtiriladi</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">وُلِدَ يُولِدُ</span><span class="lg-dot"></span><span class="lg-uz">Tug‘ildi, tug‘iladi</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">تَأَمَّلَ يَتَأمَّلُ</span><span class="lg-dot"></span><span class="lg-uz">Ta’ammul qil / fikrladi / o‘yladi</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">تَقَدَّمَ يَتَقَدَّمَ</span><span class="lg-dot"></span><span class="lg-uz">Oldinladi, oldinlaydi</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">عِدَّةُ أَيَّامٍ</span><span class="lg-dot"></span><span class="lg-uz">Bir necha kun</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">مُجْرِمٌ (ج: مُجْرِمُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Jinoyatchi</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">قَاعِدَةٌ (ج: قَوَاعِدُ)</span><span class="lg-dot"></span><span class="lg-uz">Qoida</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">حِذَاءٌ (ج:أحذِيَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Oyoq kiyim</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">سِوَارٌ (ج: أسْوِرَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Bilaguzuk</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">مَوْءُودَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Tiriklay ko‘milgan qiz</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">النَّحْلُ</span><span class="lg-dot"></span><span class="lg-uz">Qur’ondagi 16-sura (Ari)</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">رَديءٌ</span><span class="lg-dot"></span><span class="lg-uz">Yomon / past navli</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">جَرَسٌ (ج:أَجْراسٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qo‘ng‘iroq</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">إِذاً</span><span class="lg-dot"></span><span class="lg-uz">Unday bo‘lsa / demak</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">سَطَحَ</span><span class="lg-dot"></span><span class="lg-uz">Yoydi / yozdi / tekisladi</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">سَاقَ</span><span class="lg-dot"></span><span class="lg-uz">Ichirdi</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">لَدَغَ</span><span class="lg-dot"></span><span class="lg-uz">Chaqdi (hayvon chaqishi)</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">مُتَأَخِّرٌ</span><span class="lg-dot"></span><span class="lg-uz">Kechikkan kimsa</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">البَارِحَةُ</span><span class="lg-dot"></span><span class="lg-uz">Kecha</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">سَمَّى يُسَمِّي</span><span class="lg-dot"></span><span class="lg-uz">Ism qo‘ydi (nomladi)</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">خَطٌّ</span><span class="lg-dot"></span><span class="lg-uz">Chiziq, yozuv</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">الكُوفَةُ</span><span class="lg-dot"></span><span class="lg-uz">Kufa (shahar)</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">مَلابِسُ</span><span class="lg-dot"></span><span class="lg-uz">Kiyimlar</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">وَجَّهَ يُوَجِّهُ</span><span class="lg-dot"></span><span class="lg-uz">Yo‘naltirdi, yo‘naltiradi</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">ذَنْبٌ (ج: ذُنُوبٌ)</span><span class="lg-dot"></span><span class="lg-uz">Gunoh</span></div>
+    <div class="lg-item"><span class="lg-n">49</span><span class="lg-ar">وُضُوحٌ</span><span class="lg-dot"></span><span class="lg-uz">Aniqlik</span></div>
+    <div class="lg-item"><span class="lg-n">50</span><span class="lg-ar">وَاضِحٌ</span><span class="lg-dot"></span><span class="lg-uz">Aniq</span></div>
+    <div class="lg-item"><span class="lg-n">51</span><span class="lg-ar">الحَربُ الأهْلِيَّةُ</span><span class="lg-dot"></span><span class="lg-uz">Xalqlar urushi (ichki urush)</span></div>
+    <div class="lg-item"><span class="lg-n">52</span><span class="lg-ar">مُهِمٌّ</span><span class="lg-dot"></span><span class="lg-uz">Muhim</span></div>
+    <div class="lg-item"><span class="lg-n">53</span><span class="lg-ar">نَائِبٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘rinbosar</span></div>
+    <div class="lg-item"><span class="lg-n">54</span><span class="lg-ar">حَلَّ مَحَلَّهُ</span><span class="lg-dot"></span><span class="lg-uz">O‘rniga o‘tirdi</span></div>
+    <div class="lg-item"><span class="lg-n">55</span><span class="lg-ar">صَلَّى يُصَلِّي</span><span class="lg-dot"></span><span class="lg-uz">Namoz o‘qidi, namoz o‘qiydi</span></div>
+    <div class="lg-item"><span class="lg-n">56</span><span class="lg-ar">نَصَبَ</span><span class="lg-dot"></span><span class="lg-uz">Qurdi / o‘rnatdi / qadadi</span></div>
+    <div class="lg-item"><span class="lg-n">57</span><span class="lg-ar">صَلَبَ</span><span class="lg-dot"></span><span class="lg-uz">Xochga osdi</span></div>
+    <div class="lg-item"><span class="lg-n">58</span><span class="lg-ar">بَوَّابٌ</span><span class="lg-dot"></span><span class="lg-uz">Darvozabon</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الرَّابِعُ</span><span class="ld-uz">4-dars · 48 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مَنكِبٌ (ج:مَنَاكِبُ)</span><span class="lg-dot"></span><span class="lg-uz">Yelka</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">يَتِيمٌ (ج: أَيْتامٌ , يَتَامى)</span><span class="lg-dot"></span><span class="lg-uz">Yetim</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">مُعْجَمٌ (ج: مَعَاجِمُ)</span><span class="lg-dot"></span><span class="lg-uz">Lug‘at kitob</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">عَابِرُ سَبِيلٍ (ج: عَابِرُو سَبِيلٍ)</span><span class="lg-dot"></span><span class="lg-uz">O‘tib ketuvchi (musofir)</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">سَمَحَ لَهُ بِكَذَا يَسْمَحُ</span><span class="lg-dot"></span><span class="lg-uz">Unga bir narsaga ruhsat berdi, ruhsat beradi</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">صِيغَةٌ (ج: صِيَغٌ)</span><span class="lg-dot"></span><span class="lg-uz">Formula / yozilgan shakli</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">زَمَانٌ ( أَزْمِنَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Zamon, vaqt</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">نَتِيجَةٌ (ج: نَتائِجُ)</span><span class="lg-dot"></span><span class="lg-uz">Natija</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">نَاسِخ (ج: نُسَّاخٌ)</span><span class="lg-dot"></span><span class="lg-uz">Nusxa ko‘chiruvchi / kotib</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">مَجُوسِيٌ (ج: مَجُوسٌ)</span><span class="lg-dot"></span><span class="lg-uz">Majusiy / zardushdiy</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">جِهَةٌ (ج: جِهَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tomon / taraf</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">قُفْلٌ (ج: أَقْفَالٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qulf</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">غَافِلٌ</span><span class="lg-dot"></span><span class="lg-uz">G‘ofil, befarq</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">فّاتحٌ</span><span class="lg-dot"></span><span class="lg-uz">Fotih (ishg‘ol etuvchi)</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">جَزَاءٌ</span><span class="lg-dot"></span><span class="lg-uz">Jazo / mukofot</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">جَمْرٌ</span><span class="lg-dot"></span><span class="lg-uz">Cho‘g‘</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">كَفَلَ يَكْفُلُ</span><span class="lg-dot"></span><span class="lg-uz">Kafolatiga oldi, kafolatiga oladi</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">سَلَقَ يَسْلُقُ</span><span class="lg-dot"></span><span class="lg-uz">Qaynatdi, qaynatyapti</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">بَرَأَ</span><span class="lg-dot"></span><span class="lg-uz">Yasadi / ijod qildi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">شَهِدَ</span><span class="lg-dot"></span><span class="lg-uz">Guvoh bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">نَـهَرَ</span><span class="lg-dot"></span><span class="lg-uz">Baqirib haydamoq</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">فَلَقَ</span><span class="lg-dot"></span><span class="lg-uz">Yormoq, bo‘lmoq, parchalamoq</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">غَرِيبٌ (ج: غُرَبَاءُ)</span><span class="lg-dot"></span><span class="lg-uz">Begona (musofir)</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">قَبَضَ عَلَى الشَّيءِ</span><span class="lg-dot"></span><span class="lg-uz">Qo‘lga oldi / egalladi</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">فَرَّجَ بَيْنَهُمَا</span><span class="lg-dot"></span><span class="lg-uz">Orasini ochdi</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">اشْتَقَّ اشْتِقَاقًا</span><span class="lg-dot"></span><span class="lg-uz">Kelib chiqdi (so‘zlardan), kelib chiqish</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">اشْتَرى يَشْتَرِي</span><span class="lg-dot"></span><span class="lg-uz">Sotib oldi, sotib oladi</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">فِي أَثْنَاءِ كَذَا</span><span class="lg-dot"></span><span class="lg-uz">Shu vaqtda, shu asnoda</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">نَوَاةٌ (ج: نَوًى)</span><span class="lg-dot"></span><span class="lg-uz">Danak</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">دَفَنَ يَدْفُنُ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘mdi / dafn qildi,</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">جَهِلَ</span><span class="lg-dot"></span><span class="lg-uz">Bilmadi</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">كَرِهَ</span><span class="lg-dot"></span><span class="lg-uz">Yomon ko‘rdi / yoqtirmadi</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">أَسِفَ</span><span class="lg-dot"></span><span class="lg-uz">Qayg‘urdi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">قَامَ بِالأَمْرِ</span><span class="lg-dot"></span><span class="lg-uz">Bir ish qildi (bir ishni bajarishga kirishdi)</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">نَقَلَ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘chdi</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">كَسَبَ يَكْسِبُ</span><span class="lg-dot"></span><span class="lg-uz">Foyda ko‘rdi / kasb qildi / erishdi</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">أَشَارَ يُشِيرُ</span><span class="lg-dot"></span><span class="lg-uz">Ishora qildi</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">صَاغَ</span><span class="lg-dot"></span><span class="lg-uz">Formulaga soldi, tusladi</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">مَعْصِيَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Gunoh / ma’siyat / isyon</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">ظَنٌّ</span><span class="lg-dot"></span><span class="lg-uz">Gumon qildi</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">الأَنْدَلُسُ</span><span class="lg-dot"></span><span class="lg-uz">Andalus</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">سَرِقَةٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘g‘irlik</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">عَبَرَ يَعْبُرُ</span><span class="lg-dot"></span><span class="lg-uz">Bosib o‘tdi</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">فَرَّ</span><span class="lg-dot"></span><span class="lg-uz">Qochib ketdi</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">رَسِبَ يَرْسُبَ</span><span class="lg-dot"></span><span class="lg-uz">Yiqildi, yiqiladi (imtihondan)</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">طَاعةٌ</span><span class="lg-dot"></span><span class="lg-uz">Toat</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">دَلَّ يَدُلُّ</span><span class="lg-dot"></span><span class="lg-uz">Dalolat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">عَقَلَ</span><span class="lg-dot"></span><span class="lg-uz">Aqlli bo‘ldi (aqli kirdi)</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الخَامِسُ</span><span class="ld-uz">5-dars · 54 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مَرْكَزٌ (ج: مَرَاكِزُ)</span><span class="lg-dot"></span><span class="lg-uz">Markaz</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">مَرْكَزُ ِشُؤُونِ الدَّعْوَةِ</span><span class="lg-dot"></span><span class="lg-uz">Da’vatni tashkillashtirish markazi</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">تَرْحَالٌ</span><span class="lg-dot"></span><span class="lg-uz">Sayohat (safar chog‘i)</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">سِلْعَةٌ (ج: سِلْعٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tovar</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">إلَى اللَّقاءِ</span><span class="lg-dot"></span><span class="lg-uz">Uchrashguncha!</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">حَصَلَ عَلَى الشَّيْءِ حُصُولاً</span><span class="lg-dot"></span><span class="lg-uz">Bir narsaga ega bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">سِرٌّ (ج: أَسْرارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Sir</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">صَانَ يَصُونُ</span><span class="lg-dot"></span><span class="lg-uz">Saqlash (himoya qilish)</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">لَامَ يَلُومُ</span><span class="lg-dot"></span><span class="lg-uz">Afsuslandi, afsuslanadi</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">انتَهَزَ الفُرْصَةَ</span><span class="lg-dot"></span><span class="lg-uz">Fursatdan (imkoniyatda) foydalandi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">مَرْحَبٌ</span><span class="lg-dot"></span><span class="lg-uz">Xush kelish (marhamat qilish)</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">مَعْهَدٌ (ج: مَعَاهِد)</span><span class="lg-dot"></span><span class="lg-uz">Fakultet / institut</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">مَنْهَجٌ (ج:مَنَاهِجُ)</span><span class="lg-dot"></span><span class="lg-uz">Dastur (programma)</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">بِطَاقَةٌ (ج: بِطَاقَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Plastik karta (vizitka)</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">مَجَّاناً</span><span class="lg-dot"></span><span class="lg-uz">Bepul</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">السِّلْعَةُ الـمَبِيعَةُ</span><span class="lg-dot"></span><span class="lg-uz">Sotiladigan buyum</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">مُؤْتَمَرٌ (ج: مُؤْتَمَرَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Konferensiya</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">غَيْرُ النَّاطِقِينَ بِالعَرَبِيَّةِ</span><span class="lg-dot"></span><span class="lg-uz">Arab tilida gaplashmaydiganlar</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">مَالَ يَمِيلُ</span><span class="lg-dot"></span><span class="lg-uz">Og‘di, og‘adi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">نَجَا يَنْجُو</span><span class="lg-dot"></span><span class="lg-uz">Omon qoldi (najot topdi), omon qolyapti</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">شَفَى يَشْفِي</span><span class="lg-dot"></span><span class="lg-uz">Shifo topdi / tuzaldi</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">تَرَاوَحَ يَتَرَاوَحُ</span><span class="lg-dot"></span><span class="lg-uz">Chamasi</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">أذَّنَ يُؤَذِّنُ</span><span class="lg-dot"></span><span class="lg-uz">Azon aytdi, azon aytyapti</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">أَهْلٌ</span><span class="lg-dot"></span><span class="lg-uz">Qarindoshlar / ahli oila</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">سَلَّمَ عَلَيْهِ</span><span class="lg-dot"></span><span class="lg-uz">Unga salom berdi</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">زَنَى</span><span class="lg-dot"></span><span class="lg-uz">Zino qildi</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">أَهلاً وسَهْلاً وَمَرْحَباً</span><span class="lg-dot"></span><span class="lg-uz">Xush kelibsiz!</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">زَائِرٌ (ج: زُوَّارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Ziyoratchi</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">مُحَاضِرٌ (ج:مُحَاضِرُون)</span><span class="lg-dot"></span><span class="lg-uz">Ma’ruzachi</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">مَزَادٌ</span><span class="lg-dot"></span><span class="lg-uz">Ziyoda bo‘lgan</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">أَصْلٌ</span><span class="lg-dot"></span><span class="lg-uz">Asl</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">ضَلَّ</span><span class="lg-dot"></span><span class="lg-uz">Adashdi (zalolatga ketdi)</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">عَفَا عَنْهُ يَعْفُو</span><span class="lg-dot"></span><span class="lg-uz">Uni kechirdi, kechiradi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">رَجَا يَرْجُو رَجَاءً</span><span class="lg-dot"></span><span class="lg-uz">Umid qildi / iltimos qildi</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">صَحِبَ</span><span class="lg-dot"></span><span class="lg-uz">Hamrohlik qildi</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">اِسْتأْذَنَ يَسْتأْذِنُ</span><span class="lg-dot"></span><span class="lg-uz">Ruxsat so‘radi, ruxsat so‘rayapti</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">سَهْلٌ</span><span class="lg-dot"></span><span class="lg-uz">Oson</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">مُدَّةٌ (ج: مُدَدٌ)</span><span class="lg-dot"></span><span class="lg-uz">Vaqt, muddat</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">طَرْقٌ</span><span class="lg-dot"></span><span class="lg-uz">Taqillash</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">سَاقٍ</span><span class="lg-dot"></span><span class="lg-uz">Suv quyuvchi (soqiy)</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">نُسخَة ٌ(نُسَجٌ)</span><span class="lg-dot"></span><span class="lg-uz">Nusxa</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">شِرَاءٌ</span><span class="lg-dot"></span><span class="lg-uz">Sotib olish</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">شَأْنٌ (ج: شُؤُونٌ)</span><span class="lg-dot"></span><span class="lg-uz">Sha’n</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">النَّاطِقُونَ بِالعَرَبِيَّةِ</span><span class="lg-dot"></span><span class="lg-uz">Arab tilida so‘zlashuvchilar</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">أَجْوَفُ (ج: جَوْفٌ)</span><span class="lg-dot"></span><span class="lg-uz">Ichi bo‘sh</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">هَدِيَّةٌ (ج: هَدَايَا)</span><span class="lg-dot"></span><span class="lg-uz">Sovg‘a</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">صَحِبَتْكَ السَّلامَةُ فِي الحَلِّ والتَّرحَالِ</span><span class="lg-dot"></span><span class="lg-uz">Yurtingda ham safarda ham salomatlik yor bo‘lsin</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">شَكَّ</span><span class="lg-dot"></span><span class="lg-uz">Shubha qildi</span></div>
+    <div class="lg-item"><span class="lg-n">49</span><span class="lg-ar">اغْتَنَمَ الفُرْصَةَ</span><span class="lg-dot"></span><span class="lg-uz">Fursatdan foydalandi</span></div>
+    <div class="lg-item"><span class="lg-n">50</span><span class="lg-ar">اِطَّلَعَ عَلَيْهِ يَطَّلِعُ</span><span class="lg-dot"></span><span class="lg-uz">Uni ko‘rib chiqdi</span></div>
+    <div class="lg-item"><span class="lg-n">51</span><span class="lg-ar">طَرَقَ البَابَ</span><span class="lg-dot"></span><span class="lg-uz">Eshikni taqillatdi</span></div>
+    <div class="lg-item"><span class="lg-n">52</span><span class="lg-ar">سَقَى يَسْقِي</span><span class="lg-dot"></span><span class="lg-uz">Suv berdi (ichirdi), suv beradi</span></div>
+    <div class="lg-item"><span class="lg-n">53</span><span class="lg-ar">شَابٌّ (ج:شُبَّانٌ , شَبَابٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yigit</span></div>
+    <div class="lg-item"><span class="lg-n">54</span><span class="lg-ar">بَيضَةٌ (ج: بَيْضٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tuxum</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ السَّادِسُ</span><span class="ld-uz">6-dars · 24 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مَوْقِفُ السَّيَّاراتِ (ج: مَوَاقِفُ)</span><span class="lg-dot"></span><span class="lg-uz">Avtomobil turargohi</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">مَحَطَّةُ القِطَارِ</span><span class="lg-dot"></span><span class="lg-uz">Poyezd vokzali</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">مَصْرِفٌ (ج:مَصَارِفُ)</span><span class="lg-dot"></span><span class="lg-uz">Bankomat</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">مُشْتَرِكٌ (ج: مُشْتَرِكُونَ)</span><span class="lg-dot"></span><span class="lg-uz">Ishtirokchi</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">رِحْلَةٌ (رِحْلاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Sayohat</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">يَجِبُ أَنْ تَذْهَبَ</span><span class="lg-dot"></span><span class="lg-uz">Ketishing kerak</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">تَحِيَّةٌ</span><span class="lg-dot"></span><span class="lg-uz">Salomlashuv</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">مُسْتَعِدٌّ</span><span class="lg-dot"></span><span class="lg-uz">Tayyor</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">نَادَى يُنَادِي</span><span class="lg-dot"></span><span class="lg-uz">Chaqirdi, chaqiryapti</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">لَجَأَ</span><span class="lg-dot"></span><span class="lg-uz">Panoh topdi / qo‘nim topdi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">قِطَارٌ (ج: قِطَارَاتٌ , قُطُرٌ)</span><span class="lg-dot"></span><span class="lg-uz">Poyezd</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">طَافَ بِالكَعْبَةِ يَطُوفُ</span><span class="lg-dot"></span><span class="lg-uz">Ka’bani tavof qildi, tavof qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">اِلْتَقَى بِلالٌ وحامِدٌ</span><span class="lg-dot"></span><span class="lg-uz">Bilol va Hamid uchrashdilar</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">مُيَسِّرٌ</span><span class="lg-dot"></span><span class="lg-uz">Osonlashtiruvchi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">لَهَا يَلْهُو</span><span class="lg-dot"></span><span class="lg-uz">O‘yin-kulgu qildi</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">أوَى يأْوِي</span><span class="lg-dot"></span><span class="lg-uz">Boshpana izladi</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">هَجَعَ</span><span class="lg-dot"></span><span class="lg-uz">Uxladi</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">عَرَضَ يَعْرُضُ</span><span class="lg-dot"></span><span class="lg-uz">Namoyish qildi, namoyish qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">قَرَّ يَقِرُّ مَقَرٌّ</span><span class="lg-dot"></span><span class="lg-uz">Joylashdi, joylanadi, qarorgoh</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">الزِّحامُ</span><span class="lg-dot"></span><span class="lg-uz">Gavjum, tiqilinch</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">طَعِمَ</span><span class="lg-dot"></span><span class="lg-uz">Taomlandi</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">نَفَى يَنْفِي</span><span class="lg-dot"></span><span class="lg-uz">Inkor qildi, inkor qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">حَطَّ يَـحُطُّ</span><span class="lg-dot"></span><span class="lg-uz">Yerga urdi, yerga uradi</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">يَسَّرَ</span><span class="lg-dot"></span><span class="lg-uz">Oson qildi</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ السَّابِعُ</span><span class="ld-uz">7-dars · 43 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">طِرَازٌ (ج:أَطْرِزَةٌ , طُرُزٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tovar</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">آلَةٌ (ج: آلاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Uskuna</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">نَـمِرٌ (ج:نَـمُورٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yo‘lbars</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">وَدَّعَ يُوَدِّعُ وَدَاعٌ</span><span class="lg-dot"></span><span class="lg-uz">Xayrlashdi, xayrlashyapti, xayrlashuv</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">قَلَى يَقْلِي مِقْلاةٌ</span><span class="lg-dot"></span><span class="lg-uz">Qovurdi, qovuryapti, tova</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">حَرَثَ يَـحْرُثُ مِـحْرَاثٌ</span><span class="lg-dot"></span><span class="lg-uz">Yer haydadi, yer haydayapti, omoch</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">لَعِقَ يَلْعَقُ مِلْعَقَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Yaladi, yalayapti, qoshiq</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">قَاسَ يَقِيسُ مِقْيَاسٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘lchadi, o‘lchayapti, o‘lchagich</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">طَبْعاً</span><span class="lg-dot"></span><span class="lg-uz">Albatta</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">عَدَسٌ</span><span class="lg-dot"></span><span class="lg-uz">No‘xat</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">مُطَفِّفٌ</span><span class="lg-dot"></span><span class="lg-uz">Tarozi urib qoluvchi</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">كَوَى يَكْوِي مِكْوَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">Dazmolladi, dazmollayapti, dazmol</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">رَقِيَ يَرْقَى مِرْقَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘tarildi, (narvon, zina)</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">حَكٌّ يَحُكُّ مِـحَكٌّ</span><span class="lg-dot"></span><span class="lg-uz">Qashladi, qashlayapti, qashlagich</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">قَبَضَ يقْبِضُ مِقْبَضُ</span><span class="lg-dot"></span><span class="lg-uz">Ushlab oldi (qabz qildi), dasta (narushnik)</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">بَرَدَ يَبْرُدُ مِبْرَدٌ</span><span class="lg-dot"></span><span class="lg-uz">Sovqotdi, sovutgich (kuller)</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">عَصَرَ يَعْصِرُ</span><span class="lg-dot"></span><span class="lg-uz">Siqdi (sharbat tayyorladi), siqadi</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">مِعْصَرَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Siqqich</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">طَلَبَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Talab qilingan narsa</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">مِـخْلَبٌ (ج: مَـخَالِبُ)</span><span class="lg-dot"></span><span class="lg-uz">Panja</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">ذِئْبٌ (ج: ذِئَابٌ)</span><span class="lg-dot"></span><span class="lg-uz">Bo‘ri</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">مَـحَا يَـمْحُو مِـمْحَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘chirdi, o‘chiryapti, o‘chirg‘ich</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">مِـمْحَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘chirg‘ich</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">قَادَ يَقُودُ مِقْوَدٌ</span><span class="lg-dot"></span><span class="lg-uz">Boshqardi, boshqaryapti, rul</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">قَمْحٌ</span><span class="lg-dot"></span><span class="lg-uz">Bug‘doy</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">نَصَحَ لَهُ يَنْصَحُ</span><span class="lg-dot"></span><span class="lg-uz">Unga nasihat qildi, nasihat qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">أَجْوَدُ</span><span class="lg-dot"></span><span class="lg-uz">Sifatliroq</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">بَرَى يَبْرِي مِبْرَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘tkirladi (uchladi), uchlaydi, Qalam chiqarg‘ich</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">نَشَرَ يَنْشُرُ مِنْشَارٌ</span><span class="lg-dot"></span><span class="lg-uz">Tarqatdi (arraladi), tarqatyapti (arralayapti), arra</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">قَصَّ يَقُصُّ مِقَصٌّ</span><span class="lg-dot"></span><span class="lg-uz">Kesdi, kesyapti, qaychi</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">حَلَبَ يَـحْلُبُ مِـحْلَبٌ</span><span class="lg-dot"></span><span class="lg-uz">Sut berdi, sut beryapti, sut idishi</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">غَرَفَ يَغْرِفُ</span><span class="lg-dot"></span><span class="lg-uz">Hovuchladi, hovuchlaydi</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">مِغْرَفَةٌ (ج:مَغَارِفُ)</span><span class="lg-dot"></span><span class="lg-uz">Qoshiq</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">وَاسِطَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Vosita</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">بِوَاسِطَتِهِ</span><span class="lg-dot"></span><span class="lg-uz">Uning vositasida</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">وَيْلٌ</span><span class="lg-dot"></span><span class="lg-uz">Jahannamdagi bir daryo</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">صَفَا يَصْفُو مِصْفَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">Toza qildi, tozalagich (filter)</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">زَلَـجَ يَزْلِجُ مِزْلاجٌ</span><span class="lg-dot"></span><span class="lg-uz">Sirpandi, sirpanyapti, sirpanchiq</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">صَعِدَ يَصْعَدُ مِصْعَدٌ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘tarildi, ko‘targich (lift)</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">دَلالَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Dalolat qilish</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">بُرٌّ</span><span class="lg-dot"></span><span class="lg-uz">Bug‘doy</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">سَطَرَ يَسْطُرُ مِسْطَرَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Chiziq chizdi, chiziq chizyapti, chizg‘ich</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">طَرَقَ يَطْرُقُ مِطْرَقَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Taqillatdi, taqillatyapti, bolg‘a</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الثَّامِنُ</span><span class="ld-uz">8-dars · 30 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">خَرِيطَةٌ (ج: خَرَائِطُ)</span><span class="lg-dot"></span><span class="lg-uz">Xarita</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">قِسْمٌ (ج:أَقْسَامٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qism</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">حِبْرٌ</span><span class="lg-dot"></span><span class="lg-uz">Siyoh</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">سَلَّمَ لِفُلانٍ يُسَلِّمُ</span><span class="lg-dot"></span><span class="lg-uz">Falonchiga salom berdi</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">غِلافٌ (ج: غُلُفٌ)</span><span class="lg-dot"></span><span class="lg-uz">G‘ilof</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">نَادَى يُنَادِي نِدَاءً</span><span class="lg-dot"></span><span class="lg-uz">Chaqirdi, chaqiryapti</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">انْقَلَبَ يَنْقَلِبُ انْقِلاباً</span><span class="lg-dot"></span><span class="lg-uz">Ag‘darildi, ag‘darilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">رَصَاصٌ</span><span class="lg-dot"></span><span class="lg-uz">Qo‘rg‘oshin, to‘pponcha o‘qi</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">قَلَمُ رَصَاصٍ</span><span class="lg-dot"></span><span class="lg-uz">Qora qalam</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">قِيمَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Qiymat</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">لَوْحَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Lavha</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">مُعَيَّنٌ</span><span class="lg-dot"></span><span class="lg-uz">Muayyan</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">ضِدٌّ</span><span class="lg-dot"></span><span class="lg-uz">Zid, qarshi</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">قَلَمُ حِبْرٍ</span><span class="lg-dot"></span><span class="lg-uz">Siyoh qalam (ruchka)</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">الاسْمُ الـمُحَلَّى بــ ( ِالْ )</span><span class="lg-dot"></span><span class="lg-uz">(ال) kirgan ism</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">كِيسٌ (ج: أَكْيَاسٌ)</span><span class="lg-dot"></span><span class="lg-uz">Paket</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">نَوْعٌ (ج: أْنْوَاعٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tur, nav</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">مُشْتَرٍ (الـمُشْتَرِي)</span><span class="lg-dot"></span><span class="lg-uz">Xaridor</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">لِسَانٌ (ج: ألْسِنَة)</span><span class="lg-dot"></span><span class="lg-uz">Til (tana a’zosi)</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">الـمَقْصُودُ بِالنِّدَاءِ</span><span class="lg-dot"></span><span class="lg-uz">Maqsad qilingan chaqiriluvchi</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">أشَارَ يُشِيرُ إِشَارَةً</span><span class="lg-dot"></span><span class="lg-uz">Ishora qildi, ishora qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">جَافٌّ</span><span class="lg-dot"></span><span class="lg-uz">Quruq</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">قَلَمٌ جَافٌّ</span><span class="lg-dot"></span><span class="lg-uz">Qurigan qalam (siyohi tugagan)</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">وَرَقٌ مُسَطَّرٌ</span><span class="lg-dot"></span><span class="lg-uz">Satrli varoq</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">سَلِمَ</span><span class="lg-dot"></span><span class="lg-uz">Omon qoldi (sog‘aydi)</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">دَفَعَ</span><span class="lg-dot"></span><span class="lg-uz">To‘ladi (pulni) / itardi</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">نَفِدَ</span><span class="lg-dot"></span><span class="lg-uz">Tugadi (qolmadi, qurudi)</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">حَلَّى يُـحَلِّي تَحْلِيَةً</span><span class="lg-dot"></span><span class="lg-uz">Bezadi, bezaydi, bezash</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">تَحْلِيَةُ الاسْمِ بــ (ِالْ)</span><span class="lg-dot"></span><span class="lg-uz">Ismni (ال) bilan bezash</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">أَعْدَدْتُ</span><span class="lg-dot"></span><span class="lg-uz">Tayyorladim</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ التَّاسِعُ</span><span class="ld-uz">9-dars · 44 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مُقَدَّسٌ</span><span class="lg-dot"></span><span class="lg-uz">Muqaddas</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">إِلَهٌ (ج: آلِهَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Iloh, hudo</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">الـمَسَدُ</span><span class="lg-dot"></span><span class="lg-uz">Masad surasi</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">مُرَاعَاةٌ</span><span class="lg-dot"></span><span class="lg-uz">Hisobga olish, nazarda tutish</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">نُطْقٌ</span><span class="lg-dot"></span><span class="lg-uz">Nutq</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">نَحْوٌ</span><span class="lg-dot"></span><span class="lg-uz">Nahv ilmi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">صَرْفٌ</span><span class="lg-dot"></span><span class="lg-uz">Sarf ilmi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">حِصَّة (ج: حِصَصٌ)</span><span class="lg-dot"></span><span class="lg-uz">Para</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">أرِيكَةٌ (ج: أَرائشكُ)</span><span class="lg-dot"></span><span class="lg-uz">Divan</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">أَجِيرُ (ج:أُجَرَاءُ)</span><span class="lg-dot"></span><span class="lg-uz">Xizmatchi (ishchi)</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">مَبْلَغٌ (ج: مَبَالِغُ)</span><span class="lg-dot"></span><span class="lg-uz">Mablag‘ (pul)</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">أَبُو لَهَبٍ</span><span class="lg-dot"></span><span class="lg-uz">Abu Lahab</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">ذَانِكَ</span><span class="lg-dot"></span><span class="lg-uz">Anavi ikkisi</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">بُرْهَانٌ (ج: بَرَاهِينُ)</span><span class="lg-dot"></span><span class="lg-uz">Isbot, dalil</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">مَقَالٌ</span><span class="lg-dot"></span><span class="lg-uz">Maqola</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">سِوَارٌ (ج: أَسْوِرَةٌ , أَسَاوِرُ)</span><span class="lg-dot"></span><span class="lg-uz">Bilakuzuk</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">غَمَّضَ العَيْنَيْنِ يُغَمِّضُ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘zlarini yumdi, yumyapti</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">رَفَعَ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘tardi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">ضَبَطَ</span><span class="lg-dot"></span><span class="lg-uz">Tuzatdi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">كِلْتَا الجَنَّتَيْنِ آتَتْ أُكُلَها</span><span class="lg-dot"></span><span class="lg-uz">Ikki bog‘ ham o‘z mevasini berdi</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">اِجْتِماعٌ (ج: اِجْتِمَاعَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yig‘ilish</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">عُمْلَةٌ (ج: عُمُلَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Valyuta</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">دَوْلَةٌ (ج: دُوَلٌ)</span><span class="lg-dot"></span><span class="lg-uz">Davlat</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">هِندِيٌّ (ج: هُنُودٌ)</span><span class="lg-dot"></span><span class="lg-uz">Hindiy</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">مَلَأٌ</span><span class="lg-dot"></span><span class="lg-uz">Saroy a’yonlari</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">شَاهِدٌ (ج: شُهَدَاءُ)</span><span class="lg-dot"></span><span class="lg-uz">Guvoh</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">فَاكِهَةٌ (ج: فَوَاكِهُ)</span><span class="lg-dot"></span><span class="lg-uz">Meva</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">سَحَنَ</span><span class="lg-dot"></span><span class="lg-uz">Maydalamoq</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">كَفَى يَكْفِي</span><span class="lg-dot"></span><span class="lg-uz">Yetarli bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">أُكُلٌ</span><span class="lg-dot"></span><span class="lg-uz">Yeguliklar</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">عَالٍ</span><span class="lg-dot"></span><span class="lg-uz">Oliy, baland</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">بِصَوْتٍ عَالٍ</span><span class="lg-dot"></span><span class="lg-uz">Baland ovoz bilan</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">إِسْهَالٌ</span><span class="lg-dot"></span><span class="lg-uz">Ich ketish</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">نَعْلٌ (ج: نِعَالٌ)</span><span class="lg-dot"></span><span class="lg-uz">Shippak (oyoq kiyim)</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">رَقْمٌ (ج: أَرْقامٌ)</span><span class="lg-dot"></span><span class="lg-uz">Raqam</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">لَهَبٌ</span><span class="lg-dot"></span><span class="lg-uz">Cho‘g‘</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">فُسْحَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Tanaffus</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">خَلَعَ النَّعْلَينِ</span><span class="lg-dot"></span><span class="lg-uz">Shippaklarini yechdi</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">تَبَّ</span><span class="lg-dot"></span><span class="lg-uz">Halok bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">أَعْطَى يُعْطِي</span><span class="lg-dot"></span><span class="lg-uz">Berdi, beradi</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">كِلاهُمَا</span><span class="lg-dot"></span><span class="lg-uz">Ikkalasi ham</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">انْصِرافٌ</span><span class="lg-dot"></span><span class="lg-uz">Tark etmoq</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">ضَاعَ يَضِيعُ</span><span class="lg-dot"></span><span class="lg-uz">Yo‘qotdi, yo‘qoladi</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">جَنَّةٌ</span><span class="lg-dot"></span><span class="lg-uz">Jannat, bog‘</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ العَاشِرُ</span><span class="ld-uz">10-dars · 16 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">مَكَانٌ (ج: أَمْكِنَةٌ جج: أَمَاكِنُ)</span><span class="lg-dot"></span><span class="lg-uz">Makon, joy</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">اِنْتِظَارٌ</span><span class="lg-dot"></span><span class="lg-uz">Kutish</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">فَجْأَةً</span><span class="lg-dot"></span><span class="lg-uz">To‘satdan, birdaniga</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">عُطْلَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Ta’til</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">سَئِمَ الشَّيءَ أو مِنَ الشَّيءِ</span><span class="lg-dot"></span><span class="lg-uz">Bir narsadan zerikdi (jonga tegdi)</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">عَادَ الـمَرِيضَ يَعُودُ عِيَادَةً</span><span class="lg-dot"></span><span class="lg-uz">Bemorni ziyorat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">حَوَّلَ يُحَوِّلُ تَحْوِيلاً</span><span class="lg-dot"></span><span class="lg-uz">O‘zgartirdi / o‘girdi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">فَوْضَى</span><span class="lg-dot"></span><span class="lg-uz">Tartibsizlik, shovqin</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">تَقْوَى</span><span class="lg-dot"></span><span class="lg-uz">Taqvo</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">بَقِيَ يَبْقَى بَقَاءً</span><span class="lg-dot"></span><span class="lg-uz">Qoldi, qoladi, qolmoq</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">عَبِثَ</span><span class="lg-dot"></span><span class="lg-uz">O‘yin qildi</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">مَبْنًى (ج: مَبَانٍ)</span><span class="lg-dot"></span><span class="lg-uz">Bino</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">مُناسِبٌ</span><span class="lg-dot"></span><span class="lg-uz">Munosib, mos</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">سَكَنَ سَكَناً</span><span class="lg-dot"></span><span class="lg-uz">Yashadi, yashash joyi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">مَرَّ بِفُلانٍ</span><span class="lg-dot"></span><span class="lg-uz">Falonchining oldidan o‘tdi</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">جَوٌّ</span><span class="lg-dot"></span><span class="lg-uz">Ob-havo</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الحَادِيَ عَشَرَ</span><span class="ld-uz">11-dars · 15 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">بِالضَّبْطِ</span><span class="lg-dot"></span><span class="lg-uz">Xuddi shunday (aniq)</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">فَائِدَةٌ (ج: فَوَائِدُ)</span><span class="lg-dot"></span><span class="lg-uz">Foyda</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">النَّادِي الرِّياضُّ</span><span class="lg-dot"></span><span class="lg-uz">Sport klubi</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">تَمَّ يَتِمُّ</span><span class="lg-dot"></span><span class="lg-uz">Tamom bo‘ldi (ish bitti, tugadi)</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">طَبَاشِيرُ</span><span class="lg-dot"></span><span class="lg-uz">Mel / bo‘r</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">يُسْرٌ</span><span class="lg-dot"></span><span class="lg-uz">Oson</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">تَحَدَّثَ يَتَحَدَّثُ تَحَدُّثاً</span><span class="lg-dot"></span><span class="lg-uz">Gapirdi / so‘zladi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">اِسْتَأَذَنَ فِي الأمْرِ يَسْتَأْذِنُ اِسْتِئْذَاناً</span><span class="lg-dot"></span><span class="lg-uz">Bir ishda ruxsat so‘radi,</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">عَجِيبٌ</span><span class="lg-dot"></span><span class="lg-uz">Ajoyib, g‘ayrioddiy</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">عُلْبَةٌ (ج: عُلَبٌ)</span><span class="lg-dot"></span><span class="lg-uz">Quti</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">شَكَّ</span><span class="lg-dot"></span><span class="lg-uz">Shubhalandi</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">مُطَابَقَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Mos kelish (bir-biriga tushish)</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">جَبَّ</span><span class="lg-dot"></span><span class="lg-uz">Kesmoq, qirqmoq</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">مُشْرِكٌ</span><span class="lg-dot"></span><span class="lg-uz">Mushrik</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">نَوَى نِيَّةً</span><span class="lg-dot"></span><span class="lg-uz">Niyat qildi, niyat</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الثَّانِيَ عَشَرَ</span><span class="ld-uz">12-dars · 64 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">اِضْطَرَّ</span><span class="lg-dot"></span><span class="lg-uz">Majbur bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">اِقْتَرَنَ يَقْتَرِنُ</span><span class="lg-dot"></span><span class="lg-uz">Ulandi / bog‘landi</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">اِنْتَظَرَ يَنْتَظِرُ</span><span class="lg-dot"></span><span class="lg-uz">Kutdi, kutyapti</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">أَثْبَتَ يُثْبِتُ</span><span class="lg-dot"></span><span class="lg-uz">Isbotladi, isbotlayapti</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">بَقِيَ يَبْقَى</span><span class="lg-dot"></span><span class="lg-uz">Qoldi, qolyapti</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">بَلَدٌ (ج: بِلادٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yurt, o‘lka, davlat</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">اِسْتَبْقَى</span><span class="lg-dot"></span><span class="lg-uz">Saqlab qoldi / ortib qoldi / qoldirdi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">اِسْتَقْبَلَ يَسْتَقْبِلُ</span><span class="lg-dot"></span><span class="lg-uz">Kutib oldi / qarshiladi</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">اِسْتَمَرَّ</span><span class="lg-dot"></span><span class="lg-uz">Davom etdi</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">اِلتَزَمَ يَلْتَزِمُ</span><span class="lg-dot"></span><span class="lg-uz">Sodiq bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">اِمْتَنَعَ يَمْتَنِعُ</span><span class="lg-dot"></span><span class="lg-uz">Tiyildi / man qildi</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">أَبَداً</span><span class="lg-dot"></span><span class="lg-uz">Hech qachon</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">أدَّى يُؤَدِّي</span><span class="lg-dot"></span><span class="lg-uz">Shu ishga olib keldi</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">تَقْدِيرٌ</span><span class="lg-dot"></span><span class="lg-uz">Taqdir / qadrlash / baho</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">ثُمَّ</span><span class="lg-dot"></span><span class="lg-uz">Keyin / so‘ngra</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">ثَمَّ = ثَمَّةَ</span><span class="lg-dot"></span><span class="lg-uz">Joyga dalolat qiladigan so‘z</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">جَاءَ يَجِيءُ</span><span class="lg-dot"></span><span class="lg-uz">Keldi, kelyapti</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">جَرَحَ يَجْرَحُ</span><span class="lg-dot"></span><span class="lg-uz">Jarohat yetkazdi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">جُزْءٌ (ج: أَجْزَاءٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qism</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">دَرَجَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Daraja</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">رَاجَعَ يُرَاجِعُ</span><span class="lg-dot"></span><span class="lg-uz">Qaytardi / qayta ko‘rib chiqdi</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">تَقّبَّلَ يَتَقَبَّلَ</span><span class="lg-dot"></span><span class="lg-uz">Qabul qildi, qabul qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">ثَبَّتَ يَثَبِّتُ</span><span class="lg-dot"></span><span class="lg-uz">Mustahkamladi</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">ذَاقَ يَذُوقُ</span><span class="lg-dot"></span><span class="lg-uz">Tatib ko‘rdi, tatib ko‘radi</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">زَادَ يَزِيدُ</span><span class="lg-dot"></span><span class="lg-uz">Ziyoda bo‘ldi / ko‘paydi</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">حَرْفُ امتِنَاعٍ لِامْتِنَاعٍ</span><span class="lg-dot"></span><span class="lg-uz">Bir narsa bo‘lmaganligi uchun boshqa narsaning bo‘lmaganligini bildiruvchi harf</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">حَيْثُ</span><span class="lg-dot"></span><span class="lg-uz">Joyga dalolat qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">رَجَعَ يرْجِعُ</span><span class="lg-dot"></span><span class="lg-uz">Qaytdi, qaytyapti</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">رَحَّبَ (بِــ)</span><span class="lg-dot"></span><span class="lg-uz">Kutib oldi (xush ko‘rmoq)</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">رَسَبَ يَرْسُبُ</span><span class="lg-dot"></span><span class="lg-uz">Imtihondan yiqildi</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">سَامَحَ يُسَامِحُ</span><span class="lg-dot"></span><span class="lg-uz">Kechirdi, kichiradi</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">سَمَحَ يَسْمَحُ</span><span class="lg-dot"></span><span class="lg-uz">Ruhsat berdi, ruhsat beradi</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">صَبَرَ يَصْبُرُ</span><span class="lg-dot"></span><span class="lg-uz">Sabr qildi, sabr qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">طَوَى يَطْوِي</span><span class="lg-dot"></span><span class="lg-uz">Taxladi, taxlaydi</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">غَيَّرَ يُغَيِّرُ</span><span class="lg-dot"></span><span class="lg-uz">O‘zgartirdi</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">قَبِلَ يَقْبَلُ قَبُولاً</span><span class="lg-dot"></span><span class="lg-uz">Qabul qildi, qabul qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">قَعَدَ يَقْعُدُ</span><span class="lg-dot"></span><span class="lg-uz">O‘tirdi, o‘tiradi</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">لَبِثَ يَلْبَثُ</span><span class="lg-dot"></span><span class="lg-uz">Bir muddat bo‘ldi, (yashadi)</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">لَحْظَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Lahza, on</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">مُثْبَتٌ</span><span class="lg-dot"></span><span class="lg-uz">Tasdiq</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">مَنفِيٌّ</span><span class="lg-dot"></span><span class="lg-uz">Inkor</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">مَاشٍ</span><span class="lg-dot"></span><span class="lg-uz">Piyoda yuruvchi</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">مَرَّ يَـمُرُّ مُرُورٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘tib ketdi</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">مَشَى يَمْشِي</span><span class="lg-dot"></span><span class="lg-uz">Piyoda yurdi, piyoda yuryapti</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">مُمْتَازٌ</span><span class="lg-dot"></span><span class="lg-uz">A’lo</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">قَاعِدٌ (ج: قُعُودٌ)</span><span class="lg-dot"></span><span class="lg-uz">O‘tirgan kishi</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">قَطُّ</span><span class="lg-dot"></span><span class="lg-uz">Hech qachon (o‘tgan zamon uchun)</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">قَيْدٌ (ج: قُيُودٌ)</span><span class="lg-dot"></span><span class="lg-uz">Kiritish, qayd qilish</span></div>
+    <div class="lg-item"><span class="lg-n">49</span><span class="lg-ar">لَزِمَ يَلْزَمُ</span><span class="lg-dot"></span><span class="lg-uz">Lozim tutdi, shunday qilish lozim</span></div>
+    <div class="lg-item"><span class="lg-n">50</span><span class="lg-ar">لَوْ</span><span class="lg-dot"></span><span class="lg-uz">Agar (o‘tgan zamon uchun)</span></div>
+    <div class="lg-item"><span class="lg-n">51</span><span class="lg-ar">وَلَوْ</span><span class="lg-dot"></span><span class="lg-uz">Shunday bo‘lsa ham</span></div>
+    <div class="lg-item"><span class="lg-n">52</span><span class="lg-ar">لَوْلا = لَوْمَا</span><span class="lg-dot"></span><span class="lg-uz">Bo‘lmaganida edi / agar shunday bo‘lmasa</span></div>
+    <div class="lg-item"><span class="lg-n">53</span><span class="lg-ar">مَانِعٌ</span><span class="lg-dot"></span><span class="lg-uz">E’tiroz / to‘siq / man bo‘lish</span></div>
+    <div class="lg-item"><span class="lg-n">54</span><span class="lg-ar">مَقْعَدٌ (ج: مَقَاعِدُ)</span><span class="lg-dot"></span><span class="lg-uz">O‘rindiq</span></div>
+    <div class="lg-item"><span class="lg-n">55</span><span class="lg-ar">مَكَثَ يَمْكُثُ</span><span class="lg-dot"></span><span class="lg-uz">Qanchadir bo‘ldi, yashadi</span></div>
+    <div class="lg-item"><span class="lg-n">56</span><span class="lg-ar">مُلْتَزَمٌ</span><span class="lg-dot"></span><span class="lg-uz">Bir ishda davomiy bo‘luvchi</span></div>
+    <div class="lg-item"><span class="lg-n">57</span><span class="lg-ar">مَنَعَ يَمْنَعُ</span><span class="lg-dot"></span><span class="lg-uz">Ta’qiqladi / man qildi</span></div>
+    <div class="lg-item"><span class="lg-n">58</span><span class="lg-ar">نَظَّارَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Ko‘z oynak</span></div>
+    <div class="lg-item"><span class="lg-n">59</span><span class="lg-ar">نَهَارٌ</span><span class="lg-dot"></span><span class="lg-uz">Kunduz</span></div>
+    <div class="lg-item"><span class="lg-n">60</span><span class="lg-ar">وَقَفَ يَقِفُ</span><span class="lg-dot"></span><span class="lg-uz">Turdi, turadi</span></div>
+    <div class="lg-item"><span class="lg-n">61</span><span class="lg-ar">نَابَ يَنُوبُ (عَنْ)</span><span class="lg-dot"></span><span class="lg-uz">Vakillik qildi / noiblik qildi</span></div>
+    <div class="lg-item"><span class="lg-n">62</span><span class="lg-ar">نَظَرَ يَنْظُرُ</span><span class="lg-dot"></span><span class="lg-uz">Qaradi, qarayapti</span></div>
+    <div class="lg-item"><span class="lg-n">63</span><span class="lg-ar">وَرَدَ يَرِدُ</span><span class="lg-dot"></span><span class="lg-uz">Zikr qilindi, zikr qilinadi</span></div>
+    <div class="lg-item"><span class="lg-n">64</span><span class="lg-ar">وَصَلَ يَصِلُ</span><span class="lg-dot"></span><span class="lg-uz">Yetib oldi / yetdi</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الثَّالِثَ عَشَرَ</span><span class="ld-uz">13-dars · 61 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">اِشْتَرَى يَشْتَرِي</span><span class="lg-dot"></span><span class="lg-uz">Sotib oldi</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">الشِّمَالُ</span><span class="lg-dot"></span><span class="lg-uz">Shimol (chap tomon)</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">أَشْرَكَ يُشْرِكُ</span><span class="lg-dot"></span><span class="lg-uz">Shirk qildi, shirk qiladi</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">إِعْلَانٌ</span><span class="lg-dot"></span><span class="lg-uz">E’lon</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">صَوْتٌ (ج:أَصْوَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tovush</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">تَطْعِيمٌ</span><span class="lg-dot"></span><span class="lg-uz">Emlash</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">جَاهَدَ يُجَاهِدُ</span><span class="lg-dot"></span><span class="lg-uz">Tirishqoqlik bilan harakat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">جِدَارٌ</span><span class="lg-dot"></span><span class="lg-uz">Devor</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">حِبْرٌ (ج:أَحْبَارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Siyoh</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">اِسْتَطْعَمَ يَسْتَطْعِمُ اِسْتِطْعَامًا</span><span class="lg-dot"></span><span class="lg-uz">Ovqatlantirdi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">اِسْتِعَاذٌ</span><span class="lg-dot"></span><span class="lg-uz">Panoh so‘rash</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">أَجَابَ يُجِيبُ</span><span class="lg-dot"></span><span class="lg-uz">Javob berdi</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">أَطْعَمَ يُطْعِمُ إِطْعَامًا</span><span class="lg-dot"></span><span class="lg-uz">Taomlantirdi</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">بَاعَ يُبِيعُ</span><span class="lg-dot"></span><span class="lg-uz">Sotdi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">بَسْمَلَ يُبَسْمِلُ</span><span class="lg-dot"></span><span class="lg-uz">Bismillah dedi</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">تَوَجَّعَ يَتَوَجِّعُ</span><span class="lg-dot"></span><span class="lg-uz">Og‘ritdi, og‘rityapti</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">جَازَمَ</span><span class="lg-dot"></span><span class="lg-uz">Jazm qildi (qat’iy qaror qildi)</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">جَوَابٌ (ج: أَجْوِبَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Javob</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">حَزَنَ يَحْزِنُ</span><span class="lg-dot"></span><span class="lg-uz">Xafa bo‘ldi, xafa bo‘lyapti</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">خَارِجٌ</span><span class="lg-dot"></span><span class="lg-uz">Tashqari</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">خَشَبٌ</span><span class="lg-dot"></span><span class="lg-uz">Yog‘och</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">سَبَقَ يَسْبِقُ</span><span class="lg-dot"></span><span class="lg-uz">O‘zib ketdi</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">سَخِرَ يَسْخَرُ</span><span class="lg-dot"></span><span class="lg-uz">Masxara qildi, masxara qilyapti</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">سَكَنٌ</span><span class="lg-dot"></span><span class="lg-uz">Turar joy</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">صُدَاعٌ</span><span class="lg-dot"></span><span class="lg-uz">Bosh og‘riq (bosh aylanishi)</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">ضَبَطَ يَضْبِطُ</span><span class="lg-dot"></span><span class="lg-uz">To‘g‘riladi, to‘g‘rilaydi</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">طَرِيقٌ (ج: طُرُقٌ , طُرُقَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Yo‘l</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">عَاذَ يَعُوذُ</span><span class="lg-dot"></span><span class="lg-uz">Panoh so‘radi, panoh so‘raydi</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">غَرَزَ يَغْرِزُ</span><span class="lg-dot"></span><span class="lg-uz">Sanchdi, sanchyapti</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">جَوَازُ سَفَرٍ</span><span class="lg-dot"></span><span class="lg-uz">Passport</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">حِصَّةٌ</span><span class="lg-dot"></span><span class="lg-uz">Pa’ra (dars soati) / ulush</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">حَفِظُ يَحْفِظُ</span><span class="lg-dot"></span><span class="lg-uz">Yodladi / saqladi</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">دَعَا يَدْعُو</span><span class="lg-dot"></span><span class="lg-uz">Duo qildi / chaqirdi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">زَائِرٌ (ج: زُوَّارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Ziyoratchi</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">سَبَّ يَسُبُّ</span><span class="lg-dot"></span><span class="lg-uz">Kamsitdi / haqorat qildi / so‘kdi</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">سَيَّارَةُ الأُجْرَةِ</span><span class="lg-dot"></span><span class="lg-uz">Taksi mashinasi</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">صَلَحَ يَصْلُحُ صَلَاحاً</span><span class="lg-dot"></span><span class="lg-uz">Isloh bo‘ldi / to‘g‘rilandi / tuzatdi</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">طَعَامٌ (ج: أطْعِمَةٌ(</span><span class="lg-dot"></span><span class="lg-uz">Taom</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">طَعِمَ يَطعَمُ</span><span class="lg-dot"></span><span class="lg-uz">Yedi (tatib ko‘ rdi), yeyayapti</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">فِي أثْنَاءِ</span><span class="lg-dot"></span><span class="lg-uz">Shu asnoda, shu vaqtida</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">فَرَغَ يَفْرُغُ فَرَاغاً</span><span class="lg-dot"></span><span class="lg-uz">Bo‘shadi</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">فَرَّغَ يُفَرِّغُ تَفْرِيغاً</span><span class="lg-dot"></span><span class="lg-uz">Bo‘shatdi</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">قَاعَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Zal</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">لِبْسٌ</span><span class="lg-dot"></span><span class="lg-uz">Kiyim</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">طَعَّمَ يُطَعِّمُ تَطْعِيماً</span><span class="lg-dot"></span><span class="lg-uz">Ovqatlantirdi</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">فِعْلُ الـمُتَكَلِّمِ</span><span class="lg-dot"></span><span class="lg-uz">1-shaxs fe’li (so‘zlovchi fe’li)</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">فِعْلُ الـمُخَاطَبِ</span><span class="lg-dot"></span><span class="lg-uz">2-shaxs fe’li (tinglovchi fe’li)</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">فِعْلُ الغَائِبِ</span><span class="lg-dot"></span><span class="lg-uz">3-shaxs fe’li</span></div>
+    <div class="lg-item"><span class="lg-n">49</span><span class="lg-ar">قَابَلَ يُقَابِلُ</span><span class="lg-dot"></span><span class="lg-uz">Uchrashdi / ko‘rishdi</span></div>
+    <div class="lg-item"><span class="lg-n">50</span><span class="lg-ar">قَارِىٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘quvchi (narsa o‘quvchi)</span></div>
+    <div class="lg-item"><span class="lg-n">51</span><span class="lg-ar">مَسْأَلَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Masala</span></div>
+    <div class="lg-item"><span class="lg-n">52</span><span class="lg-ar">مُسْتَقْبَلٌ</span><span class="lg-dot"></span><span class="lg-uz">Kelajak</span></div>
+    <div class="lg-item"><span class="lg-n">53</span><span class="lg-ar">مَعاً</span><span class="lg-dot"></span><span class="lg-uz">Birga</span></div>
+    <div class="lg-item"><span class="lg-n">54</span><span class="lg-ar">مَكَانٌ (ج: أمْكِنَةٌ جج: أمَاكِنُ)</span><span class="lg-dot"></span><span class="lg-uz">Joy</span></div>
+    <div class="lg-item"><span class="lg-n">55</span><span class="lg-ar">وَجَعٌ</span><span class="lg-dot"></span><span class="lg-uz">Og‘riq</span></div>
+    <div class="lg-item"><span class="lg-n">56</span><span class="lg-ar">نُدْبَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Og‘rigan vaqtdagi chaqiriq</span></div>
+    <div class="lg-item"><span class="lg-n">57</span><span class="lg-ar">كَسُلَ يَكسَلُ</span><span class="lg-dot"></span><span class="lg-uz">Dangasalik qildi</span></div>
+    <div class="lg-item"><span class="lg-n">58</span><span class="lg-ar">لَبِسَ يَلْبَسُ لُبْساً</span><span class="lg-dot"></span><span class="lg-uz">Kiydi, kiyayapti, kiyish</span></div>
+    <div class="lg-item"><span class="lg-n">59</span><span class="lg-ar">مَطْعَمٌ (ج : مُطَاعِمُ)</span><span class="lg-dot"></span><span class="lg-uz">Restarant (ovqatlanish joyi)</span></div>
+    <div class="lg-item"><span class="lg-n">60</span><span class="lg-ar">مَكْسُورَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Siniq</span></div>
+    <div class="lg-item"><span class="lg-n">61</span><span class="lg-ar">وَفْدٌ (ج: وُفُودٌ)</span><span class="lg-dot"></span><span class="lg-uz">Delegatsiya / bir guruh boshliqlar</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الرَّابِعَ عَشَرَ</span><span class="ld-uz">14-dars · 25 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">قَامَ يَقُومُ قِياماً</span><span class="lg-dot"></span><span class="lg-uz">Turdi, turadi, turmoq</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">عَطَس َ يَعْطِسُ عُطَاسًا</span><span class="lg-dot"></span><span class="lg-uz">Aksirdi, aksiradi, aksirish</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">حَمِدَ يَحْمُدُ حَمْداً</span><span class="lg-dot"></span><span class="lg-uz">Hamd aytdi / maqtadi va shukur qildi</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">هَدَى يَهْدِي هُدًى وهِدَايةً</span><span class="lg-dot"></span><span class="lg-uz">Hidoyat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">هَادٍ (الهَادِي)</span><span class="lg-dot"></span><span class="lg-uz">Hidoyat qiluvchi</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">مَهْدِيٌ</span><span class="lg-dot"></span><span class="lg-uz">Hidoyat topgan</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">بَرْقِيَّةٌ</span><span class="lg-dot"></span><span class="lg-uz">Telegramma</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">عَادَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Odat</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">رَحِمَ يَرْحَمُ رَحْمَةً</span><span class="lg-dot"></span><span class="lg-uz">Rahm qildi</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">أَصْلَحَ إصْلاحاً</span><span class="lg-dot"></span><span class="lg-uz">To‘g‘riladi / isloh qildi</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">بَالٌ</span><span class="lg-dot"></span><span class="lg-uz">Fikr / o‘y xayol</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">تَضَمَّنَ تَضَمُّناً</span><span class="lg-dot"></span><span class="lg-uz">O‘z ichiga oldi, o‘z ichiga olish</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">رَغِبَ يَرْغَبُ رَغْبَةً</span><span class="lg-dot"></span><span class="lg-uz">Xohladi, xohlayapti</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">اِسْتَقْدَمَ اسْتِقْدَاماً</span><span class="lg-dot"></span><span class="lg-uz">Oldinladi, oldinga o‘tish</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">إنَاءٌ (ج: آنيَةٌ جج: أوَانٍ)</span><span class="lg-dot"></span><span class="lg-uz">Idish</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">طَاعُونٌ</span><span class="lg-dot"></span><span class="lg-uz">Vabo</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">نَعَسَ نُعَاساً</span><span class="lg-dot"></span><span class="lg-uz">Uyqusiradi, uyqusirash</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">أيقَظَ يُوقِظُ إيْقَاظاً</span><span class="lg-dot"></span><span class="lg-uz">Uyg‘otdi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">رَدَّ يَرُدُّ رَدّاً</span><span class="lg-dot"></span><span class="lg-uz">Javob qaytardi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">مِرْفَقٌ (ج: مَرَافِقٌ)</span><span class="lg-dot"></span><span class="lg-uz">Tirsak</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">سَعَى يَسْعَى سَعْياً</span><span class="lg-dot"></span><span class="lg-uz">Intildi / harakat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">أجَلٌ (ج: آجَالٌ)</span><span class="lg-dot"></span><span class="lg-uz">Ajal</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">اسْتَأْخَرَ اِسْتِئْخَاراً</span><span class="lg-dot"></span><span class="lg-uz">Kech qoldi deb xisobladi</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">جَاوَزَ مُجَاوَزَةً</span><span class="lg-dot"></span><span class="lg-uz">O‘zib ketdi / hatlab o‘tti</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">وَدَعَ يَدَعُ</span><span class="lg-dot"></span><span class="lg-uz">Qoldirdi / qo‘ydi</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">الدَّرْسُ الخَامِسَ عَشَرَ</span><span class="ld-uz">15-dars · 94 so‘z</span></div>
+  <div class="lug">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar">غَابَ يَغيبُ غِيَاباً</span><span class="lg-dot"></span><span class="lg-uz">Yo‘q bo‘ldi / kelmadi</span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar">غَائِبٌ</span><span class="lg-dot"></span><span class="lg-uz">G‘oyib / kelmagan kimsa</span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar">كَمَلَ كَمَالاً</span><span class="lg-dot"></span><span class="lg-uz">To‘liq bo‘ldi, komil bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar">كَامِلٌ</span><span class="lg-dot"></span><span class="lg-uz">To‘liq / komil</span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar">أَذِنَ إِذْناً</span><span class="lg-dot"></span><span class="lg-uz">Ruhsat berdi</span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar">اسْتأذَنَ اِسْتِئْذَاناً</span><span class="lg-dot"></span><span class="lg-uz">Ruhsat so‘radi</span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar">لائِحَةٌ (ج: لَوَائِحُ)</span><span class="lg-dot"></span><span class="lg-uz">Ro‘yxat</span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar">عَذَرَ عُذْراً ومَعْذِرَةً</span><span class="lg-dot"></span><span class="lg-uz">Uzr so‘radi</span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar">مَهْمَا (أدَاةُ الشَّرْطِ)</span><span class="lg-dot"></span><span class="lg-uz">Nima bo‘lsa ham</span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar">أَسِفَ أَسَفًا</span><span class="lg-dot"></span><span class="lg-uz">Afsuslandi, afsuslanish</span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar">هَاءَ هَاؤُمْ هَاءِ هَاؤُنَّ</span><span class="lg-dot"></span><span class="lg-uz">ol</span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar">اِغْتَابَ اغْتِيَاباً غِيبَةً</span><span class="lg-dot"></span><span class="lg-uz">G‘iybat qildi, g‘iybat qilish</span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar">غَابَةٌ</span><span class="lg-dot"></span><span class="lg-uz">O‘rmon</span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar">هَمَّ هَمًّا</span><span class="lg-dot"></span><span class="lg-uz">G‘am chekdi / qayg‘uga tushdi</span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar">هَامٌّ</span><span class="lg-dot"></span><span class="lg-uz">Muhim ish</span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar">فَصَّلَ تَفْصِيلاً</span><span class="lg-dot"></span><span class="lg-uz">Ajratdi / tafsilotladi</span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar">فَصَلَ فَصْلاً</span><span class="lg-dot"></span><span class="lg-uz">Ajraldi</span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar">نَصَّ نَصّاً</span><span class="lg-dot"></span><span class="lg-uz">Yozma shaklda so‘zladi</span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar">طُوِيَ قَيْدَهُ</span><span class="lg-dot"></span><span class="lg-uz">Haydaldi</span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar">قَصَّ قَصَصاً</span><span class="lg-dot"></span><span class="lg-uz">Qissa aytdi, qissalar</span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar">قِصَّةٌ (ج: قِصَصٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qissa</span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar">حِينَ (ظَرْفُ الزِمَانِ)</span><span class="lg-dot"></span><span class="lg-uz">Shu payt (zamonga dalolat qiladigan so‘z)</span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar">حِينٌ (ج: أحْيَانٌ , أَحَايِينِ)</span><span class="lg-dot"></span><span class="lg-uz">Bir payt / ba’zan</span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar">سَابَقَ يُسابِقُ مُسَابَقَةً</span><span class="lg-dot"></span><span class="lg-uz">Bellashdi, musobaqa</span></div>
+    <div class="lg-item"><span class="lg-n">25</span><span class="lg-ar">كُتِيْبَاتٌ</span><span class="lg-dot"></span><span class="lg-uz">Kitobchalar</span></div>
+    <div class="lg-item"><span class="lg-n">26</span><span class="lg-ar">مُفِيدٌ</span><span class="lg-dot"></span><span class="lg-uz">Foydali</span></div>
+    <div class="lg-item"><span class="lg-n">27</span><span class="lg-ar">اِشْتَرَكَ اِشْتِراكاً</span><span class="lg-dot"></span><span class="lg-uz">Ishtirok etdi, ishtirok etish</span></div>
+    <div class="lg-item"><span class="lg-n">28</span><span class="lg-ar">عُذْرٌ (ج: أعْذَارٌ)</span><span class="lg-dot"></span><span class="lg-uz">Uzir / Kechirim</span></div>
+    <div class="lg-item"><span class="lg-n">29</span><span class="lg-ar">اِعْتَذَرَ اِعْتِذَاراً</span><span class="lg-dot"></span><span class="lg-uz">Uzr so‘radi, uzr so‘rash</span></div>
+    <div class="lg-item"><span class="lg-n">30</span><span class="lg-ar">اِسْتَطَاعَ يَسْتَطِيعُ اسْتِطَاعَةً</span><span class="lg-dot"></span><span class="lg-uz">Qila oldi, qila olyapti, qila olish</span></div>
+    <div class="lg-item"><span class="lg-n">31</span><span class="lg-ar">سَجَّلَ تَسْجِيلاً</span><span class="lg-dot"></span><span class="lg-uz">Ro‘yxatga oldi, ro‘yxatga olish</span></div>
+    <div class="lg-item"><span class="lg-n">32</span><span class="lg-ar">عَادَ يَعُودُ عَوْداً وَعَوْدَةً</span><span class="lg-dot"></span><span class="lg-uz">Qaytdi / kasalni ziyorat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">33</span><span class="lg-ar">الْتَحَقَ التِحَاقاً</span><span class="lg-dot"></span><span class="lg-uz">(O‘qishga) qabul bo‘ldi</span></div>
+    <div class="lg-item"><span class="lg-n">34</span><span class="lg-ar">دَرْسٌ إضَافِيٌ</span><span class="lg-dot"></span><span class="lg-uz">Qo‘shimcha dars</span></div>
+    <div class="lg-item"><span class="lg-n">35</span><span class="lg-ar">اسْتَفَادَ يَسْتَفِيدُ اسْتِفَادَةً</span><span class="lg-dot"></span><span class="lg-uz">Foydalandi</span></div>
+    <div class="lg-item"><span class="lg-n">36</span><span class="lg-ar">احْتَسَبَ احْتِسَاباً</span><span class="lg-dot"></span><span class="lg-uz">Hisob qilib undan umid qilmoq</span></div>
+    <div class="lg-item"><span class="lg-n">37</span><span class="lg-ar">فِقْرَةٌ (ج: فِقْراتٌ , فِقرٌ)</span><span class="lg-dot"></span><span class="lg-uz">Bo‘lim, parcha (paragraf)</span></div>
+    <div class="lg-item"><span class="lg-n">38</span><span class="lg-ar">جَائِزَةٌ (ج: جَوَائِزُ)</span><span class="lg-dot"></span><span class="lg-uz">Mukofot</span></div>
+    <div class="lg-item"><span class="lg-n">39</span><span class="lg-ar">مَوْضُوعٌ (ج: مَوَاضِيعُ)</span><span class="lg-dot"></span><span class="lg-uz">Mavzu</span></div>
+    <div class="lg-item"><span class="lg-n">40</span><span class="lg-ar">الـمُنكَرُ (ضِدُّهُ الـمَعْرُوف)</span><span class="lg-dot"></span><span class="lg-uz">Yomon ish / inkor qilingan</span></div>
+    <div class="lg-item"><span class="lg-n">41</span><span class="lg-ar">أضعَفُ (اِسْمُ التَّفْضِيلِ)</span><span class="lg-dot"></span><span class="lg-uz">Eng zaif</span></div>
+    <div class="lg-item"><span class="lg-n">42</span><span class="lg-ar">لَحِقَ لُحُوقاً</span><span class="lg-dot"></span><span class="lg-uz">Yetib oldi, yetib olmoq</span></div>
+    <div class="lg-item"><span class="lg-n">43</span><span class="lg-ar">أَدْرَكَ إِدْراكاً</span><span class="lg-dot"></span><span class="lg-uz">Idrok qildi / kerakli paytda yetdi</span></div>
+    <div class="lg-item"><span class="lg-n">44</span><span class="lg-ar">لامَ يَلُومُ لَوْماً</span><span class="lg-dot"></span><span class="lg-uz">Aybladi / malomat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">45</span><span class="lg-ar">اسْتَفْهَمَ اسْتِفْهَاماً</span><span class="lg-dot"></span><span class="lg-uz">Xayolida savol bo‘lib qoldi</span></div>
+    <div class="lg-item"><span class="lg-n">46</span><span class="lg-ar">اسْتَيْقَظَ اسْتِيْقَاظًا</span><span class="lg-dot"></span><span class="lg-uz">Uyg‘ondi</span></div>
+    <div class="lg-item"><span class="lg-n">47</span><span class="lg-ar">تَابَ تَوْبَةً</span><span class="lg-dot"></span><span class="lg-uz">Tavba qildi</span></div>
+    <div class="lg-item"><span class="lg-n">48</span><span class="lg-ar">عَظِيمٌ</span><span class="lg-dot"></span><span class="lg-uz">Buyuk</span></div>
+    <div class="lg-item"><span class="lg-n">49</span><span class="lg-ar">فَازَ يَقُوزُ فَوْزاً</span><span class="lg-dot"></span><span class="lg-uz">G‘alaba qildi / yutdi</span></div>
+    <div class="lg-item"><span class="lg-n">50</span><span class="lg-ar">صَمَتَ صَمْتاً</span><span class="lg-dot"></span><span class="lg-uz">Jim turdi, jim turmoq</span></div>
+    <div class="lg-item"><span class="lg-n">51</span><span class="lg-ar">الـمُتَنَبِّئُ (أبُو طَيِّبٍ)</span><span class="lg-dot"></span><span class="lg-uz">Arab shoiri Abu Toyyibning taxallusi</span></div>
+    <div class="lg-item"><span class="lg-n">52</span><span class="lg-ar">بَلَغَ بُلُوغاً</span><span class="lg-dot"></span><span class="lg-uz">Yetdi / erishdi</span></div>
+    <div class="lg-item"><span class="lg-n">53</span><span class="lg-ar">جَمَعَ جَمْعاً</span><span class="lg-dot"></span><span class="lg-uz">Yig‘di</span></div>
+    <div class="lg-item"><span class="lg-n">54</span><span class="lg-ar">زُلالٌ = الـمَاءُ الزُلالُ</span><span class="lg-dot"></span><span class="lg-uz">Zilol suv (oqsilga boy suv)</span></div>
+    <div class="lg-item"><span class="lg-n">55</span><span class="lg-ar">حُكْمٌ (أحْكَامٌ)</span><span class="lg-dot"></span><span class="lg-uz">Hukm</span></div>
+    <div class="lg-item"><span class="lg-n">56</span><span class="lg-ar">بَلِيغٌ</span><span class="lg-dot"></span><span class="lg-uz">Yetuk / fasohatli / gapga chechan</span></div>
+    <div class="lg-item"><span class="lg-n">57</span><span class="lg-ar">أفْرَدَ إفْراداً</span><span class="lg-dot"></span><span class="lg-uz">Yakkaladi, yakkalash</span></div>
+    <div class="lg-item"><span class="lg-n">58</span><span class="lg-ar">مُفْرَدٌ</span><span class="lg-dot"></span><span class="lg-uz">Yakkalik</span></div>
+    <div class="lg-item"><span class="lg-n">59</span><span class="lg-ar">مُفْرَدَاتٌ</span><span class="lg-dot"></span><span class="lg-uz">So‘zlar (terminlar)</span></div>
+    <div class="lg-item"><span class="lg-n">60</span><span class="lg-ar">أعْطَى يُعْطِي إعْطَاءً</span><span class="lg-dot"></span><span class="lg-uz">Berdi, beradi, bermoq</span></div>
+    <div class="lg-item"><span class="lg-n">61</span><span class="lg-ar">تَنْغِيمٌ</span><span class="lg-dot"></span><span class="lg-uz">Kuylash</span></div>
+    <div class="lg-item"><span class="lg-n">62</span><span class="lg-ar">أَدَاةٌ (ج: أدَوَاتٌ)</span><span class="lg-dot"></span><span class="lg-uz">Uskuna / ma’lum vazifani bajaradigan so‘z</span></div>
+    <div class="lg-item"><span class="lg-n">63</span><span class="lg-ar">جَازَ جَوَازاً</span><span class="lg-dot"></span><span class="lg-uz">Joiz bo‘ldi (mumkin bo‘ldi)</span></div>
+    <div class="lg-item"><span class="lg-n">64</span><span class="lg-ar">اجْتَمَعَ اجْتِمَاعاً</span><span class="lg-dot"></span><span class="lg-uz">Uchrashdi / yig‘ildi</span></div>
+    <div class="lg-item"><span class="lg-n">65</span><span class="lg-ar">حَاوَلَ مُحَاوَلَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Harakat qildi / urinib ko‘rdi</span></div>
+    <div class="lg-item"><span class="lg-n">66</span><span class="lg-ar">اسْتَحَالَ اِسْتِحَالَةٌ</span><span class="lg-dot"></span><span class="lg-uz">Imkonsiz qoldi</span></div>
+    <div class="lg-item"><span class="lg-n">67</span><span class="lg-ar">تَنَاوَلَ تَنَاوُلاً</span><span class="lg-dot"></span><span class="lg-uz">Tanovul qildi</span></div>
+    <div class="lg-item"><span class="lg-n">68</span><span class="lg-ar">خَصَّ خُصُوصاً</span><span class="lg-dot"></span><span class="lg-uz">Maxsus bo‘ldi, xosladi</span></div>
+    <div class="lg-item"><span class="lg-n">69</span><span class="lg-ar">قِنْدِيلٌ (ج: قَنَادِيلُ)</span><span class="lg-dot"></span><span class="lg-uz">Qandil / chiroq / fonar</span></div>
+    <div class="lg-item"><span class="lg-n">70</span><span class="lg-ar">تَوَضَّأَ تَوَضُّؤاً</span><span class="lg-dot"></span><span class="lg-uz">Tahorat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">71</span><span class="lg-ar">نَجَا يَنْجُو نَجَاةً</span><span class="lg-dot"></span><span class="lg-uz">Omon qoldi / najot topdi / qutuldi</span></div>
+    <div class="lg-item"><span class="lg-n">72</span><span class="lg-ar">زَرَعَ زَرْعاً</span><span class="lg-dot"></span><span class="lg-uz">Ekdi, ekish</span></div>
+    <div class="lg-item"><span class="lg-n">73</span><span class="lg-ar">مُسَجِّلٌ</span><span class="lg-dot"></span><span class="lg-uz">Yozib oluvchi / ro‘yxatga oluvchi</span></div>
+    <div class="lg-item"><span class="lg-n">74</span><span class="lg-ar">عَصَى يَعْصِي عِصْيَاناً ومَعْصِيَّةً</span><span class="lg-dot"></span><span class="lg-uz">Osiy bo‘ldi / buyurilgan ishni qilmadi / isyon qiladi / ma’siyat</span></div>
+    <div class="lg-item"><span class="lg-n">75</span><span class="lg-ar">صَدَّقَ تَصْدِيقاً</span><span class="lg-dot"></span><span class="lg-uz">Ishondi / rost deb hisobladi</span></div>
+    <div class="lg-item"><span class="lg-n">76</span><span class="lg-ar">عَلَامَةُ التَّرْقِيمِ</span><span class="lg-dot"></span><span class="lg-uz">Tinish belgisi</span></div>
+    <div class="lg-item"><span class="lg-n">77</span><span class="lg-ar">شَغَلَ شَغْلاً</span><span class="lg-dot"></span><span class="lg-uz">Band bo‘ldi, band bo‘lish</span></div>
+    <div class="lg-item"><span class="lg-n">78</span><span class="lg-ar">فَاتَ فَوْتاً وَفَوَاتاً</span><span class="lg-dot"></span><span class="lg-uz">(bir ish) o‘tib ketdi</span></div>
+    <div class="lg-item"><span class="lg-n">79</span><span class="lg-ar">غَشَّ غَشًّا</span><span class="lg-dot"></span><span class="lg-uz">G‘irromlik qildi / aldadi</span></div>
+    <div class="lg-item"><span class="lg-n">80</span><span class="lg-ar">حَصَدَ حَصْداً</span><span class="lg-dot"></span><span class="lg-uz">Yig‘ib oldi / sug‘ordi</span></div>
+    <div class="lg-item"><span class="lg-n">81</span><span class="lg-ar">غَلَبَ غَلَبَةً</span><span class="lg-dot"></span><span class="lg-uz">G‘olib bo‘ldi / yengdi</span></div>
+    <div class="lg-item"><span class="lg-n">82</span><span class="lg-ar">غَيَّرَ تَغْيِيراً</span><span class="lg-dot"></span><span class="lg-uz">O‘zgartirdi</span></div>
+    <div class="lg-item"><span class="lg-n">83</span><span class="lg-ar">آمَنَ يُؤْمِنُ إيْمَاناً</span><span class="lg-dot"></span><span class="lg-uz">Ishondi, iymon keltirdi</span></div>
+    <div class="lg-item"><span class="lg-n">84</span><span class="lg-ar">اِتَّقَى اِتِّقاءً</span><span class="lg-dot"></span><span class="lg-uz">Taqvo qildi</span></div>
+    <div class="lg-item"><span class="lg-n">85</span><span class="lg-ar">تَطَوَّعَ تَطَوُّعاً</span><span class="lg-dot"></span><span class="lg-uz">Bo‘ysundi, mustahab ish qildi</span></div>
+    <div class="lg-item"><span class="lg-n">86</span><span class="lg-ar">اِسْتَغْفَرَ اِسْتِغْفَاراً</span><span class="lg-dot"></span><span class="lg-uz">Kechirim so‘radi / istig‘for aytdi</span></div>
+    <div class="lg-item"><span class="lg-n">87</span><span class="lg-ar">اِسْتَيْقَظَ اِسْتِيْقَاظاً</span><span class="lg-dot"></span><span class="lg-uz">Uyg‘ondi, uyg‘onish</span></div>
+    <div class="lg-item"><span class="lg-n">88</span><span class="lg-ar">أمِيرُ (ج: أُمَرَاءُ)</span><span class="lg-dot"></span><span class="lg-uz">Amir / boshliq / hokim</span></div>
+    <div class="lg-item"><span class="lg-n">89</span><span class="lg-ar">سِلاحٌ (ج: أَسْلِحَةٌ)</span><span class="lg-dot"></span><span class="lg-uz">Qurol</span></div>
+    <div class="lg-item"><span class="lg-n">90</span><span class="lg-ar">أَطَاعَ إِطَاعَةً</span><span class="lg-dot"></span><span class="lg-uz">Bo‘ysundi, itoat qildi</span></div>
+    <div class="lg-item"><span class="lg-n">91</span><span class="lg-ar">أَغْنَى إغْنَاءً</span><span class="lg-dot"></span><span class="lg-uz">Boy qildi, boy qilish</span></div>
+    <div class="lg-item"><span class="lg-n">92</span><span class="lg-ar">تَأَخَّرَ تَأَخُّراً</span><span class="lg-dot"></span><span class="lg-uz">Kechikdi, kechikish</span></div>
+    <div class="lg-item"><span class="lg-n">93</span><span class="lg-ar">تَعَلَّمَ تَعَلُماً</span><span class="lg-dot"></span><span class="lg-uz">O‘rgandi, o‘rganadi</span></div>
+    <div class="lg-item"><span class="lg-n">94</span><span class="lg-ar">اِحْتَرَمَ اِحْتِرَاماً</span><span class="lg-dot"></span><span class="lg-uz">Hurmat qildi</span></div>
+  </div>
+  <div class="lug-dars"><span class="ld-ar">كَلِمَاتِي</span><span class="ld-uz">Mening so‘zlarim</span></div>
+  <p class="lug-note">Kitobda uchragan, ro‘yxatda yo‘q so‘zlarni shu yerga yozib boring</p>
+  <div class="lug my-words">
+    <div class="lg-item"><span class="lg-n">1</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">2</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">3</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">4</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">5</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">6</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">7</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">8</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">9</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">10</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">11</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">12</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">13</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">14</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">15</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">16</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">17</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">18</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">19</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">20</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">21</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">22</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">23</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+    <div class="lg-item"><span class="lg-n">24</span><span class="lg-ar"></span><span class="lg-dot"></span><span class="lg-uz"></span></div>
+  </div>
+  </div>
+
+
+</div>
+<script>
+/* Husnixat namunalari: alif aynan bitta katak (6 mm) balandligida,
+   harf tagligi katak chizig'ida, bitta jumlali qator tatvil bilan cho'ziladi. */
+(function () {
+  var TATWEEL = "ـ";
+  var NOJOIN = "اأإآدذرزوؤءةى";
+  var ALEFS = "اأإآ";
+  var SQUARE = 6 * 96 / 25.4;
+  var MIN = 13, MAX = 64;
+  var DROP = 1;   // tayanchni chiziqdan shuncha piksel pastga tushirish
+  var ctx = document.createElement("canvas").getContext("2d");
+  var cache = {};
+
+  function alifSize(weight, family) {
+    var key = weight + "|" + family;
+    if (cache[key]) return cache[key];
+    ctx.font = weight + " 100px " + family;
+    var m = ctx.measureText("ا");
+    var ink = (m.actualBoundingBoxAscent || 0) + Math.max(0, m.actualBoundingBoxDescent || 0);
+    var size = ink > 0 ? SQUARE * 100 / ink : 42;
+    size = Math.max(MIN, Math.min(MAX, Math.round(size)));
+    cache[key] = size;
+    return size;
+  }
+
+  function isLetter(c) { return c >= "ء" && c <= "ي"; }
+
+  function slots(t) {
+    var p = [];
+    for (var i = 0; i < t.length - 1; i++) {
+      var a = t[i], b = t[i + 1];
+      if (!isLetter(a) || !isLetter(b)) continue;
+      if (NOJOIN.indexOf(a) >= 0) continue;
+      if (a === "ل" && ALEFS.indexOf(b) >= 0) continue;
+      if (a === "ل" && b === "ل") continue;
+      p.push(i + 1);
+    }
+    return p;
+  }
+
+  function stretch(t, p, k) {
+    if (k <= 0 || !p.length) return t;
+    var n = Math.min(p.length, Math.ceil(k / 2));
+    var add = {}, i, j;
+    for (i = 0; i < k; i++) {
+      var idx = n === 1 ? Math.floor(p.length / 2) : Math.round((i % n) * (p.length - 1) / (n - 1));
+      var pos = p[idx];
+      add[pos] = (add[pos] || 0) + 1;
+    }
+    var out = "";
+    for (i = 0; i < t.length; i++) {
+      out += t[i];
+      var c = add[i + 1];
+      if (c) for (j = 0; j < c; j++) out += TATWEEL;
+    }
+    return out;
+  }
+
+  function prep(span) {
+    if (span.getAttribute("data-ready")) return;
+    var txt = span.getAttribute("data-t") || span.textContent;
+    span.textContent = "";
+    span.appendChild(document.createTextNode(txt));
+    span.appendChild(document.createElement("i"));
+    span.setAttribute("data-ready", "1");
+  }
+
+  function setText(span, s) { span.firstChild.nodeValue = s; }
+
+  function fitRow(row) {
+    var spans = row.querySelectorAll("span");
+    if (!spans.length) return;
+    var i;
+    for (i = 0; i < spans.length; i++) { prep(spans[i]); spans[i].style.transform = "none"; }
+
+    var cs0 = getComputedStyle(spans[0]);
+    var fs = alifSize(cs0.fontWeight, cs0.fontFamily);
+    var cap = parseFloat(row.getAttribute("data-fscap") || 0);
+    if (cap && fs > cap) fs = cap;
+    row.style.setProperty("--fs", fs + "px");
+    while (row.scrollWidth > row.clientWidth + 1 && fs > MIN) {
+      fs -= 1;
+      row.style.setProperty("--fs", fs + "px");
+    }
+
+    var one = row.querySelector("span[data-t]");
+    if (one && spans.length === 1) {
+      var t = one.getAttribute("data-t");
+      var cs = getComputedStyle(row);
+      var room = row.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var p = slots(t);
+      var lo = 0, hi = 2 * p.length;
+      while (lo < hi) {
+        var mid = Math.ceil((lo + hi) / 2);
+        setText(one, stretch(t, p, mid));
+        if (one.getBoundingClientRect().width <= room) lo = mid; else hi = mid - 1;
+      }
+      setText(one, stretch(t, p, lo));
+    }
+
+    // tayanch chizig'i aynan katak chizig'iga tushsin — nishon piksel bo'yicha yaxlitlanadi
+    var anchor = spans[0].querySelector("i");
+    var page = row.closest && row.closest(".hx-page");
+    var top0 = page ? page.getBoundingClientRect().top : row.getBoundingClientRect().top;
+    // DROP — harflar chiziqqa tegib tursin uchun bir piksel pastga
+    var target = top0 + Math.round(row.getBoundingClientRect().bottom - top0) + DROP;
+    var d = target - anchor.getBoundingClientRect().top;
+    for (i = 0; i < spans.length; i++) spans[i].style.transform = "translateY(" + d.toFixed(2) + "px)";
+  }
+
+  function run() {
+    var rows = document.querySelectorAll(".hx-s");
+    for (var i = 0; i < rows.length; i++) fitRow(rows[i]);
+    // qatorlar zich turgan varaqlarda (10–12 qatorli) harakatlar ustki qatorga tegib ketmasin
+    for (i = 1; i < rows.length; i++) {
+      var prev = rows[i - 1], row = rows[i];
+      if (prev.parentNode !== row.parentNode) continue;
+      var a = prev.querySelector("span"), b = row.querySelector("span");
+      if (!a || !b) continue;
+      var guard = 0;
+      while (b.getBoundingClientRect().top < a.getBoundingClientRect().bottom - 1 && guard < 12) {
+        var fs = parseFloat(getComputedStyle(b).fontSize) - 1;
+        if (fs < MIN) break;
+        row.setAttribute("data-fscap", fs);
+        fitRow(row);
+        b = row.querySelector("span");
+        guard++;
+      }
+    }
+  }
+  window.__hxFit = run;
+
+  var timer;
+  window.addEventListener("resize", function () {
+    clearTimeout(timer); timer = setTimeout(run, 150);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  window.addEventListener("load", function () { setTimeout(run, 60); });
+})();
+</script>
+
+<script>
+/* o'quvchining natijasi shu brauzerda saqlanadi */
+(function () {
+  var KEY = "madina3-nrm-list";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+  var boxes = document.querySelectorAll(".nv-my");
+  for (var i = 0; i < boxes.length; i++) {
+    (function (el) {
+      var k = el.getAttribute("data-n");
+      if (saved[k]) el.value = saved[k];
+      el.addEventListener("input", function () {
+        saved[k] = el.value;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+      });
+    })(boxes[i]);
+  }
+})();
+</script>
+
+
+</body></html>

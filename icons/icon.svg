@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#006A47"/>
+  <g fill="none" stroke="#FBF9F2" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 160c-34-30-88-38-140-30v220c52-8 106 0 140 30 34-30 88-38 140-30V130c-52-8-106 0-140 30z"/>
+    <path d="M256 160v220"/>
+  </g>
+  <text x="352" y="318" text-anchor="middle" font-family="Scheherazade New, Amiri, serif" font-size="118" font-weight="700" fill="#FBF9F2">ف</text>
+  <text x="162" y="318" text-anchor="middle" font-family="Scheherazade New, Amiri, serif" font-size="118" font-weight="700" fill="#FBF9F2">ك</text>
+</svg>
