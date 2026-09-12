@@ -1,13 +1,33 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
 const VERSION = "__VERSION__";
+const BUILT = "__BUILT__";
 const CACHE = "firdavs-" + VERSION;
-const FILES = __FILES__;
+const FILES = __FILES__;                 // [yo'l, fayl xeshi] — xesh o'zgarmagan fayl eski keshdan olinadi, qayta yuklanmaydi
+const MANIFEST = "./__manifest__.json";  // keshdagi yo'l → xesh ro'yxati (serverda bunday fayl yo'q)
 
 self.addEventListener("install", (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(CACHE);
+    let old = null, oldMan = {};
+    for (const k of await caches.keys()) {
+      if (k === CACHE || !k.startsWith("firdavs-")) continue;
+      const oc = await caches.open(k);
+      const m = await oc.match(MANIFEST);
+      if (m) { old = oc; oldMan = await m.json(); break; }
+    }
     // bittalab: bitta fayl yuklanmasa, qolganlari baribir keshlansin
-    await Promise.all(FILES.map((f) => c.add(f).catch(() => null)));
+    await Promise.all(FILES.map(async ([f, h]) => {
+      try {
+        if (old && oldMan[f] === h) {
+          const r = await old.match(f, { ignoreSearch: true });
+          if (r) { await c.put(f, r); return; }
+        }
+        await c.add(f);
+      } catch (err) {}
+    }));
+    const man = {};
+    for (const [f, h] of FILES) man[f] = h;
+    await c.put(MANIFEST, new Response(JSON.stringify(man), { headers: { "Content-Type": "application/json" } }));
   })());
 });
 
@@ -20,6 +40,7 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("message", (e) => {
   if (e.data === "SKIP_WAITING") self.skipWaiting();
+  else if (e.data === "VERSION" && e.ports && e.ports[0]) e.ports[0].postMessage({ version: VERSION, built: BUILT });
 });
 
 async function cacheFirst(req) {
@@ -50,5 +71,6 @@ async function networkFirst(req) {
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin || e.request.method !== "GET") return;
+  if (e.request.cache === "no-store") return;   // version.json kabi «doim jonli» so'rovlar keshlanmaydi
   e.respondWith(e.request.mode === "navigate" ? networkFirst(e.request) : cacheFirst(e.request));
 });

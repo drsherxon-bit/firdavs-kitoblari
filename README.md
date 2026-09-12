@@ -23,7 +23,11 @@ Artifact → PDF → ilova. Ilovaga faqat artifact va PDF tasdiqlangandan keyin 
    (`madina-1…4`, `qoida-1…3`, `daftar-1…3` — ro‘yxat `app/books.json` da).
 2. `node tools/build.js` (yoki `node tools/build.js qoida-1`) — `kitob/` va `sw.js` qayta quriladi,
    versiya (fayllar xeshi) o‘zgaradi.
-3. Papka serverga yuklanadi. Ilova ochilganda «Kitoblarning yangi nusxasi bor — Yangilash» chiqadi.
+3. Papka serverga yuklanadi (`git push` → GitHub Pages, 1–2 daqiqa). Telefonda ilova ochilganda yangi nusxa
+   orqada yuklanadi (pastda «Yangi nusxa yuklanmoqda…»; faqat o‘zgargan fayllar — `sw.js` dagi fayl xeshlari
+   bo‘yicha), tayyor bo‘lgach «Kitoblarning yangi nusxasi bor — Yangilash» chiqadi. Yuklanish tugamay ilova
+   yopilsa ham, keyingi ochilishda tugma chiqadi (kutayotgan nusxa tekshiriladi). Pastdagi «Nusxa …» — hozir
+   ishlayotgan nusxa.
 
 ## Sinash
 

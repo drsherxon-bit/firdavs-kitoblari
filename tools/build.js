@@ -55,15 +55,23 @@ const walk = (dir, pre) => {
 };
 for (const d of ["app", "fonts", "icons", "kitob"]) walk(path.join(ROOT, d), d + "/");
 
+const sha = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 const h = crypto.createHash("sha1");
 h.update(fs.readFileSync(path.join(ROOT, "index.html")));
+// har fayl uchun alohida xesh: o'zgarmagan fayl telefonda qayta yuklanmaydi (sw.js install)
+const files = [];
 for (const f of list) {
-  const p = path.join(ROOT, f);
-  if (fs.existsSync(p) && fs.statSync(p).isFile()) h.update(fs.readFileSync(p));
+  const p = f === "./" ? path.join(ROOT, "index.html") : path.join(ROOT, f);
+  if (!fs.existsSync(p) || !fs.statSync(p).isFile()) continue;
+  const buf = fs.readFileSync(p);
+  if (f !== "./") h.update(buf);
+  files.push([f, sha(buf).slice(0, 12)]);
 }
 const ver = h.digest("hex").slice(0, 10);
+const built = new Date().toISOString();
 const swTpl = fs.readFileSync(path.join(__dirname, "sw.template.js"), "utf8");
 fs.writeFileSync(path.join(ROOT, "sw.js"),
-  swTpl.replace("__VERSION__", ver).replace("__FILES__", JSON.stringify(list, null, 1)));
-fs.writeFileSync(path.join(ROOT, "version.json"), JSON.stringify({ version: ver, built: new Date().toISOString() }));
-console.log("sw.js  versiya " + ver + "  (" + list.length + " fayl)");
+  swTpl.replace("__VERSION__", ver).replace("__BUILT__", built)
+       .replace("__FILES__", "[\n" + files.map((x) => " " + JSON.stringify(x)).join(",\n") + "\n]"));
+fs.writeFileSync(path.join(ROOT, "version.json"), JSON.stringify({ version: ver, built: built }));
+console.log("sw.js  versiya " + ver + "  (" + files.length + " fayl)");

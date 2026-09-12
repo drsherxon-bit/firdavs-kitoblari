@@ -207,31 +207,52 @@
     }
   });
 
-  /* versiya */
-  fetch("version.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (v) {
-    document.getElementById("ver").textContent = "Nusxa " + v.version + " · " + v.built.slice(0, 10);
-  }).catch(function () {});
+  /* versiya: ishlayotgan nusxa (oflayn xizmatchidan), u javob bermasa — tarmoqdagi version.json */
+  var verEl = document.getElementById("ver");
+  function showVer(v) { if (v && v.version) verEl.textContent = "Nusxa " + v.version + " · " + String(v.built || "").slice(0, 10); }
+  function activeVersion(cb) {
+    var sw = ("serviceWorker" in navigator) && navigator.serviceWorker.controller;
+    if (!sw) return cb(null);
+    var ch = new MessageChannel(), done = false;
+    function fin(v) { if (!done) { done = true; cb(v); } }
+    ch.port1.onmessage = function (ev) { fin(ev.data); };
+    try { sw.postMessage("VERSION", [ch.port2]); } catch (e) { fin(null); }
+    setTimeout(function () { fin(null); }, 1500);
+  }
+  activeVersion(function (a) {
+    if (a) showVer(a);
+    else fetch("version.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(showVer).catch(function () {});
+  });
 
-  /* oflayn xizmatchi */
+  /* oflayn xizmatchi. Yangi nusxa: o'rnatilayotganda — «yuklanmoqda», o'rnatilib kutayotganda — «Yangilash» tugmasi.
+     MUHIM: kutayotgan (waiting) nusxa har ochilishda tekshiriladi — yuklanish tugagunicha sahifa yopilgan bo'lsa ham. */
   var st = document.getElementById("st-off");
+  function status(ok, text) { st.className = ok ? "st ok" : "st"; st.lastElementChild.textContent = text; }
   if ("serviceWorker" in navigator) {
     var hadSW = !!navigator.serviceWorker.controller;   // birinchi o'rnatishda sahifa qayta yuklanmasin
     navigator.serviceWorker.register("sw.js").then(function (reg) {
-      function ready() { st.className = "st ok"; st.lastElementChild.textContent = "Internetsiz ham ochiladi"; }
-      if (reg.active && !reg.installing) ready();
-      reg.addEventListener("updatefound", function () {
-        var w = reg.installing;
+      function ready() { status(true, "Internetsiz ham ochiladi"); }
+      function offer(w) {                                 // yangi nusxa tayyor — foydalanuvchi «Yangilash» bosadi
+        ready();
+        var t = document.getElementById("toast"); t.hidden = false;
+        document.getElementById("reload").onclick = function () { t.hidden = true; status(false, "Yangilanmoqda…"); w.postMessage("SKIP_WAITING"); };
+      }
+      function track(w) {                                 // yangi nusxa yuklanmoqda (4–5 MB — telefonda vaqt oladi)
+        if (!w) return;
+        if (navigator.serviceWorker.controller) status(false, "Yangi nusxa yuklanmoqda…"); else status(false, "Oflayn tayyorlanmoqda…");
         w.addEventListener("statechange", function () {
-          if (w.state !== "installed") return;
-          if (navigator.serviceWorker.controller) {
-            var t = document.getElementById("toast"); t.hidden = false;
-            document.getElementById("reload").onclick = function () { w.postMessage("SKIP_WAITING"); };
-          } else ready();
+          if (w.state === "installed") { if (navigator.serviceWorker.controller) offer(w); else ready(); }
+          else if (w.state === "redundant" && reg.active && !reg.installing && !reg.waiting) ready();
         });
-      });
+      }
+      if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
+      else if (reg.installing) track(reg.installing);
+      else if (reg.active) ready();
+      reg.addEventListener("updatefound", function () { track(reg.installing); });
       navigator.serviceWorker.addEventListener("controllerchange", function () { if (hadSW) location.reload(); });
-    }).catch(function () { st.lastElementChild.textContent = "Oflayn rejim faqat https yoki o‘rnatilgan ilovada ishlaydi"; });
-  } else st.lastElementChild.textContent = "Bu brauzerda oflayn rejim yo‘q";
+      reg.update().catch(function () {});                 // har ochilishda yangilanish tekshiruvi
+    }).catch(function () { status(false, "Oflayn rejim faqat https yoki o‘rnatilgan ilovada ishlaydi"); });
+  } else status(false, "Bu brauzerda oflayn rejim yo‘q");
 
   /* o'rnatish */
   var inst = document.getElementById("install"), deferred = null;
