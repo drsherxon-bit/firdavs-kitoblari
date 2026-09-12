@@ -1,6 +1,6 @@
 # Firdavs kitoblari
 
-Madina kitobi (asl matn 1–3), Qoida sharhlari (1–3) va o‘quvchi daftarlari (1–3) — bitta
+Madina kitobi (asl matn 1–4; 3-jild ikki kitob: Madina 3 = 1–15-darslar, Madina 4 = 16–34-darslar, ilovalar va umumiy mashqlar), Qoida sharhlari (1–3) va o‘quvchi daftarlari (1–3) — bitta
 telefon ilovasi (PWA: «Bosh ekranga qo‘shish» bilan o‘rnatiladi, internetsiz ishlaydi).
 
 ## Papkalar
@@ -20,7 +20,7 @@ telefon ilovasi (PWA: «Bosh ekranga qo‘shish» bilan o‘rnatiladi, internets
 Artifact → PDF → ilova. Ilovaga faqat artifact va PDF tasdiqlangandan keyin o‘tiladi.
 
 1. Artifactning oxirgi nusxasi olinadi (Claude: `Artifact read`) va `src/<slug>.html` ga **nusxa** qilinadi
-   (`madina-1…3`, `qoida-1…3`, `daftar-1…3` — ro‘yxat `app/books.json` da).
+   (`madina-1…4`, `qoida-1…3`, `daftar-1…3` — ro‘yxat `app/books.json` da).
 2. `node tools/build.js` (yoki `node tools/build.js qoida-1`) — `kitob/` va `sw.js` qayta quriladi,
    versiya (fayllar xeshi) o‘zgaradi.
 3. Papka serverga yuklanadi. Ilova ochilganda «Kitoblarning yangi nusxasi bor — Yangilash» chiqadi.

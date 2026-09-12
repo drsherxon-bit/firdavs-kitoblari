@@ -1,5 +1,5 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "3c2e4ced3a";
+const VERSION = "d74b0e4e8d";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
  "./",
@@ -47,6 +47,7 @@ const FILES = [
  "./kitob/madina-1.html",
  "./kitob/madina-2.html",
  "./kitob/madina-3.html",
+ "./kitob/madina-4.html",
  "./kitob/qoida-1.html",
  "./kitob/qoida-2.html",
  "./kitob/qoida-3.html"

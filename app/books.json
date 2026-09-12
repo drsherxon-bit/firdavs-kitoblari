@@ -3,8 +3,10 @@
     "artifact": "https://claude.ai/code/artifact/64db45c9-b2dd-4cb7-9968-7378a789818f" },
   { "slug": "madina-2", "kind": "asl",    "juz": 2, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 2-kitob", "sub": "Asl matn · 31 dars",
     "artifact": "https://claude.ai/code/artifact/9aa39bf0-d65a-4e5c-947e-292ddc5aa3a6" },
-  { "slug": "madina-3", "kind": "asl",    "juz": 3, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 3-kitob", "sub": "Asl matn · 34 dars",
+  { "slug": "madina-3", "kind": "asl",    "juz": 3, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 3-kitob", "sub": "Asl matn · 1–15-darslar",
     "artifact": "https://claude.ai/code/artifact/3362a6c2-8272-4d19-9fa0-4c79258bc09d" },
+  { "slug": "madina-4", "kind": "asl",    "juz": 4, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 4-kitob", "sub": "Asl matn · 16–34-darslar (3-kitob davomi)",
+    "artifact": "https://claude.ai/code/artifact/0947dade-2b26-4f90-beb6-0f858b42519b" },
 
   { "slug": "qoida-1",  "kind": "qoida",  "juz": 1, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 1", "sub": "Qoidalar sharhi · kirish, 23 dars, xulosa",
     "artifact": "https://claude.ai/code/artifact/2fa46457-1c7a-4698-aca9-b048d490b1e5" },
