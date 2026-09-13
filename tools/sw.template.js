@@ -68,9 +68,35 @@ async function networkFirst(req) {
   }
 }
 
+// audio: keshdagi to'liq fayldan Range (206) javob yasaladi — Safari/Chrome pleyeri shuni kutadi;
+// tarmoqdan kelgan qisman (206) javob keshlanmaydi
+async function audio(req) {
+  const url = req.url.split("?")[0];
+  const cached = await caches.match(url);
+  const rh = req.headers.get("range");
+  if (cached) {
+    if (!rh) return cached;
+    const buf = await cached.arrayBuffer();
+    const total = buf.byteLength;
+    const m = /bytes=(\d*)-(\d*)/.exec(rh) || [];
+    let a = m[1] ? +m[1] : (m[2] ? Math.max(0, total - +m[2]) : 0);
+    let b = m[1] && m[2] ? +m[2] : total - 1;
+    if (a >= total) return new Response(null, { status: 416, headers: { "Content-Range": "bytes */" + total } });
+    b = Math.min(b, total - 1);
+    return new Response(buf.slice(a, b + 1), { status: 206, headers: {
+      "Content-Type": cached.headers.get("Content-Type") || "audio/mpeg",
+      "Content-Range": "bytes " + a + "-" + b + "/" + total,
+      "Content-Length": String(b - a + 1), "Accept-Ranges": "bytes" } });
+  }
+  const res = await fetch(req);
+  if (res.status === 200 && !rh) (await caches.open(CACHE)).put(url, res.clone());
+  return res;
+}
+
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin || e.request.method !== "GET") return;
   if (e.request.cache === "no-store") return;   // version.json kabi «doim jonli» so'rovlar keshlanmaydi
+  if (/\/audio\/.+\.mp3$/.test(url.pathname)) { e.respondWith(audio(e.request)); return; }
   e.respondWith(e.request.mode === "navigate" ? networkFirst(e.request) : cacheFirst(e.request));
 });

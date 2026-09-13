@@ -1,5 +1,5 @@
 [
-  { "slug": "madina-1", "kind": "asl",    "juz": 1, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 1-kitob", "sub": "Asl matn · 23 dars",
+  { "slug": "madina-1", "kind": "asl",    "juz": 1, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 1-kitob", "sub": "Asl matn · 23 dars · audio", "audio": "m1",
     "artifact": "https://claude.ai/code/artifact/64db45c9-b2dd-4cb7-9968-7378a789818f" },
   { "slug": "madina-2", "kind": "asl",    "juz": 2, "ar": "دُرُوسُ اللُّغَةِ العَرَبِيَّةِ", "uz": "Madina 2-kitob", "sub": "Asl matn · 31 dars",
     "artifact": "https://claude.ai/code/artifact/9aa39bf0-d65a-4e5c-947e-292ddc5aa3a6" },
