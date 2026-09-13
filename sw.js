@@ -1,6 +1,6 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "70e6c41483";
-const BUILT = "2026-09-13T16:18:28.678Z";
+const VERSION = "ff41912521";
+const BUILT = "2026-09-13T17:20:12.119Z";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
  ["./","e67c744053d6"],
@@ -46,7 +46,7 @@ const FILES = [
  ["./kitob/daftar-1.html","7e0127d2307c"],
  ["./kitob/daftar-2.html","f9222722e4e8"],
  ["./kitob/daftar-3.html","7ebb99ef974e"],
- ["./kitob/madina-1.html","8477b0ea20bf"],
+ ["./kitob/madina-1.html","d544adb40685"],
  ["./kitob/madina-2.html","f43154148816"],
  ["./kitob/madina-3.html","987a95d7b728"],
  ["./kitob/madina-4.html","7355dc3e8462"],
@@ -115,7 +115,7 @@ const FILES = [
  ["./audio/m1/7.mp3","56b9b7c26615"],
  ["./audio/m1/8.mp3","9bda5cc2a950"],
  ["./audio/m1/9.mp3","c789e1d33ea5"],
- ["./audio/m1/index.json","cfc34c14377d"]
+ ["./audio/m1/index.json","9f418468f736"]
 ];                 // [yo'l, fayl xeshi] — xesh o'zgarmagan fayl eski keshdan olinadi, qayta yuklanmaydi
 const MANIFEST = "./__manifest__.json";  // keshdagi yo'l → xesh ro'yxati (serverda bunday fayl yo'q)
 

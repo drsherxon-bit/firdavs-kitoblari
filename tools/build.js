@@ -31,7 +31,7 @@ function audioIndex(html, b) {
     const dars = +m[1], body = m[2];
     const h2 = /<h2 class="dars-head[^"]*">([\s\S]*?)<\/h2>/.exec(body);
     const darsTitle = h2 ? clean(h2[1].split('<span class="nrm">')[0]) : "";
-    const audRe = /<span class="aud">[\s\S]*?data-au="(\d+)" data-dur="(\d+)"/g;
+    const audRe = /<span class="aud[^"]*">[\s\S]*?data-au="(\d+)" data-dur="(\d+)"/g;
     let a;
     while ((a = audRe.exec(body))) {
       const before = body.slice(0, a.index);
@@ -40,10 +40,10 @@ function audioIndex(html, b) {
       let host = null, hm;
       while ((hm = hostRe.exec(before))) host = { tag: hm[1], cls: hm[2], end: hm.index + hm[0].length };
       const seg = host ? before.slice(host.end) : "";
-      const title = host && host.cls !== "nrm-row" ? clean(seg.split('<span class="nrm">')[0]) : "";
+      const title = host && host.cls !== "nrm-row" && host.cls !== "dars-head" ? clean(seg.split('<span class="nrm">')[0]) : "";
       const nrm = (/<\/svg>(\d+:\d\d)<\/span>/.exec(seg) || [])[1] || "";
       // keyingi matnning boshi (sarlavhasiz matn va «(أ)» kabi qisqa sarlavhalar uchun)
-      const AUD = /<span class="aud">[\s\S]*?<span class="ad">[^<]*<\/span><\/button><\/span>/g;
+      const AUD = /<span class="aud[^"]*">[\s\S]*?<span class="ad">[^<]*<\/span><\/button><\/span>/g;
       const after = body.slice(a.index).replace(AUD, " ");
       const snippet = clean(after.replace(/<span class="nrm">[\s\S]*?<\/span><\/span>/g, " ")
         .replace(/<h2[\s\S]*?<\/h2>/g, " ")).split(" ").slice(0, 7).join(" ");
