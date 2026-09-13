@@ -12,7 +12,7 @@ telefon ilovasi (PWA: «Bosh ekranga qo‘shish» bilan o‘rnatiladi, internets
 | `app/` | `books.json` (kitoblar ro‘yxati), `reader.css/js` (pastki panel: Kutubxona · Mundarija · harf kattaligi · mavzu; o‘qilgan joyni eslab qoladi). |
 | `fonts/` | Amiri, Literata, Scheherazade New (woff2, Google Fonts’dan ko‘chirilgan) + `fonts.css`. |
 | `icons/` | Ilova ikonkasi (svg + png). |
-| `audio/` | Ustoz o‘qigan normativ audiolari: `audio/<id>/N.mp3` (artifactdagi yo‘l bilan bir xil; kitobda `../audio/`) va `index.json` (build.js yasaydi: dars, mavzu, normativ vaqti, davomiyligi). Hozir `m1` = Madina 1 (62 ta, 30 MB). |
+| `audio/` | Ustoz o‘qigan normativ audiolari: `audio/<id>/N.mp3` (artifactdagi yo‘l bilan bir xil; kitobda `../audio/`) va `index.json` (build.js yasaydi: dars, mavzu, normativ vaqti, davomiyligi). Hozir `m1` = Madina 1 (62 ta, 32 MB), `m2` = Madina 2 (81 ta, 51 MB). |
 | `tools/` | `build.js` — qurish; `sw.template.js` — oflayn xizmatchi shabloni. |
 | `index.html` | Kutubxona ekrani. `normativ.html` — «Normativlar»: kitob tanlanadi, o‘sha kitobning audiolari dars-ba-dars ro‘yxatda (▶, ±5 s). `manifest.webmanifest`, `sw.js`, `version.json` — PWA qismi. |
 
@@ -45,6 +45,6 @@ faqat **https** da ishlaydi. Play Market kerak bo‘lsa shu papka Capacitor bila
 - Kitobga audio artifactda qo‘shiladi (`span.aud`, `audio/<id>/N.mp3`); `books.json` da `"audio": "<id>"` bo‘lsa
   `build.js` kitobdagi yo‘lni `../audio/` ga o‘giradi va `audio/<id>/index.json` ro‘yxatini yasaydi.
 - `normativ.html?kitob=<slug>` — shu ro‘yxatdan sahifa. Bosma kitob muqovasidagi QR kod shu manzilga olib keladi
-  (Madina 1: `normativ.html?kitob=madina-1`).
-- Oflayn: audiolar ham keshlanadi (birinchi o‘rnatishda ~35 MB); `sw.js` keshdagi fayldan Range (206) javob yasaydi,
+  (Madina 1: `normativ.html?kitob=madina-1`, Madina 2: `normativ.html?kitob=madina-2`).
+- Oflayn: audiolar ham keshlanadi (birinchi o‘rnatishda ~90 MB); `sw.js` keshdagi fayldan Range (206) javob yasaydi,
   shuning uchun pleyerda oldinga/orqaga o‘tkazish internetsiz ham ishlaydi.

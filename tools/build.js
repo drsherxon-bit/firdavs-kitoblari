@@ -22,7 +22,9 @@ fs.mkdirSync(OUT, { recursive: true });
 
 // ---- kitobdagi audio ro'yxati (Normativlar sahifasi uchun) ----
 const clean = (s) => s.replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
-  .replace(/\s+/g, " ").trim();
+  .replace(/&#(\d+);/g, (m, c) => String.fromCodePoint(+c)).replace(/\s+/g, " ").trim();
+// audio tugmasining o'zi (matndan olib tashlash uchun)
+const AUD = /<span class="aud[^"]*">[\s\S]*?<span class="ad">[^<]*<\/span><\/button><\/span>/g;
 function audioIndex(html, b) {
   const items = [];
   const secRe = /<section class="dars" id="dars-(\d+)">([\s\S]*?)<\/section>/g;
@@ -31,19 +33,19 @@ function audioIndex(html, b) {
     const dars = +m[1], body = m[2];
     const h2 = /<h2 class="dars-head[^"]*">([\s\S]*?)<\/h2>/.exec(body);
     const darsTitle = h2 ? clean(h2[1].split('<span class="nrm">')[0]) : "";
-    const audRe = /<span class="aud[^"]*">[\s\S]*?data-au="(\d+)" data-dur="(\d+)"/g;
+    const audRe = /<span class="aud[^"]*">[\s\S]*?data-au="(\d+)" data-dur="(\d+)"(?: data-t="([^"]*)")?/g;
     let a;
     while ((a = audRe.exec(body))) {
       const before = body.slice(0, a.index);
-      // eng yaqin ega element: sarlavha/band yoki sarlavhasiz matn qatori
-      const hostRe = /<(h2|div|p) class="(dars-head|topic|tamrin|lead|part|nrm-row)[^"]*"[^>]*>/g;
+      // eng yaqin ega element: sarlavha/band, sarlavhasiz matn qatori yoki jadval qatori (qr — Madina 2, 24-dars sonlari)
+      const hostRe = /<(h2|div|p|span) class="(dars-head|topic|tamrin|lead|part|nrm-row|qr)[^"]*"[^>]*>/g;
       let host = null, hm;
       while ((hm = hostRe.exec(before))) host = { tag: hm[1], cls: hm[2], end: hm.index + hm[0].length };
-      const seg = host ? before.slice(host.end) : "";
-      const title = host && host.cls !== "nrm-row" && host.cls !== "dars-head" ? clean(seg.split('<span class="nrm">')[0]) : "";
-      const nrm = (/<\/svg>(\d+:\d\d)<\/span>/.exec(seg) || [])[1] || "";
+      const seg = host ? before.slice(host.end).replace(AUD, " ") : "";   // shu egadagi oldingi tugma (ikkinchi tugma bo'lsa) hisobga olinmaydi
+      let title = host && host.cls !== "nrm-row" && host.cls !== "dars-head" ? clean(seg.split('<span class="nrm">')[0]) : "";
+      if (a[3]) title = (title ? title + " · " : "") + a[3];   // data-t: tugmaning o'z nomi (masalan, sonlar oralig'i)
+      const nrm = (/<\/svg>([\d٠-٩]+:[\d٠-٩]{2})<\/span>/.exec(seg) || [])[1] || "";
       // keyingi matnning boshi (sarlavhasiz matn va «(أ)» kabi qisqa sarlavhalar uchun)
-      const AUD = /<span class="aud[^"]*">[\s\S]*?<span class="ad">[^<]*<\/span><\/button><\/span>/g;
       const after = body.slice(a.index).replace(AUD, " ");
       const snippet = clean(after.replace(/<span class="nrm">[\s\S]*?<\/span><\/span>/g, " ")
         .replace(/<h2[\s\S]*?<\/h2>/g, " ")).split(" ").slice(0, 7).join(" ");
