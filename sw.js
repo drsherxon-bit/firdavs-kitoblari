@@ -1,11 +1,11 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "e563c6432f";
-const BUILT = "2026-09-13T16:11:22.834Z";
+const VERSION = "70e6c41483";
+const BUILT = "2026-09-13T16:18:28.678Z";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
  ["./","e67c744053d6"],
  ["./manifest.webmanifest","e0655c87f0a2"],
- ["./normativ.html","4cd0f50963be"],
+ ["./normativ.html","e7baefa7221c"],
  ["./app/books.json","ea74e0325e22"],
  ["./app/reader.css","a7a8abeb8493"],
  ["./app/reader.js","c08b19fd0f8d"],
@@ -212,5 +212,7 @@ self.addEventListener("fetch", (e) => {
   if (url.origin !== location.origin || e.request.method !== "GET") return;
   if (e.request.cache === "no-store") return;   // version.json kabi «doim jonli» so'rovlar keshlanmaydi
   if (/\/audio\/.+\.mp3$/.test(url.pathname)) { e.respondWith(audio(e.request)); return; }
+  // ro'yxatlar (kitoblar, audio indeksi): avval tarmoq — yangi kitob/audio darrov ko'rinsin, oflayn bo'lsa kesh
+  if (/\/(app\/books\.json|audio\/[^/]+\/index\.json)$/.test(url.pathname)) { e.respondWith(networkFirst(e.request)); return; }
   e.respondWith(e.request.mode === "navigate" ? networkFirst(e.request) : cacheFirst(e.request));
 });

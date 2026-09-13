@@ -98,5 +98,7 @@ self.addEventListener("fetch", (e) => {
   if (url.origin !== location.origin || e.request.method !== "GET") return;
   if (e.request.cache === "no-store") return;   // version.json kabi «doim jonli» so'rovlar keshlanmaydi
   if (/\/audio\/.+\.mp3$/.test(url.pathname)) { e.respondWith(audio(e.request)); return; }
+  // ro'yxatlar (kitoblar, audio indeksi): avval tarmoq — yangi kitob/audio darrov ko'rinsin, oflayn bo'lsa kesh
+  if (/\/(app\/books\.json|audio\/[^/]+\/index\.json)$/.test(url.pathname)) { e.respondWith(networkFirst(e.request)); return; }
   e.respondWith(e.request.mode === "navigate" ? networkFirst(e.request) : cacheFirst(e.request));
 });

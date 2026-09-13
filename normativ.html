@@ -110,6 +110,13 @@
   .sb:focus-visible { outline: 2px solid var(--asl); outline-offset: 2px; }
 
   .empty { color: var(--muted); font-size: 0.9rem; padding: 20px 0; }
+  .toast {
+    position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    background: var(--ink); color: var(--paper); border-radius: 10px; padding: 10px 16px; font-size: 0.88rem;
+    display: flex; gap: 14px; align-items: center; box-shadow: 0 6px 24px rgba(0,0,0,0.25); z-index: 20; max-width: calc(100vw - 32px);
+  }
+  .toast button { border: 0; background: var(--accent); color: #fff; border-radius: 7px; padding: 6px 12px; font: inherit; font-weight: 700; cursor: pointer; }
+  .toast[hidden] { display: none; }
   .foot { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; }
   @media (max-width: 400px) { .it .tt { font-size: 1.05rem; } .it .meta { gap: 10px; } }
 </style>
@@ -131,6 +138,7 @@
 
   <footer class="foot"><span id="cnt"></span></footer>
 </div>
+<div class="toast" id="toast" hidden><span>Kitoblarning yangi nusxasi bor.</span><button type="button" id="reload">Yangilash</button></div>
 
 <script>
 (function () {
@@ -268,7 +276,20 @@
     choose(q || get("firdavs:nrm-book") || first);
   });
 
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function () {});
+  /* oflayn xizmatchi: yangi nusxa kutayotgan bo'lsa (masalan, QR orqali kelganda) — «Yangilash» */
+  if ("serviceWorker" in navigator) {
+    var hadSW = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register("sw.js").then(function (reg) {
+      var t = document.getElementById("toast");
+      function offer(w) { t.hidden = false; document.getElementById("reload").onclick = function () { t.hidden = true; w.postMessage("SKIP_WAITING"); }; }
+      function track(w) { if (w) w.addEventListener("statechange", function () { if (w.state === "installed" && navigator.serviceWorker.controller) offer(w); }); }
+      if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
+      else if (reg.installing) track(reg.installing);
+      reg.addEventListener("updatefound", function () { track(reg.installing); });
+      navigator.serviceWorker.addEventListener("controllerchange", function () { if (hadSW) location.reload(); });
+      reg.update().catch(function () {});
+    }).catch(function () {});
+  }
 })();
 </script>
 </body>
