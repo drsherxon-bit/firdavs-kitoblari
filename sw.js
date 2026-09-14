@@ -1,6 +1,6 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "48c6926c96";
-const BUILT = "2026-09-14T00:15:49.386Z";
+const VERSION = "c37c12748e";
+const BUILT = "2026-09-14T12:42:38.408Z";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
  ["./","e67c744053d6"],
@@ -48,8 +48,8 @@ const FILES = [
  ["./kitob/daftar-3.html","7ebb99ef974e"],
  ["./kitob/madina-1.html","19dcd1917ffe"],
  ["./kitob/madina-2.html","6f6e06e0e28d"],
- ["./kitob/madina-3.html","987a95d7b728"],
- ["./kitob/madina-4.html","7355dc3e8462"],
+ ["./kitob/madina-3.html","30bfcfd4c121"],
+ ["./kitob/madina-4.html","13dad31d7a16"],
  ["./kitob/qoida-1.html","24d582504a94"],
  ["./kitob/qoida-2.html","b8ff27a64a2a"],
  ["./kitob/qoida-3.html","50e260abe1bb"],
