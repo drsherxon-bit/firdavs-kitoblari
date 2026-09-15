@@ -90,6 +90,17 @@ for (const b of BOOKS) {
     console.log("  audio/" + b.audio + "/index.json  " + idx.items.length + " ta audio");
   }
 
+  // 4b. So'zlashuv (muhadasa) audiolari: artifactda data-src="audio/<fayl>.mp3" sahifa yonida;
+  //     ilovada audio/<id>/ papkasida (Normativlar sahifasiga kirmaydi — bu ustoz audiosi emas, TTS suhbatlar)
+  if (b.mp3) {
+    const dir = path.join(ROOT, "audio", b.mp3);
+    const refs = [...html.matchAll(/data-src="audio\/([^"]+)"/g)].map((m) => m[1]);
+    const missing = refs.filter((f) => !fs.existsSync(path.join(dir, f)));
+    if (missing.length) console.warn("  audio fayli yo'q (" + b.mp3 + "): " + missing.join(", "));
+    html = html.split('data-src="audio/').join('data-src="../audio/' + b.mp3 + '/');
+    console.log("  audio/" + b.mp3 + "/  " + refs.length + " ta so'zlashuv audiosi");
+  }
+
   fs.writeFileSync(path.join(OUT, b.slug + ".html"), html);
   console.log("→ kitob/" + b.slug + ".html  " + (html.length / 1024).toFixed(0) + " KB");
 }

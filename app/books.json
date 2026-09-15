@@ -12,7 +12,7 @@
     "artifact": "https://claude.ai/code/artifact/2fa46457-1c7a-4698-aca9-b048d490b1e5" },
   { "slug": "qoida-2",  "kind": "qoida",  "juz": 2, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 2", "sub": "Qoidalar sharhi · yozilmoqda",
     "artifact": "https://claude.ai/code/artifact/9e6d8cc4-639c-4e85-af36-d64ce760c2c3" },
-  { "slug": "qoida-3",  "kind": "qoida",  "juz": 3, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 3", "sub": "Qoidalar sharhi · yozilmoqda",
+  { "slug": "qoida-3",  "kind": "qoida",  "juz": 3, "ar": "شَرْحُ دُرُوسِ اللُّغَةِ", "uz": "Qoida 3", "sub": "Qoidalar sharhi · 1–15-darslar, so‘zlashuv, xulosa", "mp3": "q3",
     "artifact": "https://claude.ai/code/artifact/9733ed03-ea8e-4a6e-a9fc-1b4b2ccadb2e" },
 
   { "slug": "daftar-1", "kind": "daftar", "juz": 1, "ar": "كُرَّاسَةُ الطَّالِبِ", "uz": "O‘quvchi daftari 1", "sub": "Reja · normativ · savollar · lug‘at · husnixat",
