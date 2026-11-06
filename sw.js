@@ -1,6 +1,6 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "4e834dffe9";
-const BUILT = "2026-11-06T14:14:48.607Z";
+const VERSION = "a340c9eb2f";
+const BUILT = "2026-11-06T14:21:51.328Z";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
  ["./","dc330f6657ed"],
@@ -46,9 +46,9 @@ const FILES = [
  ["./kitob/daftar-1.html","7e0127d2307c"],
  ["./kitob/daftar-2.html","40cf76918ac9"],
  ["./kitob/daftar-3.html","336c1fd916f5"],
- ["./kitob/madina-1.html","efb3dbee208a"],
+ ["./kitob/madina-1.html","0d8a5c373c22"],
  ["./kitob/madina-2.html","10767e748a52"],
- ["./kitob/madina-3.html","5f31c7b89e23"],
+ ["./kitob/madina-3.html","eedfda534452"],
  ["./kitob/madina-4.html","4b8d2127ad1a"],
  ["./kitob/qoida-1.html","bade8e353825"],
  ["./kitob/qoida-2.html","b8ff27a64a2a"],
@@ -115,7 +115,7 @@ const FILES = [
  ["./audio/m1/7.mp3","56b9b7c26615"],
  ["./audio/m1/8.mp3","9bda5cc2a950"],
  ["./audio/m1/9.mp3","c789e1d33ea5"],
- ["./audio/m1/index.json","8538ad1b0714"],
+ ["./audio/m1/index.json","87ff36a7af66"],
  ["./audio/m2/1.mp3","c25ed928c69c"],
  ["./audio/m2/10.mp3","2691ad1a484e"],
  ["./audio/m2/11.mp3","e6e155c53ade"],
