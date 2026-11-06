@@ -1,63 +1,198 @@
-/* Firdavs kitoblari — kitob ichidagi o'quvchi paneli.
-   Kitobning o'z ranglaridan foydalanadi (--paper, --ink, --accent, --line/--rule). */
-:root { --fk-zoom: 1; --fk-bar: 52px; }
-body > :not(.fk-bar):not(.fk-sheet):not(.fk-dim) { zoom: var(--fk-zoom); }
+/* Firdavs kitoblari — kitob ichidagi o'quvchi qobig'i:
+   pastki panel, mundarija, ko'rinish sozlamalari, audio pleyer.
+   Kitobning O'Z ranglaridan foydalanadi: --paper, --card, --ink, --muted, --accent, --line/--rule.
+   Qobiqning hamma elementida data-fk bor — harf kattaligi (zoom) ularga tegmaydi. */
+:root { --fk-zoom: 1; --fk-lead: 1; --fk-bar: 56px; --fk-player: 0px; }
+body > :not([data-fk]) { zoom: var(--fk-zoom); }
 /* kattalashtirilganda 1–2 px yon toshish telefonda butun sahifani surib yuboradi — kesib tashlanadi */
 html, body { overflow-x: clip; }
-body::after { content: ""; display: block; height: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px) + 12px); }
-
-.fk-bar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-  display: flex; align-items: stretch; justify-content: space-around;
-  height: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px));
-  padding: 0 4px env(safe-area-inset-bottom, 0px);
-  background: var(--paper, #FBF9F2);
-  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+body::after {
+  content: ""; display: block;
+  height: calc(var(--fk-bar) + var(--fk-player) + env(safe-area-inset-bottom, 0px) + 14px);
 }
-.fk-bar button, .fk-bar a {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  border: 0; background: none; color: var(--muted, #726D65); text-decoration: none;
-  font: inherit; font-size: 0.62rem; letter-spacing: 0.04em; cursor: pointer; padding: 0; min-width: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-.fk-bar svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.fk-bar .fk-home { color: var(--accent, #006A47); }
-.fk-bar button:active, .fk-bar a:active { color: var(--accent, #006A47); }
-.fk-bar .fk-aa { font-weight: 700; font-family: "Literata", Georgia, serif; }
-.fk-bar .fk-aa b { font-size: 1.05rem; line-height: 1; }
-.fk-bar .fk-aa.sm b { font-size: 0.85rem; }
-
-.fk-dim { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.35); }
-.fk-sheet {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
-  max-height: 72vh; overflow-y: auto; overscroll-behavior: contain;
-  background: var(--paper, #FBF9F2); color: var(--ink, #0A0A0A);
-  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
-  border-radius: 14px 14px 0 0;
-  padding: 8px 0 calc(12px + env(safe-area-inset-bottom, 0px));
-  font-family: "Literata", Georgia, serif;
-  box-shadow: 0 -8px 30px rgba(0,0,0,0.12);
-}
-.fk-sheet::before { content: ""; display: block; width: 38px; height: 4px; border-radius: 2px; margin: 0 auto 10px; background: var(--line, var(--rule, #D7DDE6)); }
-.fk-sheet h3 { margin: 0 18px 6px; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #006A47); font-weight: 700; }
-.fk-sheet a {
-  display: flex; align-items: baseline; gap: 12px;
-  padding: 10px 18px; color: inherit; text-decoration: none; font-size: 0.98rem;
-  border-top: 1px solid var(--line, var(--rule, #D7DDE6));
-}
-.fk-sheet a.now { color: var(--accent, #006A47); font-weight: 700; }
-.fk-sheet a .ar { margin-left: auto; font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 1.15rem; color: var(--muted, #726D65); }
-.fk-sheet a.now .ar { color: var(--accent, #006A47); }
-.fk-sheet .fk-row { display: flex; gap: 8px; padding: 6px 18px 10px; }
-.fk-sheet .fk-row button {
-  flex: 1; border: 1px solid var(--line, var(--rule, #D7DDE6)); background: var(--card, #FFFDF7); color: var(--ink, #0A0A0A);
-  border-radius: 8px; padding: 8px 4px; font: inherit; font-size: 0.85rem; cursor: pointer;
-}
-.fk-sheet .fk-row button.on { border-color: var(--accent, #006A47); color: var(--accent, #006A47); font-weight: 700; }
 [hidden] { display: none !important; }
 
+/* ---- qobiqning umumiy ranglari (kitobdan olinadi) ---- */
+[data-fk] {
+  --fk-pap: var(--paper, #FBF9F2);
+  --fk-card: var(--card, #FFFDF7);
+  --fk-ink: var(--ink, #0A0A0A);
+  --fk-mut: var(--muted, #726D65);
+  --fk-acc: var(--accent, #006A47);
+  --fk-line: var(--line, var(--rule, #D7DDE6));
+  --fk-soft: var(--accent-soft, #EEF3F0);
+  font-family: "Literata", Georgia, serif;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+@supports (background: color-mix(in srgb, red 10%, white)) {
+  [data-fk] { --fk-soft: color-mix(in srgb, var(--fk-acc) 12%, var(--fk-pap)); }
+}
+[data-fk] *, [data-fk] *::before, [data-fk] *::after { box-sizing: border-box; }
+[data-fk] svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- pastki panel ---- */
+.fk-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; align-items: stretch;
+  height: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px));
+  padding: 0 4px env(safe-area-inset-bottom, 0px);
+  background: var(--fk-pap);
+  border-top: 1px solid var(--fk-line);
+}
+@supports (backdrop-filter: blur(4px)) {
+  .fk-bar { background: color-mix(in srgb, var(--fk-pap) 84%, transparent); backdrop-filter: blur(14px) saturate(1.3); }
+}
+.fk-bar > a, .fk-bar > button {
+  flex: 1; min-width: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  color: var(--fk-mut); text-decoration: none; font: inherit; font-size: 0.6rem; letter-spacing: 0.03em;
+}
+.fk-bar svg { width: 22px; height: 22px; }
+.fk-bar > a:active, .fk-bar > button:active, .fk-bar > .on { color: var(--fk-acc); }
+.fk-bar .fk-home { color: var(--fk-acc); }
+.fk-bar .fk-aa b { font: 700 1.1rem/1 "Literata", Georgia, serif; letter-spacing: -0.02em; }
+/* o'qilgan ulush — panel ustidagi ingichka chiziq */
+.fk-prog { position: absolute; left: 0; top: -1px; height: 2px; width: 0; background: var(--fk-acc); border-radius: 0 2px 2px 0; transition: width 0.25s; }
+
+/* ---- pastdan chiqadigan varaq (mundarija, ko'rinish) ---- */
+.fk-dim { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.42); opacity: 0; transition: opacity 0.22s; }
+.fk-dim.in { opacity: 1; }
+.fk-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+  display: flex; flex-direction: column; max-height: 84vh;
+  background: var(--fk-pap); color: var(--fk-ink);
+  border: 1px solid var(--fk-line); border-bottom: 0; border-radius: 18px 18px 0 0;
+  box-shadow: 0 -10px 34px rgba(0, 0, 0, 0.16);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transform: translateY(101%); transition: transform 0.26s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+.fk-sheet.in { transform: none; }
+.fk-grab { flex: none; width: 40px; height: 4px; border-radius: 2px; background: var(--fk-line); margin: 8px auto 0; }
+.fk-head { flex: none; display: flex; align-items: flex-start; gap: 10px; padding: 8px 16px 10px; }
+.fk-head h3 { margin: 0; font-size: 1.04rem; font-weight: 700; line-height: 1.2; }
+.fk-head p { margin: 3px 0 0; font-size: 0.76rem; color: var(--fk-mut); }
+.fk-x {
+  flex: none; margin-inline-start: auto; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--fk-line); background: var(--fk-card); color: var(--fk-mut);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.fk-x svg { width: 16px; height: 16px; stroke-width: 2; }
+.fk-body { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* ---- mundarija ro'yxati ---- */
+.fk-ti {
+  display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+  color: inherit; text-decoration: none; border-top: 1px solid var(--fk-line);
+}
+.fk-ti:first-child { border-top: 0; }
+.fk-ti .n {
+  flex: none; width: 30px; height: 30px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--fk-card); border: 1px solid var(--fk-line); color: var(--fk-mut);
+  font-size: 0.78rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.fk-ti .tx { flex: 1; min-width: 0; }
+.fk-ti .u { display: flex; align-items: baseline; gap: 10px; font-size: 0.95rem; font-weight: 600; line-height: 1.3; }
+.fk-ti .u span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fk-ti .u i {
+  margin-left: auto; flex: none; font-style: normal;   /* rtl elementda inline-start = o'ng tomon */
+  font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate;
+  font-size: 1.06rem; color: var(--fk-mut); max-width: 9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.fk-ti .m { display: flex; align-items: center; gap: 10px; margin-top: 2px; font-size: 0.72rem; color: var(--fk-mut); font-variant-numeric: tabular-nums; }
+.fk-ti .m em { font-style: normal; display: inline-flex; align-items: center; gap: 4px; }
+.fk-ti .m svg { width: 11px; height: 11px; }
+.fk-ti .s { flex: none; width: 24px; text-align: center; color: var(--fk-acc); font-size: 0.7rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.fk-ti .s svg { width: 17px; height: 17px; stroke-width: 2.4; }
+.fk-ti.done .n { background: var(--fk-soft); border-color: transparent; color: var(--fk-acc); }
+.fk-ti.now { background: var(--fk-soft); }
+.fk-ti.now .n { background: var(--fk-acc); border-color: transparent; color: var(--fk-pap); }
+.fk-ti.now .u { color: var(--fk-acc); }
+.fk-empty { padding: 18px 16px; color: var(--fk-mut); font-size: 0.9rem; }
+
+/* ---- ko'rinish sozlamalari ---- */
+.fk-set { display: flex; flex-direction: column; gap: 12px; padding: 2px 16px 18px; }
+.fk-r { display: flex; align-items: center; gap: 12px; }
+.fk-r > .k { flex: none; width: 5.4em; font-size: 0.8rem; color: var(--fk-mut); }
+.fk-seg, .fk-step {
+  flex: 1; min-width: 0; display: flex; gap: 3px; padding: 3px;
+  background: var(--fk-card); border: 1px solid var(--fk-line); border-radius: 11px;
+}
+.fk-seg button {
+  flex: 1; min-width: 0; border: 0; background: none; border-radius: 8px; cursor: pointer;
+  padding: 7px 2px; font: inherit; font-size: 0.82rem; color: var(--fk-ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+}
+.fk-seg button svg { width: 15px; height: 15px; }
+.fk-seg button.on { background: var(--fk-acc); color: var(--fk-pap); font-weight: 700; }
+.fk-step { align-items: center; justify-content: space-between; padding: 3px 4px; }
+.fk-step button { width: 40px; height: 30px; border: 0; background: none; color: var(--fk-acc); cursor: pointer; font: 700 1.05rem/1 "Literata", Georgia, serif; }
+.fk-step button:disabled { color: var(--fk-line); }
+.fk-step .v { font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.fk-prev {
+  margin-top: 2px; padding: 12px 14px; border: 1px solid var(--fk-line); border-radius: 12px; background: var(--fk-card);
+  font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; text-align: center; color: var(--fk-ink);
+  font-size: calc(1.28rem * var(--fk-zoom)); line-height: calc(1.95 * var(--fk-lead));
+}
+.fk-reset { align-self: flex-start; border: 0; background: none; color: var(--fk-mut); font: inherit; font-size: 0.76rem; text-decoration: underline; cursor: pointer; padding: 0; }
+
+/* ---- audio pleyer (ustoz o'qishi) ---- */
+.fk-play {
+  position: fixed; left: 8px; right: 8px; z-index: 55;
+  bottom: calc(var(--fk-bar) + env(safe-area-inset-bottom, 0px) + 8px);
+  display: flex; flex-direction: column; gap: 7px; padding: 8px 10px;
+  background: var(--fk-card); border: 1px solid var(--fk-line); border-radius: 15px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.16);
+  transform: translateY(160%); transition: transform 0.26s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+.fk-play.in { transform: none; }
+.fk-p1, .fk-p2 { display: flex; align-items: center; gap: 8px; }
+.fk-pp {
+  flex: none; width: 38px; height: 38px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--fk-acc); color: var(--fk-pap); display: inline-flex; align-items: center; justify-content: center;
+}
+.fk-pp svg { width: 17px; height: 17px; fill: currentColor; stroke: none; }
+.fk-sk {
+  flex: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--fk-line); background: var(--fk-pap); color: var(--fk-acc);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.fk-sk svg { width: 19px; height: 19px; }
+.fk-sk .ah { fill: currentColor; stroke: none; }
+.fk-sk text { fill: currentColor; stroke: none; font: 700 9px "Literata", Georgia, serif; }
+.fk-t { flex: 1; min-width: 0; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font: inherit; text-align: start; }
+.fk-t b { display: block; font-size: 0.8rem; font-weight: 700; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fk-t b i { font-style: normal; font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; font-size: 0.96rem; }
+.fk-t span { display: block; font-size: 0.7rem; color: var(--fk-mut); }
+.fk-seek { flex: 1; min-width: 56px; height: 22px; display: flex; align-items: center; cursor: pointer; touch-action: none; }
+.fk-seek i { display: block; width: 100%; height: 4px; border-radius: 2px; background: var(--fk-line); }
+.fk-seek i b { display: block; position: relative; height: 100%; border-radius: 2px; background: var(--fk-acc); width: 0; }
+.fk-seek i b::after {
+  content: ""; position: absolute; top: 50%; left: 100%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px;
+  border-radius: 50%; background: var(--fk-acc);
+}
+.fk-time { flex: none; font-size: 0.7rem; color: var(--fk-mut); font-variant-numeric: tabular-nums; }
+.fk-chip {
+  flex: none; border: 1px solid var(--fk-line); background: var(--fk-pap); color: var(--fk-mut);
+  border-radius: 999px; padding: 4px 9px; font: inherit; font-size: 0.7rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums;
+}
+.fk-chip svg { width: 13px; height: 13px; }
+.fk-chip.on { border-color: var(--fk-acc); color: var(--fk-acc); font-weight: 700; background: var(--fk-soft); }
+
+/* o'qilayotgan band — matnning o'zi belgilanadi (joyi o'zgarmaydi) */
+.fk-nowplay { border-radius: 10px; transition: background 0.2s; background: var(--accent-soft, rgba(0, 106, 71, 0.08)); }
+@supports (background: color-mix(in srgb, red 10%, white)) {
+  .fk-nowplay { background: color-mix(in srgb, var(--accent, #006A47) 11%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fk-sheet, .fk-play, .fk-dim, .fk-prog { transition: none; }
+}
 @media (min-width: 900px) {
-  .fk-bar { left: 50%; right: auto; transform: translateX(-50%); width: 520px; border-left: 1px solid var(--line, var(--rule, #D7DDE6)); border-right: 1px solid var(--line, var(--rule, #D7DDE6)); border-radius: 12px 12px 0 0; }
-  .fk-sheet { left: 50%; right: auto; transform: translateX(-50%); width: 560px; }
+  .fk-bar { left: 50%; right: auto; transform: translateX(-50%); width: 520px; border: 1px solid var(--fk-line); border-bottom: 0; border-radius: 14px 14px 0 0; }
+  .fk-sheet { left: 50%; right: auto; transform: translateY(101%) translateX(-50%); width: 560px; }
+  .fk-sheet.in { transform: translateX(-50%); }
+  .fk-play { left: 50%; right: auto; margin-inline-start: -260px; width: 520px; }
 }

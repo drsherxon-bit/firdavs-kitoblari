@@ -1,14 +1,14 @@
 /* Firdavs kitoblari — oflayn xizmatchi. tools/build.js hosil qiladi, qo'lda tahrirlanmaydi. */
-const VERSION = "4e2e7fd62e";
-const BUILT = "2026-09-15T05:21:44.736Z";
+const VERSION = "a9bff5e895";
+const BUILT = "2026-11-04T19:24:52.967Z";
 const CACHE = "firdavs-" + VERSION;
 const FILES = [
- ["./","e67c744053d6"],
+ ["./","dc330f6657ed"],
  ["./manifest.webmanifest","e0655c87f0a2"],
- ["./normativ.html","e7baefa7221c"],
+ ["./normativ.html","90541fc19353"],
  ["./app/books.json","51d283435db1"],
- ["./app/reader.css","a7a8abeb8493"],
- ["./app/reader.js","c08b19fd0f8d"],
+ ["./app/reader.css","a0b06a0ffb89"],
+ ["./app/reader.js","41984d25556d"],
  ["./fonts/amiri-J7acnpd8CGxBHp2VkaY6zp5yGw.woff2","d4fcd1fe15ba"],
  ["./fonts/amiri-J7acnpd8CGxBHp2VkaYxzp5yGw.woff2","4fde6b58bbe5"],
  ["./fonts/amiri-J7acnpd8CGxBHp2VkaY_zp4.woff2","a73a7c3b018c"],
@@ -44,13 +44,13 @@ const FILES = [
  ["./icons/icon-512.png","c5dce9cf44df"],
  ["./icons/icon.svg","c36ddaa56ae4"],
  ["./kitob/daftar-1.html","7e0127d2307c"],
- ["./kitob/daftar-2.html","f9222722e4e8"],
- ["./kitob/daftar-3.html","7ebb99ef974e"],
- ["./kitob/madina-1.html","19dcd1917ffe"],
- ["./kitob/madina-2.html","6f6e06e0e28d"],
- ["./kitob/madina-3.html","30bfcfd4c121"],
- ["./kitob/madina-4.html","13dad31d7a16"],
- ["./kitob/qoida-1.html","24d582504a94"],
+ ["./kitob/daftar-2.html","40cf76918ac9"],
+ ["./kitob/daftar-3.html","336c1fd916f5"],
+ ["./kitob/madina-1.html","ac1ea4228e67"],
+ ["./kitob/madina-2.html","aacf72642e2f"],
+ ["./kitob/madina-3.html","03c6ce402b5b"],
+ ["./kitob/madina-4.html","582cd9f9565c"],
+ ["./kitob/qoida-1.html","bade8e353825"],
  ["./kitob/qoida-2.html","b8ff27a64a2a"],
  ["./kitob/qoida-3.html","cf4419e41119"],
  ["./audio/m1/1.mp3","4c6ed2cc9198"],
@@ -197,7 +197,7 @@ const FILES = [
  ["./audio/m2/80.mp3","84365acafdb8"],
  ["./audio/m2/81.mp3","9fd73f5cc274"],
  ["./audio/m2/9.mp3","624c0ddb7ee7"],
- ["./audio/m2/index.json","f53ca1b9478a"],
+ ["./audio/m2/index.json","2d084cf244f2"],
  ["./audio/q3/mh1-a-01.mp3","e340656e85df"],
  ["./audio/q3/mh1-a-02.mp3","f5008a5c7ea3"],
  ["./audio/q3/mh1-a-03.mp3","a5d8cf11f608"],

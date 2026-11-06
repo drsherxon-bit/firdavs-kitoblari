@@ -71,7 +71,17 @@
   }
   .dars h2::after { content: ""; flex: 1; height: 1px; background: var(--asl); opacity: 0.35; }
   .dars h2 .h-ar { font-family: "Amiri", serif; direction: rtl; font-size: 1.05rem; letter-spacing: 0; text-transform: none; }
-  .dars h2 a { margin-left: auto; font-size: 0.66rem; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; text-transform: none; }
+  /* dars sarlavhasi ostidagi qator: jami · tinglangani · ketma-ket · kitobda ochish */
+  .dmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 8px; font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .dmeta > span { white-space: nowrap; }
+  .dmeta .seq {
+    border: 1px solid var(--asl); background: transparent; color: var(--asl); border-radius: 999px;
+    padding: 3px 10px; font: inherit; font-size: 0.72rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px; -webkit-tap-highlight-color: transparent;
+  }
+  .dmeta .seq svg { width: 11px; height: 11px; fill: currentColor; stroke: none; }
+  .dmeta .seq.on { background: var(--asl); color: var(--card); }
+  .dmeta a { margin-left: auto; font-size: 0.7rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
   .list { display: flex; flex-direction: column; gap: 6px; }
   .it {
     position: relative; overflow: hidden;
@@ -84,6 +94,10 @@
   .it .sn { grid-column: 1 / -1; font-family: "Amiri", serif; direction: rtl; unicode-bidi: isolate; text-align: right; font-size: 0.98rem; color: var(--muted); line-height: 1.5; margin-top: -2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .it .meta { grid-column: 1 / -1; display: flex; gap: 14px; align-items: center; font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
   .it .meta b { color: var(--asl); font-weight: 700; }
+  .it .meta .hd { margin-left: auto; display: none; align-items: center; gap: 4px; color: var(--asl); font-weight: 700; }
+  .it .meta .hd svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .it.heard .meta .hd { display: inline-flex; }
+  .it.heard .au { background: var(--asl-soft); }
   .it .bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--asl); opacity: 0; transition: opacity .2s; }
   .it.on .bar, .it.paused .bar { opacity: 1; }
 
@@ -166,6 +180,8 @@
   /* ---- pleyer ---- */
   var AR = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
   var ARC = '<path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/>';
+  var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
   function fmt(s) { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ":" + (s % 60 < 10 ? "0" : "") + (s % 60); }
   var btn = null, a = null;
   function row() { return btn ? btn.closest(".it") : null; }
@@ -179,6 +195,7 @@
     btn.querySelector(".ad").textContent = fmt(t > 0 && !a.ended ? t : d);
     var r = row(), bar = r && r.querySelector(".bar");
     if (bar) bar.style.width = (d ? Math.min(100, t / d * 100) : 0) + "%";
+    if (d && t / d > 0.9 && r) markHeard(r);          // oxirigacha yetdi — «tinglandi»
   }
   function stop() {
     if (!btn) return;
@@ -189,17 +206,73 @@
     btn.querySelector(".ad").textContent = fmt(parseFloat(btn.getAttribute("data-dur")) || 0);
     btn = null;
   }
+  /* ---- tinglangan audiolar (shu brauzerda saqlanadi) ---- */
+  var heard = {}, heardKey = "";
+  function loadHeard(id) {
+    heardKey = "firdavs:heard:" + id;
+    try { heard = JSON.parse(get(heardKey) || "{}") || {}; } catch (e) { heard = {}; }
+  }
+  function markHeard(r) {
+    var n = r && r.getAttribute("data-n");
+    if (!n || heard[n]) return;
+    heard[n] = 1; set(heardKey, JSON.stringify(heard));
+    r.classList.add("heard"); paintCounts();
+  }
+  function paintCounts() {
+    var secs = list.querySelectorAll("section.dars"), all = 0;
+    for (var i = 0; i < secs.length; i++) {
+      var rows = secs[i].querySelectorAll(".it"), h = 0;
+      for (var j = 0; j < rows.length; j++) if (rows[j].classList.contains("heard")) h++;
+      all += h;
+      var hc = secs[i].querySelector(".hc");
+      if (hc) hc.textContent = h ? h + " tinglandi" : "";
+    }
+    if (cnt.getAttribute("data-base")) cnt.textContent = cnt.getAttribute("data-base") + (all ? " · " + all + " tinglandi" : "");
+  }
+
+  /* ---- ketma-ket tinglash (dars bo'yicha) ---- */
+  var seqSec = null;
+  function seqStop() {
+    if (!seqSec) return;
+    var b = seqSec.querySelector(".seq"); if (b) b.classList.remove("on");
+    seqSec = null;
+  }
+  function seqNext(r) {
+    var rows = Array.prototype.slice.call(seqSec.querySelectorAll(".it"));
+    var i = rows.indexOf(r), nx = i >= 0 ? rows[i + 1] : null;
+    stop();
+    if (!nx) { seqStop(); return; }
+    var nb = nx.querySelector(".au");
+    if (nb) { nb.click(); nx.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  }
+
   function player() {
     if (a) return a;
     a = new Audio(); a.preload = "none";
     a.addEventListener("timeupdate", paint);
-    a.addEventListener("ended", stop);
+    a.addEventListener("ended", function () {
+      var r = row();
+      if (r) markHeard(r);
+      if (seqSec && r && seqSec.contains(r)) { seqNext(r); return; }
+      stop();
+    });
     a.addEventListener("play", function () { var r = row(); if (btn) { btn.classList.add("on"); } if (r) { r.classList.add("on"); r.classList.remove("paused"); } });
     a.addEventListener("pause", function () { var r = row(); if (btn && !a.ended) { btn.classList.remove("on"); if (r) { r.classList.remove("on"); r.classList.add("paused"); } } });
     a.addEventListener("error", function () { if (btn) { btn.querySelector(".ad").textContent = "xato"; btn.classList.remove("on"); } });
     return a;
   }
   document.addEventListener("click", function (e) {
+    var sq = e.target.closest ? e.target.closest(".seq") : null;
+    if (sq) {                                        /* darsni boshidan ketma-ket tinglash */
+      e.preventDefault();
+      var sec = sq.closest("section.dars");
+      if (seqSec === sec) { if (a) a.pause(); seqStop(); return; }
+      seqStop();
+      seqSec = sec; sq.classList.add("on");
+      var first = sec.querySelector(".it .au");
+      if (first) first.click();
+      return;
+    }
     var sb = e.target.closest ? e.target.closest(".sb") : null;
     if (sb) {
       e.preventDefault();
@@ -231,10 +304,14 @@
     var html = "";
     order.forEach(function (d) {
       var items = byDars[d], t = items[0].darsTitle || "";
-      html += '<section class="dars"><h2>' + d + '-dars <span class="h-ar">' + esc(t) + '</span>' +
-        '<a href="kitob/' + esc(b.slug) + '.html#dars-' + d + '">kitobda ochish ›</a></h2><div class="list">';
+      var tot = 0;
+      items.forEach(function (x) { tot += x.dur || 0; });
+      html += '<section class="dars" data-dars="' + d + '"><h2>' + d + '-dars <span class="h-ar">' + esc(t) + '</span></h2>' +
+        '<div class="dmeta"><span>' + items.length + ' ta audio · ' + fmt(tot) + '</span><span class="hc"></span>' +
+        '<button type="button" class="seq">' + PLAY + 'Ketma-ket</button>' +
+        '<a href="kitob/' + esc(b.slug) + '.html#dars-' + d + '">kitobda ochish ›</a></div><div class="list">';
       items.forEach(function (it) {
-        html += '<div class="it" data-n="' + it.n + '">' +
+        html += '<div class="it' + (heard[it.n] ? " heard" : "") + '" data-n="' + it.n + '">' +
           '<span class="aud"><span class="sk" hidden>' +
             '<button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true">' + ARC + '<text x="12" y="16.4" text-anchor="middle">5</text></svg></button>' +
             '<button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)">' + ARC + '</g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button>' +
@@ -243,13 +320,14 @@
             '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">' + fmt(it.dur) + '</span></button></span>' +
           '<div class="tt">' + esc(it.title) + '<span class="k">' + (it.kind === "mashq" ? "mashq" : "matn") + '</span></div>' +
           (generic(it) && it.snippet ? '<div class="sn">' + esc(it.snippet) + ' …</div>' : "") +
-          '<div class="meta">' + (it.nrm ? '<span>normativ <b>' + esc(it.nrm) + '</b></span>' : "") + '<span>audio ' + fmt(it.dur) + '</span><span>№ ' + it.n + '</span></div>' +
+          '<div class="meta">' + (it.nrm ? '<span>normativ <b>' + esc(it.nrm) + '</b></span>' : "") + '<span>audio ' + fmt(it.dur) + '</span><span>№ ' + it.n + '</span><span class="hd">' + CHECK + 'tinglandi</span></div>' +
           '<i class="bar"></i></div>';
       });
       html += '</div></section>';
     });
     list.innerHTML = html || '<p class="empty">Bu kitob uchun audio hali yo‘q.</p>';
-    cnt.textContent = idx.items.length + " ta audio · " + order.length + " dars";
+    cnt.setAttribute("data-base", idx.items.length + " ta audio · " + order.length + " dars");
+    paintCounts();
   }
   function choose(slug) {
     var b = books.filter(function (x) { return x.slug === slug && x.audio; })[0];
@@ -258,6 +336,7 @@
     try { history.replaceState(null, "", "?kitob=" + slug); } catch (e) {}
     Array.prototype.forEach.call(pick.children, function (el) { el.classList.toggle("on", el.getAttribute("data-slug") === slug); });
     list.innerHTML = '<p class="empty">Yuklanmoqda…</p>';
+    loadHeard(b.audio);
     fetch("audio/" + b.audio + "/index.json").then(function (r) { return r.json(); })
       .then(function (idx) { if (current === slug) render(idx, b); })
       .catch(function () { list.innerHTML = '<p class="empty">Ro‘yxat yuklanmadi.</p>'; });

@@ -9,12 +9,12 @@ telefon ilovasi (PWA: «Bosh ekranga qo‘shish» bilan o‘rnatiladi, internets
 |---|---|
 | `src/` | Artifactlardan olingan **asl nusxalar**. Qo‘lda tahrirlanmaydi — manba artifactning o‘zi. |
 | `kitob/` | `src/` dan qurilgan kitoblar: shriftlar lokal, o‘quvchi paneli ulangan. Ilova shu fayllarni ochadi. |
-| `app/` | `books.json` (kitoblar ro‘yxati), `reader.css/js` (pastki panel: Kutubxona · Mundarija · harf kattaligi · mavzu; o‘qilgan joyni eslab qoladi). |
+| `app/` | `books.json` (kitoblar ro‘yxati), `reader.css/js` — **o‘quvchi qobig‘i** (pastki panel, mundarija, ko‘rinish sozlamalari, audio pleyer). Qarang: «O‘quvchi qobig‘i». |
 | `fonts/` | Amiri, Literata, Scheherazade New (woff2, Google Fonts’dan ko‘chirilgan) + `fonts.css`. |
 | `icons/` | Ilova ikonkasi (svg + png). |
 | `audio/` | Ustoz o‘qigan normativ audiolari: `audio/<id>/N.mp3` (artifactdagi yo‘l bilan bir xil; kitobda `../audio/`) va `index.json` (build.js yasaydi: dars, mavzu, normativ vaqti, davomiyligi). Hozir `m1` = Madina 1 (62 ta, 32 MB), `m2` = Madina 2 (81 ta, 51 MB). |
 | `tools/` | `build.js` — qurish; `sw.template.js` — oflayn xizmatchi shabloni. |
-| `index.html` | Kutubxona ekrani. `normativ.html` — «Normativlar»: kitob tanlanadi, o‘sha kitobning audiolari dars-ba-dars ro‘yxatda (▶, ±5 s). `manifest.webmanifest`, `sw.js`, `version.json` — PWA qismi. |
+| `index.html` | Kutubxona — **ikki bosqichli**: 1) «Davom etish» kartasi + 4 bo‘lim (Madina kitobi · Qoida — sharh · O‘quvchi daftari · Kitob audiolari); 2) bo‘lim bosilganda jildlar ro‘yxati (`#madina`, `#qoida`, `#daftar`, `#audio` — brauzer «ortga» tugmasi ishlaydi). Har kitobda muqova, arabcha nomi, o‘qilgan bo‘limlar va audio soni; «Kitob audiolari» dagi jild `normativ.html?kitob=<slug>` ga olib boradi. `normativ.html` — «Normativlar»: audiolar dars-ba-dars ro‘yxatda (▶, ±5 s, ketma-ket, ✓ tinglandi). `manifest.webmanifest`, `sw.js`, `version.json` — PWA qismi. |
 
 ## Yangilash tartibi (har kitob uchun)
 
@@ -32,8 +32,34 @@ Artifact → PDF → ilova. Ilovaga faqat artifact va PDF tasdiqlangandan keyin 
 
 ## Sinash
 
-`sahab/.claude/launch.json` dagi `firdavs` konfiguratsiyasi: `npx serve -l 4173 C:/Users/Asus/madina-kitob`,
-so‘ng http://localhost:4173/ (telefon ko‘rinishi 375 px da tekshirilgan).
+`sahab/.claude/launch.json` dagi `firdavs` konfiguratsiyasi: `npx serve -l 4600 C:/Users/Asus/madina-kitob`,
+so‘ng http://localhost:4600/ (telefon ko‘rinishi 375 px da tekshiriladi).
+
+> Sinashda **oflayn xizmatchi** eski nusxani beradi — `app/` yoki `index.html` o‘zgarsa, brauzerda
+> xizmatchini o‘chirib keshni tozalash kerak (DevTools → Application → Unregister, yoki
+> `navigator.serviceWorker.getRegistrations()` → `unregister()` va `caches.delete(...)`).
+
+## O‘quvchi qobig‘i (kitob ichida)
+
+`app/reader.css` + `app/reader.js` har bir kitobga ulanadi (build.js qo‘shadi). Kitobning matniga, arabchasiga va
+harakatlariga tegmaydi — faqat ustidan qobiq qo‘yadi; qobiqning hamma elementida `data-fk` bor (harf kattaligi
+ularga ta’sir qilmaydi).
+
+- **Pastki panel**: Kutubxona · Mundarija · Ko‘rinish (Aa) · Normativ (audiosi bor kitobda). Panel ustidagi
+  ingichka chiziq — kitobning o‘qilgan ulushi.
+- **Mundarija**: kitobning o‘z navigatsiyasidan olinadi (`.topnav`, `.bc-list`, `.cv-toc`). Har qatorda: raqam,
+  o‘zbekcha nom, arabcha sarlavha (bo‘lim sarlavhasidan), shu bo‘limdagi audiolar soni va umumiy vaqti,
+  o‘qilgani (✓ yoki foiz). Tepada «5/24 bo‘lim o‘qildi · 22%».
+- **Ko‘rinish**: mavzu (Avto / Kunduz / Tungi), harf kattaligi (80–160%), **qator oralig‘i**
+  (Ixcham / Oddiy / Keng — harakatlar bir-biriga tegmasligi uchun), arabcha namuna va «Standart holatga qaytarish».
+  Qator oralig‘i har elementning O‘Z nisbatini (line-height ÷ font-size) ko‘paytiradi — kitobning uslubi buzilmaydi.
+- **Audio pleyer**: kitobdagi ▶ bosilganda pastda chiqadi — ±5 s, vaqt chizig‘i, tezlik (0.75–1.5×), takror,
+  ketma-ket. O‘qilayotgan band matnda belgilanadi, sarlavha bosilsa o‘sha bandga qaytaradi. Kitobning o‘z pleyeri
+  almashtirilmaydi: qobiq `window.Audio` ustidan ulanadi.
+
+Brauzerda saqlanadigan kalitlar: `firdavs:theme`, `firdavs:zoom`, `firdavs:lead`, `firdavs:rate`,
+`firdavs:pos:<slug>` (qayerda qolgani), `firdavs:read:<slug>` (bo‘limlar bo‘yicha o‘qilgani),
+`firdavs:heard:<audio-id>` (Normativlarda tinglangan audiolar).
 
 ## Joylash
 
@@ -44,7 +70,9 @@ faqat **https** da ishlaydi. Play Market kerak bo‘lsa shu papka Capacitor bila
 
 - Kitobga audio artifactda qo‘shiladi (`span.aud`, `audio/<id>/N.mp3`); `books.json` da `"audio": "<id>"` bo‘lsa
   `build.js` kitobdagi yo‘lni `../audio/` ga o‘giradi va `audio/<id>/index.json` ro‘yxatini yasaydi.
-- `normativ.html?kitob=<slug>` — shu ro‘yxatdan sahifa. Bosma kitob muqovasidagi QR kod shu manzilga olib keladi
+- `normativ.html?kitob=<slug>` — shu ro‘yxatdan sahifa: har darsda audiolar soni va umumiy vaqti, «Ketma-ket»
+  (darsni boshidan oxirigacha o‘zi tinglatadi) va tinglangan audioda «✓ tinglandi» (`firdavs:heard:<id>`).
+  Bosma kitob muqovasidagi QR kod shu manzilga olib keladi
   (Madina 1: `normativ.html?kitob=madina-1`, Madina 2: `normativ.html?kitob=madina-2`).
 - Oflayn: audiolar ham keshlanadi (birinchi o‘rnatishda ~90 MB); `sw.js` keshdagi fayldan Range (206) javob yasaydi,
   shuning uchun pleyerda oldinga/orqaga o‘tkazish internetsiz ham ishlaydi.
