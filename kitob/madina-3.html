@@ -277,6 +277,46 @@
     .nrm svg { width: 11px; height: 11px; }
     .nrm .my { font-size: 0.84rem; width: 4.2em; margin-top: 3px; }
   }
+  /* ---- audio: ustoz öqişi — böş joyda, oqimdan taşqari (matn surilmaydi) ---- */
+  .qa > .qr { position: relative; }
+  .aud { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 6px; direction: ltr; z-index: 2; }
+  .aud.au-top { top: 0; transform: translateY(calc(-100% - 3px)); right: 0; }
+  .dars-head > .aud { top: calc(50% + 10px); }
+  .dars-head > .aud.au-top { top: 3px; transform: none; }
+  .aud .au { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 5px; padding: 1px 8px 1px 5px;
+    border: 1px solid var(--accent); border-radius: 999px; background: var(--paper); color: var(--accent);
+    font: 600 0.72rem/1.25 "Literata", Georgia, serif; font-variant-numeric: tabular-nums; cursor: pointer; --p: 0%; white-space: nowrap; }
+  .aud .au svg { width: 11px; height: 11px; flex: none; fill: currentColor; stroke: none; }
+  .aud .au .q { display: none; }
+  .aud .au::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: var(--p); background: var(--card); opacity: 0; }
+  .aud .au.on { background: var(--accent); color: var(--card); }
+  .aud .au.on .p { display: none; }
+  .aud .au.on .q { display: block; }
+  .aud .au.on::after, .aud .au.paused::after { opacity: 0.9; }
+  .aud .au.paused::after { background: var(--accent); }
+  .aud .au:hover { background: var(--fig-tint); }
+  .aud .au.on:hover { background: var(--accent); }
+  .aud .au:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .aud .sk { display: flex; gap: 6px; }
+  .aud .sk[hidden], .aud.nosk .sk { display: none; }
+  .aud .sb { width: 22px; height: 22px; padding: 0; border: 1px solid var(--rule); border-radius: 50%; background: var(--card); color: var(--accent);
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .aud .sb svg { width: 17px; height: 17px; }
+  .aud .sb .arc { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .aud .sb .ah { fill: currentColor; stroke: none; }
+  .aud .sb text { fill: currentColor; stroke: none; font: 700 9px "Literata", Georgia, serif; }
+  .aud .sb:hover { background: var(--fig-tint); border-color: var(--accent); }
+  .aud .sb:active { background: var(--accent); color: var(--card); }
+  .aud .sb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (max-width: 760px) {
+    .aud { gap: 5px; }
+    .aud .au { font-size: 0.64rem; padding: 1px 6px 1px 4px; gap: 4px; }
+    .aud .au svg { width: 10px; height: 10px; }
+    .aud .sk { gap: 5px; }
+    .aud .sb { width: 21px; height: 21px; }
+    .aud .sb svg { width: 16px; height: 16px; }
+  }
+  .items > div.nv > .aud.au-chap { left: 0; right: auto; top: 86px; transform: none; }
 </style>
 
 <nav class="topnav" aria-label="Mundarija">
@@ -753,7 +793,7 @@
 
   <!-- ================= 2-DARS ================= -->
   <section class="dars" id="dars-2">
-    <h2 class="dars-head"><span class="dn">(٢)</span> الدرس الثاني<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٩:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d2-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٢)</span> الدرس الثاني</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٩:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d2-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="4" data-dur="471" aria-label="Tinglaş: arabça matn + özbekça tarjima (7:51)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">7:51</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المدرس :</span> أين حامدٌ؟</div>
@@ -821,7 +861,7 @@
         <span class="note">(٤) من الذي قرأ النَّصَّ؟</span>
         <span class="note">(٥) ما معنى «الحُفاةِ» في الجملة الواردة في الدرس؟ وما مفردها؟</span>
       </div>
-      <div class="nv"><span class="n">٢ ـ</span> تأمل الأمثلة الآتية لـ(واو الحال) :<span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d2-m2"><span class="mk">وقتي</span></span>
+      <div class="nv has-au"><span class="lt"><span class="n">٢ ـ</span> تأمل الأمثلة الآتية لـ(واو الحال) :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d2-m2"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="5" data-dur="58" aria-label="Tinglaş: arabça matn + özbekça tarjima (0:58)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">0:58</span></button></span>
         <span class="note">(١) سَافَرْتُ وأنا صغيرٌ .</span>
         <span class="note">(٢) دخلت المسجدَ والناسُ يخرجون منه .</span>
         <span class="note">(٣) مات الرجل وهو نائمٌ .</span>
@@ -950,7 +990,7 @@
 
   <!-- ================= 3-DARS ================= -->
   <section class="dars" id="dars-3">
-    <h2 class="dars-head"><span class="dn">(٣)</span> الدرس الثالث<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١٠:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٣)</span> الدرس الثالث</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١٠:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="6" data-dur="490" aria-label="Tinglaş: arabça matn + özbekça tarjima (8:10)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">8:10</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المدرس :</span> لِمَ تَأَخَّرْتُم ياإخوان؟</div>
@@ -1035,7 +1075,7 @@
         <span class="note">(٧) ماذا يُقْرَأُ في كلِّ صباحٍ؟</span>
         <span class="note">(٨) من الذي سُرِقَ كتابه؟</span>
       </div>
-      <div class="nv"><span class="n">٢ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m2"><span class="mk">وقتي</span></span> تأمل الأمثلة الآتية للفعل المبني للمجهول، وعَيِّنْ نائبَ الفاعلِ في كل واحد منها :
+      <div class="nv has-au"><span class="lt"><span class="n">٢ ـ</span> تأمل الأمثلة الآتية للفعل المبني للمجهول، وعَيِّنْ نائبَ الفاعلِ في كل واحد منها :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m2"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="7" data-dur="64" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:04)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:04</span></button></span>
         <span class="note">(١) بُنِيَتِ المدرسةُ على ثلاثةِ طوابقَ .</span>
         <span class="note">(٢) فُتِحَتِ المكتبةُ بالكُوفَةِ .</span>
       </div>
@@ -1126,7 +1166,7 @@
 
   <section class="dars" id="tamrin-3d">
     <div class="items">
-      <div class="nv"><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m6"><span class="mk">وقتي</span></span>(١) يَشْرَحُ المدرسُ الدرسَ مَرَّتَيْنِ .</div>
+      <div class="nv has-au"><span class="lt">(١) يَشْرَحُ المدرسُ الدرسَ مَرَّتَيْنِ .</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m6"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="9" data-dur="88" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:28)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:28</span></button></span></div>
       <div>(٢) ما كَسَرَ الأولادُ الزُّجاجَ .</div>
       <div>(٣) يَقْرَأُ الطالبُ الدرسَ بصوتٍ عالٍ .</div>
       <div>(٤) يَزْرَعُ النَّاسُ القُطْنَ في كثيرٍ من البلادِ .</div>
@@ -1203,7 +1243,7 @@
 
   <section class="dars" id="tamrin-3f">
     <div class="items">
-      <div class="nv"><span class="n">٨ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m8"><span class="mk">وقتي</span></span> عَيِّنْ نائبَ الفاعلِ فيما يأتي :
+      <div class="nv has-au"><span class="lt"><span class="n">٨ ـ</span> عَيِّنْ نائبَ الفاعلِ فيما يأتي :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m8"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="10" data-dur="71" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:11)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:11</span></button></span>
         <span class="note">(١) وإذا سُئِلَ التلميذُ عن سَبَبِ غِيابِهِ صَمَتَ .</span>
         <span class="note">(٢) لا يُوصَفُ المتأخِّرُ بالكسل قبل أن يُسْأَلَ عن عذره .</span>
         <span class="note">(٣) تُسْأَلونَ في الامتحان عمّا درستم في الفصل .</span>
@@ -1354,7 +1394,7 @@
     <p class="rule">ومثلُ «ثَلاثِمائةٍ» أخواتُها «أَرْبَعُمِائَةٍ» و«خَمْسُمِائَةٍ» . . . إلى «تِسْعِمائة» .</p>
 
     <div class="items">
-      <div class="nv"><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٠٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m24"><span class="mk">وقتي</span></span>اقرأِ الأعدادَ فيما يلي قراءةً صحيحة :
+      <div class="nv has-au"><span class="lt">اقرأِ الأعدادَ فيما يلي قراءةً صحيحة :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٠٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d3-m24"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="11" data-dur="50" aria-label="Tinglaş: arabça matn + özbekça tarjima (0:50)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">0:50</span></button></span>
         <span class="note">(١) في هذا الكتاب خمسمائة صفحة، قرأت منها أربعمائة صفحةٍ .</span>
         <span class="note">(٢) ثَمَــنُ التَّــذكرة تِسعمائــة دولارٍ .</span>
         <span class="note">(٣) اشتريت هذا السِّوارَ بسبعمائة جُنَيْهٍ .</span>
@@ -1373,7 +1413,7 @@
   </section>
 
   <section class="dars" id="dars-4">
-    <h2 class="dars-head"><span class="dn">(٤)</span> الدرس الرابع<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٥:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٤)</span> الدرس الرابع</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٥:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="12" data-dur="217" aria-label="Tinglaş: arabça matn + özbekça tarjima (3:37)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">3:37</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">البــراء :</span> نريد أن نعرفَ نَتيجَةَ الاخْتِبار الشَّهْرِيِّ ياأستاذ .</div>
@@ -1462,7 +1502,7 @@
     </div>
 
     <div class="items">
-      <div class="nv"><span class="n">٤ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-m4"><span class="mk">وقتي</span></span> عين أسماء الفاعلين فيما يلي :
+      <div class="nv has-au"><span class="lt"><span class="n">٤ ـ</span> عين أسماء الفاعلين فيما يلي :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-m4"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="13" data-dur="106" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:46)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:46</span></button></span>
         <span class="note">(١) مَنْ كاتِبُ هذه الرسالة؟</span>
         <span class="note">(٢) اسمع للسائِلِ قبل أن تجيبه .</span>
         <span class="note">(٣) أَلَدَيْكَ شاهِدٌ على ما تقول .</span>
@@ -1516,7 +1556,7 @@
 
   <section class="dars" id="tamrin-4d">
     <div class="items">
-      <div class="nv"><span class="n">٧ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-m7"><span class="mk">وقتي</span></span> عَيِّنْ أسماءَ الفـاعِلينَ وأسماءَ المفعولينَ فيما يلي . ضعْ خَطّاً واحداً تحتَ الأولى وخَطَّيْنِ تحتَ الثانية :
+      <div class="nv has-au"><span class="lt"><span class="n">٧ ـ</span> عَيِّنْ أسماءَ الفـاعِلينَ وأسماءَ المفعولينَ فيما يلي . ضعْ خَطّاً واحداً تحتَ الأولى وخَطَّيْنِ تحتَ الثانية :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d4-m7"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="15" data-dur="111" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:51)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:51</span></button></span>
         <span class="note">(١) قال المدير للطالبين : مَنْ منكما الضاربُ ومَنْ المضروبُ؟</span>
         <span class="note">(٢) فَرَّ القاتِلُ ونُقِلَ المقتولُ إلى المستشفى .</span>
         <span class="note">(٣) قَبَضْنَا على السارق، ولكنّنا لم نجد لديه المالَ المسروقَ .</span>
@@ -1631,7 +1671,7 @@
   </section>
 
   <section class="dars" id="dars-5">
-    <h2 class="dars-head"><span class="dn">(٥)</span> الدرس الخامس<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٥:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d5-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٥)</span> الدرس الخامس</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٥:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d5-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="16" data-dur="316" aria-label="Tinglaş: arabça matn + özbekça tarjima (5:16)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">5:16</span></button></span></h2>
     <div class="part">في مكتب مدير مَعْهَدِ اللّغة العربيّة</div>
     <div class="part">(يُسْمَعُ طَرْقٌ على الباب)</div>
 
@@ -1891,7 +1931,7 @@
 
   <section class="dars" id="tamrin-5f">
     <div class="items">
-      <div class="nv"><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d5-m16"><span class="mk">وقتي</span></span>(٢) ما أَجْمَلَ هذا البيتَ المَبْنِيَّ بالحجرِ!</div>
+      <div class="nv has-au"><span class="lt">(٢) ما أَجْمَلَ هذا البيتَ المَبْنِيَّ بالحجرِ!</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d5-m16"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="17" data-dur="148" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:28)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:28</span></button></span></div>
       <div>(٣) أَقائِمٌ أنت؟</div>
       <div>(٤) أُحِبُّ اللَّحْمَ المَشْوِيَّ والبيضَ المَقْلِيَّ .</div>
       <div>(٥) المعلّم دالٌّ على طريق العلم، والطالب سائِرٌ فيه .</div>
@@ -1976,7 +2016,7 @@
   </section>
 
   <section class="dars" id="dars-6">
-    <h2 class="dars-head"><span class="dn">(٦)</span> الدرس السادس<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d6-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٦)</span> الدرس السادس</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d6-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="18" data-dur="166" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:46)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:46</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المُشْرِفُ :</span> (بعد التَّحيَّةِ) أأنتم المُشْتَرِكُونَ في رِحْلةِ الرَّبيعِ؟</div>
@@ -2091,7 +2131,7 @@
 
   <section class="dars" id="tamrin-6b">
     <div class="items">
-      <div class="nv"><span class="n">٤ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d6-m4"><span class="mk">وقتي</span></span> استخـرج مما يأتي أسماء الزمان والمكان، واذكر وزن كل واحد منها، والفعل الذي اشْتُقَّ منه :
+      <div class="nv has-au"><span class="lt"><span class="n">٤ ـ</span> استخـرج مما يأتي أسماء الزمان والمكان، واذكر وزن كل واحد منها، والفعل الذي اشْتُقَّ منه :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d6-m4"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="22" data-dur="75" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:15)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:15</span></button></span>
         <span class="note">(١) يُقالُ : هُوَ مِنِّي بِمَرْأَىً ومَسْمَعٍ، أي بِحَيْثُ أراهُ وأَسْمَعُ كَلامَهُ .</span>
         <span class="note">(٢) مَوْعِدُ الرحلة بعد الظهر، فلا تتأخّروا .</span>
         <span class="note">(٣) مَسْكَنُ الطلاب الجدد في الطابَق الثالث من المَبْنَى .</span>
@@ -2107,7 +2147,7 @@
   </section>
 
   <section class="dars" id="dars-7">
-    <h2 class="dars-head"><span class="dn">(٧)</span> الدرس السابع<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d7-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٧)</span> الدرس السابع</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d7-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="23" data-dur="182" aria-label="Tinglaş: arabça matn + özbekça tarjima (3:02)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">3:02</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">هشـــام :</span> أتريدين شيئاً من السوق ياأم أحمد؟</div>
@@ -2209,7 +2249,7 @@
     </div>
 
     <div class="items">
-      <div class="nv"><span class="n">٦ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d7-m6"><span class="mk">وقتي</span></span> عيِّنْ أسماء الآلة فيما يأتي، واذكر وزنَ كل واحد منها :
+      <div class="nv has-au"><span class="lt"><span class="n">٦ ـ</span> عيِّنْ أسماء الآلة فيما يأتي، واذكر وزنَ كل واحد منها :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d7-m6"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="24" data-dur="50" aria-label="Tinglaş: arabça matn + özbekça tarjima (0:50)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">0:50</span></button></span>
         <span class="note">(١) علّقت مِرْآةً كبيرة على جدار الغرفة .</span>
         <span class="note">(٢) صعد العامل على المِرْقَاةِ ليصلح المِصْباحَ .</span>
         <span class="note">(٣) ركب الراعي بعيرَه وأخذ يسوق الغنم بالمِحْجَنِ <span class="n">(١)</span> .</span>
@@ -2280,7 +2320,7 @@
   </section>
 
   <section class="dars" id="dars-8">
-    <h2 class="dars-head"><span class="dn">(٨)</span> الدرس الثَّامـــن<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d8-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٨)</span> الدرس الثَّامـــن</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d8-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="25" data-dur="175" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:55)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:55</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المُشْـــتَري :</span> ألديك أقلامٌ؟</div>
@@ -2422,7 +2462,7 @@
   </section>
 
   <section class="dars" id="dars-9">
-    <h2 class="dars-head"><span class="dn">(٩)</span> الدَّرسُ التَّاسع<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٨:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(٩)</span> الدَّرسُ التَّاسع</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٨:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="26" data-dur="336" aria-label="Tinglaş: arabça matn + özbekça tarjima (5:36)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">5:36</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المدرّسُ :</span> أينَ قَلَمَايَ؟ (بصوتٍ عالٍ) أرأيتُمْ قَلَمَيَّ ياإخوانُ؟</div>
@@ -2503,7 +2543,7 @@
 
     <div class="items">
       <div><span class="n">٣ ـ</span> استخرج من الدرس الأسماء المُثَنَّاة والمجموعة جمعَ مذكرٍ سالماً المحذوفةَ نونُها للإضافة .</div>
-      <div class="nv"><span class="n">٤ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٠٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-m4"><span class="mk">وقتي</span></span> تأمل الأمثلة الآتية للمثنّى وجمع المذكر السالم المحذوفة نُونها للإضافة :
+      <div class="nv has-au"><span class="lt"><span class="n">٤ ـ</span> تأمل الأمثلة الآتية للمثنّى وجمع المذكر السالم المحذوفة نُونها للإضافة :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٠٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-m4"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="27" data-dur="106" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:46)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:46</span></button></span>
         <span class="note">(١) اغْسِل يَدَيْكَ وَرِجْلَيْك .</span>
         <span class="note">(٢) اِبْنَا عليٍّ في الجامعة، وبنتاه في المدرسة .</span>
         <span class="note">(٣) بابا المسجد مفتوحان .</span>
@@ -2524,7 +2564,7 @@
 
   <section class="dars" id="tamrin-9b">
     <div class="items">
-      <div class="nv"><span class="n">٥ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-m5"><span class="mk">وقتي</span></span> اقرأ ما يلي، ثم اكتبه مع كتابة الأرقام الواردة فيه بالحروف :
+      <div class="nv has-au"><span class="lt"><span class="n">٥ ـ</span> اقرأ ما يلي، ثم اكتبه مع كتابة الأرقام الواردة فيه بالحروف :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d9-m5"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="28" data-dur="94" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:34)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:34</span></button></span>
         <span class="note">(١) جاء من الصين هذا العام ٢٠٠ تاجرٍ .</span>
         <span class="note">(٢) أريد ٢٠٠ نُسْخَةٍ من هذا الكتاب .</span>
         <span class="note">(٣) اشتريت هذه الساعة بـ٢٠٠ ريال .</span>
@@ -2742,7 +2782,7 @@
   </section>
 
   <section class="dars" id="dars-10">
-    <h2 class="dars-head"><span class="dn">(١٠)</span> الدَّرْسُ العاشـــر<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d10-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١٠)</span> الدَّرْسُ العاشـــر</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٢:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d10-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="29" data-dur="149" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:29)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:29</span></button></span></h2>
 
     <p class="flow">رَنّ الجرسُ، وبَدَأَتِ الحِصَّة الخامسة . مرت عشرُ دقائقَ أو أكثرُ ولم يأت المدرس، سَئِمَ الطلابُ الانتظارَ، وطَفِقُوا يَتَحَرَّكُونَ من أماكِنهم ويَعْبَثُون . فبعضُهم وقف يخطب، وبعضهم جَعَلَ يكتب على السبُّورة .</p>
 
@@ -2837,7 +2877,7 @@
   </section>
 
   <section class="dars" id="dars-11">
-    <h2 class="dars-head"><span class="dn">(١١)</span> الدرسُ الحادي عشر<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d11-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١١)</span> الدرسُ الحادي عشر</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d11-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="30" data-dur="192" aria-label="Tinglaş: arabça matn + özbekça tarjima (3:12)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">3:12</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المـــدرس :</span> الطلابُ قليلونَ . أين الآخرونَ؟</div>
@@ -3090,7 +3130,7 @@
   </section>
 
   <section class="dars" id="dars-12">
-    <h2 class="dars-head"><span class="dn">(١٢)</span> الدرسُ الثاني عشر<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١٢)</span> الدرسُ الثاني عشر</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="31" data-dur="188" aria-label="Tinglaş: arabça matn + özbekça tarjima (3:08)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">3:08</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المدرس :</span> أُرَحِّبُ بكم في اليوم الأوَّل من العام الجديد . متى وصلتم من بلادكم؟</div>
@@ -3189,7 +3229,7 @@
       <div><span class="n">١ ـ</span> استخرج ما في الدرس من ظروف الزمان والمكان .</div>
       <div><span class="n">٢ ـ</span> استخرج ما فيه من الظروف المبنيَّة .</div>
       <div><span class="n">٣ ـ</span> استخرج منه كلماتٍ نابَتْ عن الظرف .</div>
-      <div class="nv"><span class="n">٤ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-m4"><span class="mk">وقتي</span></span> عيِّنْ ظروف الزمان والمكان فيما يأتي :
+      <div class="nv has-au"><span class="lt"><span class="n">٤ ـ</span> عيِّنْ ظروف الزمان والمكان فيما يأتي :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٣٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-m4"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="32" data-dur="80" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:20)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:20</span></button></span>
         <span class="note">(١) انْتَظِـرْ لَحْظَـــــةً .</span>
         <span class="note">(٢) جلس الزُّوَّارُ عِنْدَ المدير نصفَ ساعةٍ .</span>
         <span class="note">(٣) كَمْ ساعةً بَقِيَ الجَرِيْحُ في المستشفى؟</span>
@@ -3201,7 +3241,7 @@
         <span class="note">(٩) أساعتَيْنِ نمتَ أم ثلاثَ ساعاتٍ؟</span>
         <span class="note">(١٠) أين مكثتَ هذه المدةَ؟</span>
       </div>
-      <div class="nv"><span class="n">٥ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-m5"><span class="mk">وقتي</span></span> عيِّنْ ظروف الزمان والمكان في الجمل الآتية :
+      <div class="nv has-au"><span class="lt"><span class="n">٥ ـ</span> عيِّنْ ظروف الزمان والمكان في الجمل الآتية :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٢٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d12-m5"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="33" data-dur="48" aria-label="Tinglaş: arabça matn + özbekça tarjima (0:48)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">0:48</span></button></span>
         <span class="note">(١) رجع الصيّادون إلى القرية عِشاءً وهم متعبون .</span>
         <span class="note">(٢) علّق النجّار المصباح فوقَ الباب .</span>
         <span class="note">(٣) سهر الحارس لَيْلاً ونام نهاراً .</span>
@@ -3290,7 +3330,7 @@
   </section>
 
   <section class="dars" id="dars-13">
-    <h2 class="dars-head"><span class="dn">(١٣)</span> الدرسُ الثالث عشرَ<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٤:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١٣)</span> الدرسُ الثالث عشرَ</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٤:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="34" data-dur="239" aria-label="Tinglaş: arabça matn + özbekça tarjima (3:59)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">3:59</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">الحســـن :</span> ياأستاذ، لم أفهمْ درس الأَمْسِ جيّداً .</div>
@@ -3344,7 +3384,7 @@
 
     <div class="items">
       <div><span class="n">١ ـ</span> استخرج ما في الدرس من أمثلة لام الأمر .</div>
-      <div class="nv"><span class="n">٢ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m2"><span class="mk">وقتي</span></span> عيِّنْ لامَ الأمرِ فيما يأتي، واضْبِطْها بالشكل :
+      <div class="nv has-au"><span class="lt"><span class="n">٢ ـ</span> عيِّنْ لامَ الأمرِ فيما يأتي، واضْبِطْها بالشكل :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:١٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m2"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="35" data-dur="74" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:14)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:14</span></button></span>
         <span class="note">(١) ليذهب الطلابُ الجددُ إلى المدير، وليرجعوا بعد مُقَابَلَتِهِ .</span>
         <span class="note">(٢) ليكتب الطلابُ الأَجْوِبَةَ بالحِبْرِ الأَزْرَقِ أو الأَسْوَدِ .</span>
         <span class="note">(٣) لنذهب إلى المكتبة ولنقرأ الصُّحُفَ والمَجَلَّات .</span>
@@ -3392,7 +3432,7 @@
 
   <section class="dars" id="tamrin-13c">
     <div class="items">
-      <div class="nv"><span class="n">١ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٠٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m1a"><span class="mk">وقتي</span></span> اِضْبِط بالشكل الأفعالَ الآتية بعد (لا الناهية) فيما يلي :
+      <div class="nv has-au"><span class="lt"><span class="n">١ ـ</span> اِضْبِط بالشكل الأفعالَ الآتية بعد (لا الناهية) فيما يلي :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٠٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m1a"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="36" data-dur="125" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:05)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:05</span></button></span>
         <span class="note">(١) لا يدخل أحدُكم الفصلَ في أَثْناءِ الدرس .</span>
         <span class="note">(٢) لا يضرب بعضُكم بعضاً .</span>
         <span class="note">(٣) لا تدخل الجامعةَ سيّارةُ الأُجْرَةِ .</span>
@@ -3457,7 +3497,7 @@
     <p class="rule">إذا وَقَعَ المضارعُ جواباً للطَّلَبِ جُزِمَ . ومن أنواعِ الطَّلَبِ : الأَمْرُ والنَّهْيُ، نحو : اعْمَلْ بِجِدٍّ تَنَلِ الجائزةَ . لا تَكْسَلْ تَنْجَحْ .</p>
 
     <div class="items">
-      <div class="nv"><span class="n">١ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m1b"><span class="mk">وقتي</span></span> عَيِّنِّ جوابَ الطَلَبِ في كل جملةٍ مما يأتي، واضْبِطْه بالشكل :
+      <div class="nv has-au"><span class="lt"><span class="n">١ ـ</span> عَيِّنِّ جوابَ الطَلَبِ في كل جملةٍ مما يأتي، واضْبِطْه بالشكل :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٥٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d13-m1b"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="37" data-dur="66" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:06)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:06</span></button></span>
         <span class="note">(١) اِجْلِسْ نسمع الأخبار .</span>
         <span class="note">(٢) قِفْ نقرأ هذا الإِعْلانَ .</span>
         <span class="note">(٣) زُرْني أَزُرْكَ .</span>
@@ -3535,7 +3575,7 @@
   </section>
 
   <section class="dars" id="dars-14">
-    <h2 class="dars-head"><span class="dn">(١٤)</span> الدرس الرابع عشر<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٦:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d14-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١٤)</span> الدرس الرابع عشر</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٦:٢٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d14-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="38" data-dur="244" aria-label="Tinglaş: arabça matn + özbekça tarjima (4:04)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">4:04</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">هشـــــام :</span> أَمُعْجَمٌ هذا يافضيلةَ الشيخِ؟</div>
@@ -3613,7 +3653,7 @@
     <div class="items">
       <div>(ب) إذا وجدتَ المريضَ نائماً فلا تُوْقِظْهُ .</div>
       <div>(جـ) إذا رَأيتُ بِلالاً فَماذا أقولُ له؟</div>
-      <div class="nv"><span class="n">١ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٤:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d14-m1"><span class="mk">وقتي</span></span> عيِّنِ الشَّرْطَ وجوابَ الشرطِ فيما يأتي . وإذا كان الجوابُ مُقْتَرِناً بالفاء فَاذْكُرْ سَبَبَ ذلك :
+      <div class="nv has-au"><span class="lt"><span class="n">١ ـ</span> عيِّنِ الشَّرْطَ وجوابَ الشرطِ فيما يأتي . وإذا كان الجوابُ مُقْتَرِناً بالفاء فَاذْكُرْ سَبَبَ ذلك :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٤:١٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d14-m1"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="39" data-dur="127" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:07)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:07</span></button></span>
         <span class="note">(١) إذا دخلتم المَعْمَلَ فالبسوا القُفّازاتِ، ونظّفوا الأدوات بعد التجربة .</span>
         <span class="note">(٢) إذا تعطّلتِ السيارةُ فالميكانيكيُّ في الشارع المجاور .</span>
         <span class="note">(٣) إذا رنّ الجرسُ فادخلوا الفصلَ بهدوء، وذَرُوا الحديث في الممرّ <span class="n">(١)</span> .</span>
@@ -3657,7 +3697,7 @@
   </section>
 
   <section class="dars" id="dars-15">
-    <h2 class="dars-head"><span class="dn">(١٥)</span> الدرس الخامسَ عَشَرَ<span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١٠:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-matn"><span class="mk">وقتي</span></span></h2>
+    <h2 class="dars-head has-au"><span class="lt"><span class="dn">(١٥)</span> الدرس الخامسَ عَشَرَ</span><span class="nrm"><span class="k">معيار النصّ</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١٠:٤٠</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-matn"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="40" data-dur="588" aria-label="Tinglaş: arabça matn + özbekça tarjima (9:48)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">9:48</span></button></span></h2>
 
     <div class="items">
       <div><span class="n">المدرس :</span> ياياسر، إنـك غِبْتَ أسبـوعَيْنْ كامِلَيْنِ . إنْ تَغِبْ بعدَ هذا تُفْصَلْ . فإنَّ اللائِحَةَ تَنُصُّ على أنَّهُ مَنْ يَغِبْ أَكْثَرَ مِنْ أسبوعين يُطْوَ قَيْدُهُ .</div>
@@ -3860,7 +3900,7 @@
 
   <section class="dars" id="tamrin-15f">
     <div class="items">
-      <div class="nv"><span class="n">٣ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-m3"><span class="mk">وقتي</span></span> عين أداةَ الشرطِ، والشرطَ وجوابَه في كل جملة مما يأتي . ضع خطّاً واحداً تحتَ أداةِ الشرطِ، وخَطَّيْن تحتَ الشرطِ، وثلاثَةَ خُطوطٍ تحتَ جواب الشرطِ . وإذا كان الجوابُ مقترناً بالفاء فاذْكُرْ السببَ :
+      <div class="nv has-au"><span class="lt"><span class="n">٣ ـ</span> عين أداةَ الشرطِ، والشرطَ وجوابَه في كل جملة مما يأتي . ضع خطّاً واحداً تحتَ أداةِ الشرطِ، وخَطَّيْن تحتَ الشرطِ، وثلاثَةَ خُطوطٍ تحتَ جواب الشرطِ . وإذا كان الجوابُ مقترناً بالفاء فاذْكُرْ السببَ :</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>٣:٥٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-m3"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="41" data-dur="145" aria-label="Tinglaş: arabça matn + özbekça tarjima (2:25)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">2:25</span></button></span>
         <span class="note">(١) من يحترمِ الناسَ يحترمْه الناسُ .</span>
         <span class="note">(٢) إن يكنْ في الفريق لاعبان ماهران يَفُزْ بالمباراة .</span>
         <span class="note">(٣) من زرع في الربيع فهو يحصد في الصيف .</span>
@@ -3958,7 +3998,7 @@
     <p class="rule">ويكون الفعلُ المضارعُ بعدَها منصوباً بـ(أَنْ) مُضْمَرَةً وُجُوباً .</p>
 
     <div class="items">
-      <div class="nv"><span class="n">١ ـ</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-m1"><span class="mk">وقتي</span></span> اقرأ الجمل الآتية مع ضبط الأفعال الواقعة بعد (حَتَّى) وتَعْيينِ معنى (حتّى) .
+      <div class="nv has-au"><span class="lt"><span class="n">١ ـ</span> اقرأ الجمل الآتية مع ضبط الأفعال الواقعة بعد (حَتَّى) وتَعْيينِ معنى (حتّى) .</span><span class="nrm"><span class="k">معيار التمرين</span><span class="t"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5"/><path d="M9.5 2.5h5"/></svg>١:٤٥</span><input class="my" type="text" inputmode="numeric" maxlength="6" placeholder="٠:٠٠" aria-label="وقتي" data-nrm="d15-m1"><span class="mk">وقتي</span></span><span class="aud"><span class="sk" hidden><button type="button" class="sb" data-skip="-5" aria-label="5 soniya orqaga" title="5 soniya orqaga"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/><text x="12" y="16.4" text-anchor="middle">5</text></svg></button><button type="button" class="sb" data-skip="5" aria-label="5 soniya oldinga" title="5 soniya oldinga"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="matrix(-1 0 0 1 24 0)"><path class="arc" d="M12 6A7 7 0 1 1 5.94 9.5"/><path class="ah" d="M12.4 2.4V9.6L7.6 6z"/></g><text x="12" y="16.4" text-anchor="middle">5</text></svg></button></span><button class="au" type="button" data-au="42" data-dur="66" aria-label="Tinglaş: arabça matn + özbekça tarjima (1:06)" title="Arabça matn + özbekça tarjima"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="p" d="M8 5v14l11-7z"/><path class="q" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span class="ad">1:06</span></button></span>
         <span class="note">(١) أَجْتَهِدُ لَيْلَ نَهَارَ حتّى أنجح بتقدير ممتاز .</span>
         <span class="note">(٢) اِنْتَظِرْ حتّى أَتَهَيَّأَ .</span>
         <span class="note">(٣) لا يُتْقِنُ أحدُكم اللغةَ حتى يقرأ كثيراً ويتكلم كثيراً .</span>
@@ -4118,6 +4158,117 @@
     var el = document.getElementById(id);
     if (el) obs.observe(el);
   });
+})();
+</script>
+
+<script>
+/* ustoz öqişi (audio): bitta pleyer; ▶ / ❚❚; ötgan vaqt; faol audioda ±5 s.
+   place(): tugma böş joyga qöyiladi — band/qator matnining yonida, siğmasa ustida; matn surilmaydi. */
+(function () {
+  var btn = null, a = null;
+  function fmt(s) { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ":" + (s % 60 < 10 ? "0" : "") + (s % 60); }
+  function dur() { return btn ? (parseFloat(btn.getAttribute("data-dur")) || (a && isFinite(a.duration) ? a.duration : 0)) : 0; }
+  function skip(b, on) { var k = b && b.parentNode ? b.parentNode.querySelector(".sk") : null; if (k) k.hidden = !on; }
+  function paint() {
+    if (!btn || !a) return;
+    var d = dur(), t = a.currentTime || 0;
+    btn.querySelector(".ad").textContent = fmt(t > 0 && !a.ended ? t : d);
+    btn.style.setProperty("--p", (d ? Math.min(100, t / d * 100) : 0) + "%");
+  }
+  function stop() {
+    if (!btn) return;
+    skip(btn, false);
+    btn.classList.remove("on"); btn.classList.remove("paused");
+    btn.querySelector(".ad").textContent = fmt(parseFloat(btn.getAttribute("data-dur")) || 0);
+    btn.style.setProperty("--p", "0%");
+    btn = null;
+    replace();
+  }
+  function player() {
+    if (a) return a;
+    a = new Audio(); a.preload = "none";
+    a.addEventListener("timeupdate", paint);
+    a.addEventListener("ended", stop);
+    a.addEventListener("play", function () { if (btn) { btn.classList.add("on"); btn.classList.remove("paused"); } });
+    a.addEventListener("pause", function () { if (btn && !a.ended) { btn.classList.remove("on"); btn.classList.add("paused"); } });
+    a.addEventListener("error", function () { if (btn) { btn.querySelector(".ad").textContent = "xato"; btn.classList.remove("on"); } });
+    return a;
+  }
+  document.addEventListener("click", function (e) {
+    var sb = e.target && e.target.closest ? e.target.closest(".sb") : null;
+    if (sb) {
+      e.preventDefault();
+      if (!a || !btn) return;
+      var d = dur(), t = (a.currentTime || 0) + (parseFloat(sb.getAttribute("data-skip")) || 0);
+      a.currentTime = Math.max(0, d ? Math.min(d, t) : Math.max(0, t));
+      paint();
+      return;
+    }
+    var b = e.target && e.target.closest ? e.target.closest(".au") : null;
+    if (!b) return;
+    e.preventDefault();
+    var p = player();
+    if (btn === b) { if (p.paused) p.play().catch(function () {}); else p.pause(); return; }
+    if (btn) { p.pause(); stop(); }
+    btn = b;
+    skip(btn, true);
+    p.src = "../audio/m3/" + b.getAttribute("data-au") + ".mp3";
+    p.play().catch(function () {});
+    replace();
+  });
+
+  /* ---- joylaştiriş ---- */
+  function place() {
+    var hosts = document.querySelectorAll(".has-au");
+    for (var i = 0; i < hosts.length; i++) {
+      var host = hosts[i], lt = host.querySelector(":scope > .lt"), auds = host.querySelectorAll(":scope > .aud");
+      if (!lt || !auds.length) continue;
+      var rects = lt.getClientRects(); if (!rects.length) continue;
+      // qatorlar: bir qatordagi bölaklar (içki span lar) birlaştiriladi
+      var lines = [];
+      for (var k = 0; k < rects.length; k++) {
+        var r = rects[k], L = null;
+        for (var j = 0; j < lines.length; j++) if (Math.abs(lines[j].top - r.top) < 4) { L = lines[j]; break; }
+        if (L) { L.left = Math.min(L.left, r.left); L.right = Math.max(L.right, r.right); L.bottom = Math.max(L.bottom, r.bottom); }
+        else lines.push({ top: r.top, bottom: r.bottom, left: r.left, right: r.right });
+      }
+      // full: ±5 s tugmalari bilan (faol audioda), pill: faqat ▶ tugmasi
+      var hr = host.getBoundingClientRect(), q, full = 0, pill = 0;
+      for (q = 0; q < auds.length; q++) {
+        auds[q].classList.remove("au-top"); auds[q].classList.remove("au-chap"); auds[q].classList.remove("nosk"); auds[q].style.right = ""; auds[q].style.top = "";
+        full += (auds[q].offsetWidth || 50) + (q ? 6 : 0); pill += (auds[q].querySelector(".au").offsetWidth || 50) + (q ? 6 : 0);
+      }
+      var nosk = function () { for (var z = 0; z < auds.length; z++) auds[z].classList.add("nosk"); };
+      if (host.classList.contains("lead") || host.classList.contains("qr") || host.classList.contains("nv")) {
+        // band/qator matnining çap yonida (öşa qatorda); çapdagi normativ yorliğiga tegmasin
+        var last = lines[lines.length - 1], badge = host.querySelector(":scope > .nrm");
+        var reserve = badge ? badge.getBoundingClientRect().right - hr.left + 8 : 0;
+        var free = last.left - hr.left - reserve;
+        if (free >= pill + 10) {
+          if (free < full + 10) nosk();   // ±5 s siğmasa — faqat ▶ qoladi, joyi özgarmaydi
+          var zm = 1; for (var zh = host; zh && zh.style; zh = zh.parentElement) zm *= parseFloat(zh.style.zoom) || 1;
+          var off = 10, top = ((last.top + last.bottom) / 2 - hr.top) / zm;
+          for (q = 0; q < auds.length; q++) { auds[q].style.right = ((hr.right - last.left) / zm + off) + "px"; auds[q].style.top = top + "px"; off += (auds[q].offsetWidth || 50) + 6; }
+        } else if (host.classList.contains("nv")) { nosk(); for (q = 0; q < auds.length; q++) { auds[q].classList.add("au-chap"); auds[q].style.top = (badge ? badge.offsetTop + badge.offsetHeight + 3 : 0) + "px"; } }
+        else for (q = 0; q < auds.length; q++) auds[q].classList.add("au-top");
+      } else {
+        // markazlaşgan sarlavha: öngda joy bölsa yonida, bölmasa ustida
+        var right = 0; for (q = 0; q < lines.length; q++) right = Math.max(right, lines[q].right);
+        var room = hr.right - right;
+        if (room < pill + 8) auds[0].classList.add("au-top");
+        else if (room < full + 8) nosk();
+      }
+    }
+  }
+  var timer = null;
+  function replace() { clearTimeout(timer); timer = setTimeout(place, 60); }
+  place();
+  setTimeout(place, 800); setTimeout(place, 2500);
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", replace);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  window.addEventListener("load", place);
+  window.addEventListener("resize", replace);
+  if (window.MutationObserver) new MutationObserver(replace).observe(document.documentElement, { attributes: true, attributeFilter: ["style", "data-theme"] });
 })();
 </script>
 <link rel="stylesheet" href="../app/reader.css">

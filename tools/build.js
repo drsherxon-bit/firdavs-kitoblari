@@ -27,10 +27,11 @@ const clean = (s) => s.replace(/<[^>]+>/g, " ").replace(/&middot;/g, "·").repla
 const AUD = /<span class="aud[^"]*">[\s\S]*?<span class="ad">[^<]*<\/span><\/button><\/span>/g;
 function audioIndex(html, b) {
   const items = [];
-  const secRe = /<section class="dars" id="dars-(\d+)">([\s\S]*?)<\/section>/g;
-  let m;
-  while ((m = secRe.exec(html))) {
-    const dars = +m[1], body = m[2];
+  // dars keyingi darsgacha: Madina 3–4 da dars ichida yana <section> bor
+  const boshlar = [...html.matchAll(/<section class="dars" id="dars-(\d+)">/g)];
+  for (let bi = 0; bi < boshlar.length; bi++) {
+    const m = boshlar[bi];
+    const dars = +m[1], body = html.slice(m.index + m[0].length, bi + 1 < boshlar.length ? boshlar[bi + 1].index : html.length);
     const h2 = /<h2 class="dars-head[^"]*">([\s\S]*?)<\/h2>/.exec(body);
     const darsTitle = h2 ? clean(h2[1].split('<span class="nrm">')[0]) : "";
     const audRe = /<span class="aud[^"]*">[\s\S]*?data-au="(\d+)" data-dur="(\d+)"(?: data-t="([^"]*)")?/g;
@@ -38,7 +39,7 @@ function audioIndex(html, b) {
     while ((a = audRe.exec(body))) {
       const before = body.slice(0, a.index);
       // eng yaqin ega element: sarlavha/band, sarlavhasiz matn qatori yoki jadval qatori (qr — Madina 2, 24-dars sonlari)
-      const hostRe = /<(h2|div|p|span) class="(dars-head|topic|tamrin|lead|part|nrm-row|qr)[^"]*"[^>]*>/g;
+      const hostRe = /<(h2|div|p|span) class="(dars-head|topic|tamrin|lead|part|nrm-row|qr|nv)[^"]*"[^>]*>/g;
       let host = null, hm;
       while ((hm = hostRe.exec(before))) host = { tag: hm[1], cls: hm[2], end: hm.index + hm[0].length };
       const seg = host ? before.slice(host.end).replace(AUD, " ") : "";   // shu egadagi oldingi tugma (ikkinchi tugma bo'lsa) hisobga olinmaydi
@@ -49,7 +50,9 @@ function audioIndex(html, b) {
       const after = body.slice(a.index).replace(AUD, " ");
       const snippet = clean(after.replace(/<span class="nrm">[\s\S]*?<\/span><\/span>/g, " ")
         .replace(/<h2[\s\S]*?<\/h2>/g, " ")).split(" ").slice(0, 7).join(" ");
-      items.push({ n: +a[1], dars, darsTitle, kind: host && host.cls === "lead" ? "mashq" : "matn",
+      // Madina 3–4 da mashq qatori div.nv, yorlig'i «معيار التمرين»
+      const mashq = host && (host.cls === "lead" || (host.cls === "nv" && !seg.includes("معيار النصّ")));
+      items.push({ n: +a[1], dars, darsTitle, kind: mashq ? "mashq" : "matn",
                    title: title || "Dars matni", snippet, nrm, dur: +a[2], file: "audio/" + b.audio + "/" + a[1] + ".mp3" });
     }
   }
@@ -107,11 +110,13 @@ for (const b of BOOKS) {
 
 // 5. Service worker: keshlanadigan fayllar ro'yxati + versiya
 const list = ["./", "./manifest.webmanifest", "./normativ.html"];
+// faqat bosma kitobdagi QR uchun: ilovada ishlatilmaydi, oflayn keshga olinmaydi (tarmoqdan ochiladi)
+const FAQAT_QR = ["audio/q4/", "audio/d3/"];
 const walk = (dir, pre) => {
   if (!fs.existsSync(dir)) return;
   for (const f of fs.readdirSync(dir)) {
     const p = path.join(dir, f);
-    if (fs.statSync(p).isDirectory()) walk(p, pre + f + "/");
+    if (fs.statSync(p).isDirectory()) { if (!FAQAT_QR.includes(pre + f + "/")) walk(p, pre + f + "/"); }
     else list.push("./" + pre + f);
   }
 };
